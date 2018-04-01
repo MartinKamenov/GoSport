@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.constants.Constants;
+import com.kamenov.martin.gosportbg.internet.HttpRequester;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +29,7 @@ public class NewEventFragment extends Fragment implements View.OnClickListener, 
     private TimePicker timePicker;
     private Button showDateBtn;
     private Button showTimeBtn;
+    private Button createEventBtn;
 
     public NewEventFragment() {
         // Required empty public constructor
@@ -63,6 +65,9 @@ public class NewEventFragment extends Fragment implements View.OnClickListener, 
                     timePicker.setVisibility(View.GONE);
                 }
                 break;
+            case R.id.create_event:
+                break;
+
         }
     }
 
@@ -71,9 +76,10 @@ public class NewEventFragment extends Fragment implements View.OnClickListener, 
         showDateBtn.setOnClickListener(this);
         showTimeBtn = root.findViewById(R.id.show_time);
         showTimeBtn.setOnClickListener(this);
+        createEventBtn = root.findViewById(R.id.create_event);
+        createEventBtn.setOnClickListener(this);
         calendarView.setOnDateChangeListener(this);
         timePicker.setOnTimeChangedListener(this);
-
     }
 
     @Override

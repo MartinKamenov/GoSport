@@ -19,7 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".new_event.NewEventActivity" />
-        <activity android:name=".pesho.PeshoActivity"></activity>
     </application>
 
 </manifest>
