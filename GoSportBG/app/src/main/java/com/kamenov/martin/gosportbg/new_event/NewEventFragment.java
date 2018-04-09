@@ -1,13 +1,15 @@
 package com.kamenov.martin.gosportbg.new_event;
 
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
+import com.kamenov.martin.gosportbg.login.LoginActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +69,7 @@ public class NewEventFragment extends Fragment implements View.OnClickListener, 
                 }
                 break;
             case R.id.create_event:
+                Toast.makeText(getActivity(), "Creates event", Toast.LENGTH_SHORT).show();
                 break;
 
         }

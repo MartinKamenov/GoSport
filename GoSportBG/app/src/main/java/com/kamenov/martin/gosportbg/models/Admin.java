@@ -14,7 +14,7 @@ public class Admin extends User {
 
     public Admin(String username, String address, String email, String name, String password) {
         super(username, address, email, name, password);
-    }
+    }/*
 
 
 
@@ -106,7 +106,7 @@ public class Admin extends User {
             });
         }
 
-    }
+    }*/
 
 
 }

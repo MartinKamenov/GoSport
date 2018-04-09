@@ -8,50 +8,51 @@ public class User {
     private String email;
     private String password;
 
-    public User(String var1, String var2, String var3, String var4, String var5) {
-        this.username = var1;
-        this.address = var2;
-        this.email = var3;
-        this.name = var4;
-        this.password = var5;
+    public User(String username, String address, String email, String name, String password) {
+        this.username = username;
+        this.address = address;
+        this.email = email;
+        this.name = name;
+        this.password = password;
     }
 
     public String getName() {
         return this.name;
     }
 
-    public void setName(String var1) {
-        this.name = var1;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername() {
         return this.username;
     }
 
-    public void setUsername(String var1) {
-        this.username = var1;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getAddress() {
         return this.address;
     }
 
-    public void setAddress(String var1) {
-        this.address = var1;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getEmail() {
         return this.email;
     }
 
-    public void setEmail(String var1) {
-        this.email = var1;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getID() {
         return ID;
     }
 
+    @Override
     public String toString() {
         return "User{" +
                 " name: " + name + '\'' +

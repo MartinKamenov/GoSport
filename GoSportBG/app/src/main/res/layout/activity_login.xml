@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.kamenov.martin.gosportbg.login.LoginActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/laptop">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <EditText
+                android:layout_marginTop="120dp"
+                android:layout_width="500px"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:hint="username"
+                android:textColorHint="#fff"
+                android:textAlignment="center"/>
+            <EditText
+                android:layout_marginTop="30dp"
+                android:layout_width="500px"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:hint="password"
+                android:textColorHint="#fff"
+                android:textAlignment="center"
+                android:inputType="textPassword"/>
+            <Button
+                android:layout_marginTop="30dp"
+                android:layout_width="500px"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="login"/>
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</FrameLayout>

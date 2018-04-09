@@ -1,6 +1,8 @@
 package com.kamenov.martin.gosportbg.models;
 
 
+import com.kamenov.martin.gosportbg.constants.Sport;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -8,31 +10,29 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
-public class Event implements Comparable {
-    List<User> players;
-    Admin admin;
+public class Event {
+    private List<User> players;
+    private User admin;
     private Sport sport;
-    private LocalDate date;
-    private LocalTime time;
-    private LocalDateTime dateTime;
+    private Date dateTime;
     private String name;
     private String location;
 
-    public Event(Sport sport, String name, int playerLimit, LocalDate date, LocalTime time, String location) {
+    public Event(User admin,Sport sport, String name, Date dateTime, int playerLimit, String location) {
+        this.admin = admin;
         this.sport = sport;
         this.name = name;
+        this.dateTime = dateTime;
         this.setPlayers(playerLimit);
-        this.date = date;
-        this.time = time;
-        this.dateTime = LocalDateTime.of(date, time);
         this.location = location;
     }
 
 
-    public Event(Sport sport, String name, LocalDate date, LocalTime time, String location) {
-        this(sport, name, 0, date, time, location);
+    public Event(User admin,Sport sport, String name, Date date, String location) {
+        this(admin, sport, name, date, 0, location);
     }
 
     public void setPlayers(int playerLimit) {
@@ -51,8 +51,8 @@ public class Event implements Comparable {
         return this.name;
     }
 
-    public void setName(String var1) {
-        this.name = var1;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLocation() {
@@ -63,49 +63,23 @@ public class Event implements Comparable {
         this.location = location;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return this.dateTime;
     }
 
-    public LocalDate getDate() {
-        return this.date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-        this.setDateTime(date, this.time);
-    }
-
-    public Sport getSport() {
-        return sport;
-    }
-
-    public LocalTime getTime() {
-        return this.time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
-        this.setDateTime(this.date, time);
-    }
-
-    private void setDateTime(LocalDate date, LocalTime time) {
-        this.dateTime = LocalDateTime.of(date, time);
+    public void setDate(Date dateTime) {
+        this.dateTime = dateTime;
     }
 
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
+        //DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM);
         return "Event{" +
                 ", sport=" + sport +
                 ", name='" + name + '\'' +
-                ", dateTime=" + dateTime.format(formatter) +
+                ", dateTime=" + dateTime +
                 ", location='" + location + '\'' +
                 '}';
-    }
-
-    public int compareTo(Object var1) {
-        return this.getDateTime().isAfter(((Event) var1).getDateTime()) ? 1 : -1;
     }
 }
 

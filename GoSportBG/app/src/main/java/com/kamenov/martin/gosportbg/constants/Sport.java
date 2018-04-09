@@ -1,4 +1,4 @@
-package com.kamenov.martin.gosportbg.models;
+package com.kamenov.martin.gosportbg.constants;
 
 
 public enum Sport {
