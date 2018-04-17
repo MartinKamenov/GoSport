@@ -10,4 +10,6 @@ public class Constants {
             "Септември", "Октомври", "Ноември", "Декември"};
     public static String[] SPORTS = {"Футбол", "Баскетбол", "Тенис на маса", "Шах",
             "Волейбол"};
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
 }

@@ -3,7 +3,7 @@ package com.kamenov.martin.gosportbg.models;
 public class User {
     private String username;
     private String name;
-    private String ID;
+    private int ID;
     private String address;
     private String email;
     private String password;
@@ -48,7 +48,7 @@ public class User {
         this.email = email;
     }
 
-    public String getID() {
+    public int getId() {
         return ID;
     }
 

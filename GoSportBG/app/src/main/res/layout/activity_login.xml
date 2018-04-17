@@ -8,42 +8,130 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/laptop">
+        android:background="@drawable/sportsmedicine">
         <LinearLayout
+            android:id="@+id/login_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
             <EditText
-                android:layout_marginTop="120dp"
+                android:id="@+id/username_txt"
                 android:layout_width="500px"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:layout_gravity="center_horizontal"
+                android:textColorHint="#ccededed"
+                android:textColor="#fff"
                 android:hint="username"
-                android:textColorHint="#fff"
                 android:textAlignment="center"/>
             <EditText
-                android:layout_marginTop="30dp"
+                android:id="@+id/password_txt"
                 android:layout_width="500px"
-                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center_horizontal"
+                android:textColorHint="#ccededed"
+                android:textColor="#fff"
                 android:hint="password"
-                android:textColorHint="#fff"
                 android:textAlignment="center"
                 android:inputType="textPassword"/>
             <Button
+                android:id="@+id/login_user"
                 android:layout_marginTop="30dp"
                 android:layout_width="500px"
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="login"/>
+            <Button
+                android:id="@+id/show_register"
+                android:layout_width="500px"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Sign in"
+                android:textAlignment="center"
+                />
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/register_form"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <EditText
+                android:layout_width="500px"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:textColorHint="#ccededed"
+                android:textColor="#fff"
+                android:hint="email"
+                android:id="@+id/email_txt"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                />
+            <EditText
+                android:layout_width="500px"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColorHint="#ccededed"
+                android:textColor="#fff"
+                android:hint="username"
+                android:id="@+id/username_txt1"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                />
+            <EditText
+                android:layout_width="500px"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColorHint="#ccededed"
+                android:textColor="#fff"
+                android:hint="city"
+                android:id="@+id/city_txt"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                />
+            <EditText
+                android:id="@+id/password_txt1"
+                android:layout_marginTop="30dp"
+                android:layout_width="500px"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:textColorHint="#ccededed"
+                android:textColor="#fff"
+                android:hint="password"
+                android:textAlignment="center"
+                android:inputType="textPassword"/>
+            <EditText
+                android:id="@+id/password_txt2"
+                android:layout_marginTop="30dp"
+                android:layout_width="500px"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:textColorHint="#ccededed"
+                android:textColor="#fff"
+                android:hint="repeat password"
+                android:textAlignment="center"
+                android:inputType="textPassword"/>
+
+            <Button
+                android:id="@+id/register_user"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_width="500px"
+                android:layout_height="wrap_content"
+                android:text="Sign In"/>
         </LinearLayout>
     </RelativeLayout>
+
 
 </FrameLayout>
