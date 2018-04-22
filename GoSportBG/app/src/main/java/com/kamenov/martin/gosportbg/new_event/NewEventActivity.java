@@ -16,6 +16,8 @@ public class NewEventActivity extends Activity {
         setContentView(R.layout.activity_new_event);
 
         this.mNewEventFragment = new NewEventFragment();
+        NewEventPresenter newEventPresenter = new NewEventPresenter();
+        mNewEventFragment.setPresenter(newEventPresenter);
 
         getFragmentManager()
                 .beginTransaction()

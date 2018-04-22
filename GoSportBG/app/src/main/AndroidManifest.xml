@@ -10,10 +10,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/gosporticon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".menu.MenuActivity"/>
-        <activity android:name=".new_event.NewEventActivity" />
-        <activity android:name=".login.LoginActivity">
+        android:theme="@style/AppTheme"
+        android:name="com.kamenov.martin.gosportbg.GoSportApplication">
+        <activity android:name=".menu.MenuActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".new_event.NewEventActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".login.LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +26,10 @@
         </activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
-
+        <meta-data android:name="DATABASE" android:value="goSport.db" />
+        <meta-data android:name="VERSION" android:value="1" />
+        <meta-data android:name="QUERY_LOG" android:value="true" />
+        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.kamenov.martin" />
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation"

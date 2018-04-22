@@ -7,17 +7,17 @@ import com.kamenov.martin.gosportbg.models.User;
  */
 
 public class AuthenticationService {
-    public static User user;
+    public User user;
 
-    public static int getUserId(User user){
+    public int getUserId(User user){
         return user.getId();
     }
 
-    public static void setUser(User user){
-        user = user;
+    public void setUser(User user){
+        this.user = user;
     }
 
-    public static void logOut(){
-        user = null;
+    public void logOut(){
+        this.user = null;
     }
 }

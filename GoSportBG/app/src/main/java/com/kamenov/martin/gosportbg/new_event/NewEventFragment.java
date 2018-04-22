@@ -17,6 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.kamenov.martin.gosportbg.R;
+import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.login.LoginActivity;
@@ -24,7 +25,7 @@ import com.kamenov.martin.gosportbg.login.LoginActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NewEventFragment extends Fragment implements View.OnClickListener, CalendarView.OnDateChangeListener, TimePicker.OnTimeChangedListener {
+public class NewEventFragment extends Fragment implements BaseContracts.View, View.OnClickListener, CalendarView.OnDateChangeListener, TimePicker.OnTimeChangedListener {
 
 
     private View root;
@@ -33,6 +34,7 @@ public class NewEventFragment extends Fragment implements View.OnClickListener, 
     private Button showDateBtn;
     private Button showTimeBtn;
     private Button createEventBtn;
+    private NewEventContracts.INewEventPresenter mPresenter;
 
     public NewEventFragment() {
         // Required empty public constructor
@@ -100,5 +102,10 @@ public class NewEventFragment extends Fragment implements View.OnClickListener, 
         TextView chosenTime = root.findViewById(R.id.chosen_time);
         String str = hourOfDay+":"+ minute + " часа";
         chosenTime.setText(str);
+    }
+
+    @Override
+    public void setPresenter(BaseContracts.Presenter presenter) {
+        this.mPresenter = (NewEventContracts.INewEventPresenter)presenter;
     }
 }
