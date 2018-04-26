@@ -21,6 +21,7 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.login.LoginActivity;
+import com.kamenov.martin.gosportbg.maps.MapsActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +36,7 @@ public class NewEventFragment extends Fragment implements BaseContracts.View, Vi
     private Button showTimeBtn;
     private Button createEventBtn;
     private NewEventContracts.INewEventPresenter mPresenter;
+    private Button showLocationBtn;
 
     public NewEventFragment() {
         // Required empty public constructor
@@ -70,6 +72,10 @@ public class NewEventFragment extends Fragment implements BaseContracts.View, Vi
                     timePicker.setVisibility(View.GONE);
                 }
                 break;
+            case R.id.location_btn:
+                Intent intent = new Intent(getActivity(), MapsActivity.class);
+                startActivity(intent);
+                break;
             case R.id.create_event:
                 Toast.makeText(getActivity(), "Creates event", Toast.LENGTH_SHORT).show();
                 break;
@@ -82,6 +88,8 @@ public class NewEventFragment extends Fragment implements BaseContracts.View, Vi
         showDateBtn.setOnClickListener(this);
         showTimeBtn = root.findViewById(R.id.show_time);
         showTimeBtn.setOnClickListener(this);
+        showLocationBtn = root.findViewById(R.id.location_btn);
+        showLocationBtn.setOnClickListener(this);
         createEventBtn = root.findViewById(R.id.create_event);
         createEventBtn.setOnClickListener(this);
         calendarView.setOnDateChangeListener(this);

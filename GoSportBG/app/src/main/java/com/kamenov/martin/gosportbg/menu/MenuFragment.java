@@ -40,8 +40,8 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         presenter.unsubscribe();
+        super.onDestroy();
     }
 
     @Override

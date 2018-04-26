@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.kamenov.martin.gosportbg.new_event.NewEventFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -77,6 +76,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner"/>
+            <Button
+                android:id="@+id/location_btn"
+                android:text="Изберете място"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/create_event"
