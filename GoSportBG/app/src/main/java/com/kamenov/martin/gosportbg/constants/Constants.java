@@ -12,4 +12,5 @@ public class Constants {
             "Волейбол"};
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
+    public static String DOMAIN;
 }

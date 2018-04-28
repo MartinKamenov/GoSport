@@ -2,6 +2,7 @@ package com.kamenov.martin.gosportbg;
 
 import android.app.Application;
 
+import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.models.DaoMaster;
 import com.kamenov.martin.gosportbg.models.DaoSession;
 import com.kamenov.martin.gosportbg.models.SettingsConfiguration;
@@ -27,6 +28,7 @@ public class GoSportApplication extends Application {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "gosport-db");
         Database db = helper.getWritableDb();
         mDaoSession = new DaoMaster(db).newSession();
+        Constants.DOMAIN = "https://gosport.herokuapp.com";
     }
 
     public GenericCacheRepository<SettingsConfiguration, Long> getSettingsConfigurationRepository() {

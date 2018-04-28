@@ -19,24 +19,37 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.kamenov.martin.gosportbg.R;
+import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
-import com.kamenov.martin.gosportbg.internet.contracts.HttpHandler;
 import com.kamenov.martin.gosportbg.menu.MenuActivity;
+import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
+import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 
-import java.io.IOException;
 import java.util.Arrays;
 
-import okhttp3.Response;
-
-public class LoginActivity extends Activity implements HttpHandler, View.OnClickListener {
+public class LoginActivity extends Activity implements LoginContracts.ILoginView, View.OnClickListener {
 
 
     private static final String EMAIL = "email";
 
     private CallbackManager callbackManager;
     private LoginButton loginButton;
-    private HttpRequester httpRequester;
+    private LoginContracts.ILoginPresenter mPresenter;
+    private TextView loginUsernameTextView;
+    private TextView loginPasswordTextView;
+    private TextView registerUsernameTextView;
+    private TextView registerEmailTextView;
+    private TextView registerPasswordTextView;
+    private TextView registerPassword2TextView;
+    private TextView registerCityTextView;
+    private Button loginUserButton;
+    private Button registerUserButton;
+    private Button showRegisterFormButton;
+    private View loginForm;
+    private View registerForm;
+    private View progressBarForm;
+    private String lastForm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,14 +58,19 @@ public class LoginActivity extends Activity implements HttpHandler, View.OnClick
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.SCREEN_HEIGHT = dm.heightPixels;
-        httpRequester = new HttpRequester(this);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         callbackManager = CallbackManager.Factory.create();
+        NavigationCommand menuNavigationCommand = new ActivityNavigationCommand(this, MenuActivity.class);
+        HttpRequester requester = new HttpRequester();
+        LoginPresenter presenter = new LoginPresenter(requester, menuNavigationCommand);
+        setPresenter(presenter);
+        presenter.subscribe(this);
         setContentView(R.layout.activity_login);
-
+        selectSizes();
         setListeners();
+        lastForm = "login";
 
         loginButton = findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList(EMAIL));
@@ -85,30 +103,7 @@ public class LoginActivity extends Activity implements HttpHandler, View.OnClick
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void handleGet(Response response) {
-
-    }
-
-    @Override
-    public void handlePost(final Response response) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    String result = response.body().string();
-                    Toast.makeText(LoginActivity.this, result.toString(), Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    Toast.makeText(LoginActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
     private void setListeners() {
-        Button loginUserButton = findViewById(R.id.login_user);
-        Button registerUserButton =  findViewById(R.id.register_user);
-        Button showRegisterFormButton = findViewById(R.id.show_register);
         loginUserButton.setOnClickListener(this);
         registerUserButton.setOnClickListener(this);
         showRegisterFormButton.setOnClickListener(this);
@@ -119,38 +114,107 @@ public class LoginActivity extends Activity implements HttpHandler, View.OnClick
 
         switch (view.getId()){
             case R.id.login_user:
-                TextView usernameTxt = findViewById(R.id.username_txt);
-                TextView passwordTxt = findViewById(R.id.password_txt);
-                String username = usernameTxt.getText().toString();
-                String password = passwordTxt.getText().toString();
-                String body = String.format("{\"username\":\"%s\",\"password\":\"%s\"}", username, password);
-                httpRequester.post("https://gosport.herokuapp.com/login", body);
+                loginButtonPressed();
                 break;
             case R.id.show_register:
                 LinearLayout loginForm = findViewById(R.id.login_form);
                 loginForm.setVisibility(View.GONE);
                 LinearLayout registerForm =  findViewById(R.id.register_form);
                 registerForm.setVisibility(View.VISIBLE);
+                lastForm = "register";
                 break;
             case R.id.register_user:
-                String emailTxt = ((TextView)findViewById(R.id.email_txt)).getText().toString();
-                String usernameTxtView = ((TextView)findViewById(R.id.username_txt1)).getText().toString();
-                String cityTxt = ((TextView)findViewById(R.id.city_txt)).getText().toString();
-                String password1Txt = ((TextView)findViewById(R.id.password_txt1)).getText().toString();
-                String password2Txt = ((TextView)findViewById(R.id.password_txt2)).getText().toString();
-                if(emailTxt.length() == 0 || usernameTxtView.length() == 0 || cityTxt.length() == 0 ||
-                        password1Txt.length() == 0 || password2Txt.length() == 0) {
-                    Toast.makeText(this, "Моля попълнете всички полета", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                if(!password1Txt.equals(password2Txt)) {
-                    Toast.makeText(this, "Паролите не съвпадат", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                String registerBody = String.format("{\"email\":\"%s\",\"username\":\"%s\""+
-                                ",\"city\":\"%s\",\"password\":\"%s\"}",
-                        emailTxt, usernameTxtView, cityTxt, password1Txt);
-                httpRequester.post("https://gosport.herokuapp.com/register", registerBody);
+                registerButtonPressed();
         }
+    }
+
+    @Override
+    public void setPresenter(BaseContracts.Presenter presenter) {
+        this.mPresenter = (LoginContracts.ILoginPresenter) presenter;
+    }
+
+    @Override
+    public void selectSizes() {
+        loginUsernameTextView = findViewById(R.id.username_txt);
+        loginPasswordTextView = findViewById(R.id.password_txt);
+        registerUsernameTextView = findViewById(R.id.username_txt1);
+        registerEmailTextView = findViewById(R.id.email_txt);
+        registerPasswordTextView = findViewById(R.id.password_txt1);
+        registerPassword2TextView = findViewById(R.id.password_txt2);
+        registerCityTextView = findViewById(R.id.city_txt);
+        loginUserButton = findViewById(R.id.login_user);
+        registerUserButton =  findViewById(R.id.register_user);
+        showRegisterFormButton = findViewById(R.id.show_register);
+        loginForm = findViewById(R.id.login_form);
+        registerForm = findViewById(R.id.register_form);
+        progressBarForm = findViewById(R.id.progress_bar_form);
+    }
+
+    @Override
+    public void loginButtonPressed() {
+        String username = loginUsernameTextView.getText().toString();
+        String password = loginPasswordTextView.getText().toString();
+        mPresenter.login(username, password);
+    }
+
+    @Override
+    public void registerButtonPressed() {
+        String emailTxt = registerEmailTextView.getText().toString();
+        String usernameTxtView = registerUsernameTextView.getText().toString();
+        String cityTxt = registerCityTextView.getText().toString();
+        String password1Txt = registerPasswordTextView.getText().toString();
+        String password2Txt = registerPassword2TextView.getText().toString();
+        if(emailTxt.length() == 0 || usernameTxtView.length() == 0 || cityTxt.length() == 0 ||
+                password1Txt.length() == 0 || password2Txt.length() == 0) {
+            Toast.makeText(this, "Моля попълнете всички полета", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(!password1Txt.equals(password2Txt)) {
+            Toast.makeText(this, "Паролите не съвпадат", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        mPresenter.register(emailTxt, usernameTxtView, password1Txt, cityTxt);
+    }
+
+    @Override
+    public void notifyUserOnMainTread(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    Toast.makeText(LoginActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void showProgressBar() {
+        loginForm.setVisibility(View.GONE);
+        registerForm.setVisibility(View.GONE);
+        progressBarForm.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if(lastForm.equals("login")) {
+                        progressBarForm.setVisibility(View.GONE);
+                        loginForm.setVisibility(View.VISIBLE);
+                    } else {
+                        progressBarForm.setVisibility(View.GONE);
+                        registerForm.setVisibility(View.VISIBLE);
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(LoginActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

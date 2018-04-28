@@ -14,10 +14,11 @@
             android:layout_height="match_parent"
             tools:context="com.kamenov.martin.gosportbg.maps.MapsActivity" />
         <Button
+            android:id="@+id/select_location_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Избор"
-            android:layout_alignParentBottom="true"  />
+            android:layout_alignParentBottom="true"/>
     </RelativeLayout>
 </FrameLayout>
 

@@ -1,9 +1,7 @@
 package com.kamenov.martin.gosportbg.internet;
 
-import android.app.Activity;
-import android.widget.Toast;
-
-import com.kamenov.martin.gosportbg.internet.contracts.HttpHandler;
+import com.kamenov.martin.gosportbg.internet.contracts.GetHandler;
+import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 
 import java.io.IOException;
 
@@ -20,16 +18,14 @@ import okhttp3.Response;
  */
 
 public class HttpRequester {
-    private final HttpHandler handler;
     private OkHttpClient client;
     private MediaType JSON;
 
-    public HttpRequester(HttpHandler handler) {
+    public HttpRequester() {
         this.client = new OkHttpClient();
-        this.handler = handler;
     }
 
-    public void get(String url) {
+    public void get(final GetHandler handler, String url) {
         Request request = new Request.Builder()
                 .get()
                 .url(url)
@@ -42,12 +38,12 @@ public class HttpRequester {
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                handler.handleGet(response);
+                handler.handleGet(call, response);
             }
         });
     }
 
-    public void post(String url, String bodyText) {
+    public void post(final PostHandler handler, String url, String bodyText) {
         JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, bodyText);
         Request request = new Request.Builder()
@@ -64,7 +60,7 @@ public class HttpRequester {
 
             @Override
             public void onResponse(Call call, final Response response) throws IOException {
-                handler.handlePost(response);
+                handler.handlePost(call, response);
             }
         });
     }
