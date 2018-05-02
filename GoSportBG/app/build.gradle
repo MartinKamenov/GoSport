@@ -33,6 +33,7 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:percent:23.1.0'
+    compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:26.+'
     compile 'com.squareup.okhttp3:okhttp:3.10.0'

@@ -1,7 +1,9 @@
 package com.kamenov.martin.gosportbg.maps;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -54,7 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        // Add a marker in Sofia and move the camera
         LatLng sofia = new LatLng(42.698334, 23.319941);
         markerOptions = new MarkerOptions().position(sofia).title("Selected place").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mMap.setOnMapClickListener(this);
@@ -73,7 +75,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(this, NewEventActivity.class);
-        startActivity(intent);
+        Intent result = new Intent();
+        LatLng position = myMarker.getPosition();
+        result.putExtra("longitude", position.longitude);
+        result.putExtra("latitude", position.latitude);
+        setResult(Activity.RESULT_OK, result);
+        finish();
     }
 }

@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">Go Sport BG</string>
+    <string name="app_name">GoSportBG</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="facebook_app_id">1858056840892364</string>
     <string name="fb_login_protocol_scheme">fb1858056840892364</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_event">Event</string>
 </resources>

@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.kamenov.martin.gosportbg.R;
+import com.kamenov.martin.gosportbg.event.EventActivity;
+import com.kamenov.martin.gosportbg.internet.HttpRequester;
+import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
+import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 
 public class NewEventActivity extends Activity {
     private NewEventFragment mNewEventFragment;
@@ -15,8 +19,11 @@ public class NewEventActivity extends Activity {
         setContentView(R.layout.activity_new_event);
 
         this.mNewEventFragment = new NewEventFragment();
-        NewEventPresenter newEventPresenter = new NewEventPresenter();
+        HttpRequester requester = new HttpRequester();
+        NavigationCommand eventNavigationCommand = new ActivityNavigationCommand(this, EventActivity.class);
+        NewEventPresenter newEventPresenter = new NewEventPresenter(requester, eventNavigationCommand);
         mNewEventFragment.setPresenter(newEventPresenter);
+        newEventPresenter.subscribe(mNewEventFragment);
 
         getFragmentManager()
                 .beginTransaction()
