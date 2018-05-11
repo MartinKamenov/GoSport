@@ -99,7 +99,7 @@ public class ShowEventsActivity extends FragmentActivity implements ShowEventsCo
                         events[i].datetime.hour + ":" + events[i].datetime.minute);
                     }
                     LatLng latLng = new LatLng(events[i].location.latitude, events[i].location.longitude);
-                    Marker marker = mMap.addMarker(new MarkerOptions().position(latLng)
+                    mMap.addMarker(new MarkerOptions().position(latLng)
                             .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap)).anchor(0.5f, 0.6f)
                             .snippet(String.valueOf(events[i].id)));
                 }

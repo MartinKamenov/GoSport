@@ -5,6 +5,7 @@ import android.app.Application;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.models.DaoMaster;
 import com.kamenov.martin.gosportbg.models.DaoSession;
+import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.SettingsConfiguration;
 import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 
@@ -17,6 +18,7 @@ import org.greenrobot.greendao.database.Database;
 public class GoSportApplication extends Application {
     private DaoSession mDaoSession;
     private GenericCacheRepository<SettingsConfiguration, Long> mSettingsConfigurationRepository;
+    private GenericCacheRepository<LocalUser, Long> mLocalUserRepository;
 
     public GoSportApplication() {
         super();
@@ -37,5 +39,13 @@ public class GoSportApplication extends Application {
         }
 
         return mSettingsConfigurationRepository;
+    }
+
+    public GenericCacheRepository<LocalUser, Long> getLocalUserRepository() {
+        if (mSettingsConfigurationRepository == null) {
+            mLocalUserRepository = new GenericCacheRepository<>(mDaoSession.getLocalUserDao());
+        }
+
+        return mLocalUserRepository;
     }
 }

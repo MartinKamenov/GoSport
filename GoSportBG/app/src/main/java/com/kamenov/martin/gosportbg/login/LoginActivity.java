@@ -18,6 +18,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.gson.Gson;
+import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
@@ -64,7 +66,8 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         callbackManager = CallbackManager.Factory.create();
         NavigationCommand menuNavigationCommand = new ActivityNavigationCommand(this, MenuActivity.class);
         HttpRequester requester = new HttpRequester();
-        LoginPresenter presenter = new LoginPresenter(requester, menuNavigationCommand);
+        Gson gson = new Gson();
+        LoginPresenter presenter = new LoginPresenter(requester, gson, menuNavigationCommand);
         setPresenter(presenter);
         presenter.subscribe(this);
         setContentView(R.layout.activity_login);
@@ -74,6 +77,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
 
         loginButton = findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList(EMAIL));
+        mPresenter.tryLoginAuthomaticly();
         // If you are using in a fragment, call loginButton.setFragment(this);
 
         // Callback registration
@@ -81,8 +85,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Toast.makeText(LoginActivity.this, "Logged", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
-                startActivity(intent);
+                mPresenter.navigateToMenu();
             }
 
             @Override
@@ -131,6 +134,11 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
     @Override
     public void setPresenter(BaseContracts.Presenter presenter) {
         this.mPresenter = (LoginContracts.ILoginPresenter) presenter;
+    }
+
+    @Override
+    public GoSportApplication getGoSportApplication() {
+        return (GoSportApplication) getApplication();
     }
 
     @Override

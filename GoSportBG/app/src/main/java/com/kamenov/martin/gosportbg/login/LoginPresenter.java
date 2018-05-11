@@ -2,13 +2,18 @@ package com.kamenov.martin.gosportbg.login;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
+import com.kamenov.martin.gosportbg.models.LocalUser;
+import com.kamenov.martin.gosportbg.models.User;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
+import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -18,13 +23,35 @@ import okhttp3.Response;
  */
 
 public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandler {
+    private final Gson mGson;
     private LoginContracts.ILoginView mView;
     private HttpRequester mRequester;
     private final NavigationCommand mMenuNavigationCommand;
-    public LoginPresenter(HttpRequester requester, NavigationCommand menuNavigationCommand) {
+    public LoginPresenter(HttpRequester requester, Gson gson, NavigationCommand menuNavigationCommand) {
         this.mRequester = requester;
+        this.mGson = gson;
         this.mMenuNavigationCommand = menuNavigationCommand;
     }
+
+
+    @Override
+    public LocalUser getLoggedUser() {
+        GenericCacheRepository<LocalUser, Long> repo = mView.getGoSportApplication().getLocalUserRepository();
+        List<LocalUser> list = repo.getAll();
+        if(list.size() == 1) {
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public void tryLoginAuthomaticly() {
+        LocalUser user = getLoggedUser();
+        if(getLoggedUser() != null) {
+            login(user.getUsername(), user.getPassword());
+        }
+    }
+
     @Override
     public void navigateToMenu() {
         mMenuNavigationCommand.navigate();
@@ -48,8 +75,11 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     }
 
     @Override
-    public void loginLocal(String username, String email, String city, String password) {
+    public void loginLocal(User user) {
         // TO DO: Implement method
+        GenericCacheRepository<LocalUser, Long> repo = mView.getGoSportApplication().getLocalUserRepository();
+        repo.clearAll();
+        repo.add(new LocalUser(user.id, user.email, user.username, user.password, user.city));
     }
 
     @Override
@@ -65,36 +95,35 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     @Override
     public void handlePost(Call call, Response response) {
         String url = call.request().url().toString();
-        String responseBody = "";
+        String jsonInString = "";
         try {
-            responseBody = response.body().string();
+            jsonInString = response.body().string();
         } catch (IOException e) {
         }
 
         // Parse date from responseBody
-        String username = "";
-        String password = "";
-        String email = "";
-        String city = "";
+        User event = mGson.fromJson(jsonInString, User.class);
         // Handles login calls
         if (url.contains("login")) {
             // Successful login case
-            if(responseBody.contains("email")) {
-                loginLocal(username, email, city, password);
+            if(jsonInString.contains("email")) {
+                loginLocal(event);
+                mView.hideProgressBar();
                 navigateToMenu();
             } // Unsuccessful login
             else {
-                mView.notifyUserOnMainTread(responseBody);
+                mView.notifyUserOnMainTread(jsonInString);
                 mView.hideProgressBar();
             }
         }
         // Handles registration calls
         else if(url.contains("register")) {
             if(response.body().toString().contains("Successful")) {
-                loginLocal(username, email, city, password);
+                loginLocal(event);
+                mView.hideProgressBar();
                 navigateToMenu();
-            } else if(responseBody.contains("Username Taken")) {
-                mView.notifyUserOnMainTread(responseBody);
+            } else if(jsonInString.contains("Username Taken")) {
+                mView.notifyUserOnMainTread(jsonInString);
                 mView.hideProgressBar();
             }
         }
