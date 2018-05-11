@@ -9,134 +9,139 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/world_cup">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="100px">
-            <LinearLayout
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/new_event_container">
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:weightSum="1">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Описание на събитието"
-                    android:textAlignment="center"
-                    android:textColor="#fff"/>
-
-                <EditText
-                    android:id="@+id/event_name_txt"
-                    android:inputType="textMultiLine"
-                    android:lines="3"
-                    android:minLines="3"
-                    android:scrollbars="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#fff"/>
-
-                <CheckBox
-                    android:id="@+id/checkbox_limit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Ограничен брой необходими играчи"
-                    android:textColor="#fff"
-                    android:buttonTint="#fff"
-                    android:layout_gravity="center_horizontal"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="100px">
                 <LinearLayout
-                    android:id="@+id/show_limit"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_horizontal">
+                    android:orientation="vertical"
+                    android:weightSum="1">
+
                     <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Описание на събитието"
+                        android:textAlignment="center"
+                        android:textColor="#fff"/>
+
+                    <EditText
+                        android:id="@+id/event_name_txt"
+                        android:inputType="textMultiLine"
+                        android:lines="3"
+                        android:minLines="3"
+                        android:scrollbars="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#fff"/>
+
+                    <CheckBox
+                        android:id="@+id/checkbox_limit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="Ограничен брой необходими играчи"
+                        android:textColor="#fff"
+                        android:buttonTint="#fff"
+                        android:layout_gravity="center_horizontal"/>
+                    <LinearLayout
+                        android:id="@+id/show_limit"
+                        android:visibility="gone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Брой необходими играчи:"
+                            android:textColor="#fff"/>
+                        <EditText
+                            android:id="@+id/players_limit_txt"
+                            android:layout_width="250px"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            app:backgroundTint="#fff"
+                            android:textColor="#fff"
+                            android:textAlignment="center"/>
+                    </LinearLayout>
+                    <CalendarView
+                        android:id="@+id/calendarView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#aaffffff"/>
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Брой необходими играчи:"
-                        android:textColor="#fff"/>
-                    <EditText
-                        android:id="@+id/players_limit_txt"
-                        android:layout_width="250px"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal">
+                        <Button
+                            android:id="@+id/show_date"
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:text="Избор на дата"/>
+                        <TextView
+                            android:id="@+id/chosen_date"
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:text="Не е избрана"
+                            android:textColor="#fff"/>
+                    </LinearLayout>
+                    <TimePicker
+                        android:layout_marginTop="50px"
+                        android:id="@+id/time_picker"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"
-                        android:maxLength="3"
-                        app:backgroundTint="#fff"
-                        android:textColor="#fff"
-                        android:textAlignment="center"/>
+                        android:timePickerMode="spinner"
+                        android:background="#ddffffff"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal">
+                        <Button
+                            android:id="@+id/show_time"
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:text="Избор на час"/>
+                        <TextView
+                            android:id="@+id/chosen_time"
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:text="Не е избран"
+                            android:textColor="#fff"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_horizontal">
+                        <Button
+                            android:id="@+id/location_btn"
+                            android:text="Изберете място"
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:id="@+id/chosen_place"
+                            android:layout_width="300px"
+                            android:layout_height="wrap_content"
+                            android:text="Не е избрано"
+                            android:textColor="#fff"/>
+                    </LinearLayout>
                 </LinearLayout>
-                <CalendarView
-                    android:id="@+id/calendarView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#aaffffff"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_horizontal">
-                    <Button
-                        android:id="@+id/show_date"
-                        android:layout_width="300px"
-                        android:layout_height="wrap_content"
-                        android:text="Избор на дата"/>
-                    <TextView
-                        android:id="@+id/chosen_date"
-                        android:layout_width="300px"
-                        android:layout_height="wrap_content"
-                        android:text="Не е избрана"
-                        android:textColor="#fff"/>
-                </LinearLayout>
-                <TimePicker
-                    android:layout_marginTop="50px"
-                    android:id="@+id/time_picker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:timePickerMode="spinner"
-                    android:background="#ddffffff"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_horizontal">
-                    <Button
-                        android:id="@+id/show_time"
-                        android:layout_width="300px"
-                        android:layout_height="wrap_content"
-                        android:text="Избор на час"/>
-                    <TextView
-                        android:id="@+id/chosen_time"
-                        android:layout_width="300px"
-                        android:layout_height="wrap_content"
-                        android:text="Не е избран"
-                        android:textColor="#fff"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center_horizontal">
-                    <Button
-                        android:id="@+id/location_btn"
-                        android:text="Изберете място"
-                        android:layout_width="300px"
-                        android:layout_height="wrap_content" />
-                    <TextView
-                        android:id="@+id/chosen_place"
-                        android:layout_width="300px"
-                        android:layout_height="wrap_content"
-                        android:text="Не е избрано"
-                        android:textColor="#fff"/>
-                </LinearLayout>
-            </LinearLayout>
-        </ScrollView>
-        <Button
-            android:id="@+id/create_event"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Създай събитие"
-            android:layout_alignParentBottom="true"/>
+            </ScrollView>
+            <Button
+                android:id="@+id/create_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Създай събитие"
+                android:layout_alignParentBottom="true"/>
+        </RelativeLayout>
         <LinearLayout
             android:id="@+id/progress_bar_form"
             android:visibility="gone"

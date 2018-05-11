@@ -10,8 +10,8 @@ import android.content.Intent;
 
 
 public class ActivityNavigationCommand implements NavigationCommand {
-    private final Activity currentActivity;
-    private final Class clazz;
+    private Activity currentActivity;
+    private Class clazz;
     private final Intent intent;
 
     public ActivityNavigationCommand(Activity currentActivity, Class clazz) {
@@ -23,5 +23,10 @@ public class ActivityNavigationCommand implements NavigationCommand {
     @Override
     public void navigate() {
         currentActivity.startActivity(intent);
+    }
+
+    @Override
+    public void putExtraInteger(String name, int obj) {
+        intent.putExtra(name, obj);
     }
 }

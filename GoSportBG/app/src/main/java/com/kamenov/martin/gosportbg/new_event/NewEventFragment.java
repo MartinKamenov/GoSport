@@ -5,11 +5,9 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
@@ -21,16 +19,10 @@ import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.constants.Sport;
-import com.kamenov.martin.gosportbg.date.DateTime;
-import com.kamenov.martin.gosportbg.internet.HttpRequester;
-import com.kamenov.martin.gosportbg.login.LoginActivity;
 import com.kamenov.martin.gosportbg.maps.MapsActivity;
+import com.kamenov.martin.gosportbg.models.DateTime;
 
-import java.io.IOException;
 import java.util.Date;
-
-import okhttp3.Call;
-import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -162,7 +154,12 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         String name = ((TextView)root.findViewById(R.id.event_name_txt)).getText().toString();
         Sport sport = Sport.Football;
 
-        DateTime date = new DateTime(year, month, dayOfMonth, hourOfDay, minute);
+        DateTime date = new DateTime();
+        date.year = year;
+        date.month = month;
+        date.dayOfMonth = dayOfMonth;
+        date.hour = hourOfDay;
+        date.minute = minute;
         int neededPlayers = -1;
         if(checkBoxLimitations.isChecked()) {
             TextView playersLimitTxt = root.findViewById(R.id.players_limit_txt);
@@ -209,6 +206,27 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
             @Override
             public void run() {
                 Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void showLoadingBar() {
+        View newEventContainer = root.findViewById(R.id.new_event_container);
+        View loadingBarContainer = root.findViewById(R.id.progress_bar_form);
+        newEventContainer.setVisibility(View.GONE);
+        loadingBarContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoginBarOnUIThread() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                View newEventContainer = root.findViewById(R.id.new_event_container);
+                View loadingBarContainer = root.findViewById(R.id.progress_bar_form);
+                loadingBarContainer.setVisibility(View.GONE);
+                newEventContainer.setVisibility(View.VISIBLE);
             }
         });
     }

@@ -2,13 +2,7 @@ package com.kamenov.martin.gosportbg.new_event;
 
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Sport;
-import com.kamenov.martin.gosportbg.date.DateTime;
-import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
-
-import java.util.Date;
-
-import okhttp3.Call;
-import okhttp3.Response;
+import com.kamenov.martin.gosportbg.models.DateTime;
 
 /**
  * Created by Martin on 17.4.2018 г..
@@ -32,5 +26,9 @@ public class NewEventContracts {
         void changeLocationStatus();
 
         void showMessageOnMainTread(String message);
+
+        void showLoadingBar();
+
+        void hideLoginBarOnUIThread();
     }
 }

@@ -9,23 +9,31 @@ import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
  */
 
 public class MenuPresenter implements MenuContracts.IMenuPresenter {
-    private MenuContracts.IMenuView view;
+    private MenuContracts.IMenuView mView;
     private NavigationCommand mNewEventCommand;
-    public MenuPresenter(NavigationCommand newEventCommand) {
+    private NavigationCommand mShowEventsCommand;
+
+    public MenuPresenter(NavigationCommand newEventCommand, NavigationCommand showEventsCommand) {
         this.mNewEventCommand = newEventCommand;
+        this.mShowEventsCommand = showEventsCommand;
     }
     @Override
     public void subscribe(BaseContracts.View view) {
-        this.view = (MenuContracts.IMenuView) view;
+        this.mView = (MenuContracts.IMenuView) view;
     }
 
     @Override
     public void unsubscribe() {
-        this.view = null;
+        this.mView = null;
     }
 
     @Override
     public void navigateToCreateNewEvents() {
         mNewEventCommand.navigate();
+    }
+
+    @Override
+    public void navigateToShowEvents() {
+        mShowEventsCommand.navigate();
     }
 }

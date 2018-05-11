@@ -3,9 +3,9 @@ package com.kamenov.martin.gosportbg.new_event;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.constants.Sport;
-import com.kamenov.martin.gosportbg.date.DateTime;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
+import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 
 import java.io.IOException;
@@ -33,8 +33,9 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
         String body = String.format("{\"name\":\"%s\",\"sport\":\"%s\",\"year\":\"%s\",\"month\":\"%s\"," +
                 "\"day\":\"%s\",\"hours\":\"%s\",\"minutes\":\"%s\",\"longitude\":\"%s\"," +
                 "\"latitude\":\"%s\",\"neededPlayers\":\"%d\",\"adminId\":\"%s\"" +
-                "}", name, bodySport, date.getYear(), date.getMonth(), date.getDay(), date.getHour(),
-                date.getMinutes(), longitude, latitude, neededPlayers, myId);
+                "}", name, bodySport, date.year, date.month, date.dayOfMonth, date.hour,
+                date.minute, longitude, latitude, neededPlayers, myId);
+        mView.showLoadingBar();
         mRequester.post(this, Constants.DOMAIN + "/events/createEvent", body);
     }
 
@@ -50,11 +51,51 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
 
     @Override
     public void handlePost(Call call, Response response) {
+        String body = "";
         try {
-            this.mView.showMessageOnMainTread(response.body().string());
+            body = response.body().string();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        mEventNavigationCommand.navigate();
+        if(body.contains("id")) {
+            this.mView.showMessageOnMainTread("Успешно създадено събитие");
+            mView.hideLoginBarOnUIThread();
+            int id = Integer.parseInt(findFieldFromJsonString("id", body));
+            mEventNavigationCommand.putExtraInteger("id", id);
+            mEventNavigationCommand.navigate();
+        } else {
+            this.mView.showMessageOnMainTread(body);
+            mView.hideLoginBarOnUIThread();
+        }
+    }
+
+    private String findFieldFromJsonString(String fieldName, String text) {
+        int index = text.indexOf(fieldName);
+        if(index < 0) {
+            return "No field with this name";
+        }
+
+        StringBuilder result = new StringBuilder();
+        index += fieldName.length();
+        boolean started = false;
+        while(true) {
+            if(text.charAt(index) == ':') {
+                started = true;
+                index++;
+                continue;
+            }
+            if(text.charAt(index) == ',') {
+                break;
+            }
+
+            if(started) {
+                result.append(text.charAt(index));
+            }
+
+            index++;
+        }
+
+        return result.toString().trim();
     }
 }

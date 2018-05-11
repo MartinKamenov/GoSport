@@ -1,8 +1,54 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.kamenov.martin.gosportbg.event.EventActivity" />
+    tools:context="com.kamenov.martin.gosportbg.event.EventActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/event_container">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="100px">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:map="http://schemas.android.com/apk/res-auto"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="250px"
+                    tools:context="com.kamenov.martin.gosportbg.event.EventActivity" />
+                <TextView
+                    android:id="@+id/name_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/date_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Date"
+                    android:textAlignment="center"/>
+                <TextView
+                    android:id="@+id/time_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Time"
+                    android:textAlignment="center"/>
+            </LinearLayout>
+        </ScrollView>
+        <Button
+            android:id="@+id/addUserToEvent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Присъединяване към събитие"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</FrameLayout>

@@ -51,7 +51,7 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
                 newEventButtonPressed();
                 break;
             case R.id.incoming_event:
-                Toast.makeText(getActivity(), "Incoming", Toast.LENGTH_SHORT).show();
+                showEventsButtonPressed();
                 break;
         }
 
@@ -73,5 +73,10 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
     @Override
     public void newEventButtonPressed() {
         presenter.navigateToCreateNewEvents();
+    }
+
+    @Override
+    public void showEventsButtonPressed() {
+        presenter.navigateToShowEvents();
     }
 }

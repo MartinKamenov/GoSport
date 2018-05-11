@@ -20,7 +20,7 @@
         <activity
             android:name=".new_event.NewEventActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".login.LoginActivity"
             android:noHistory="true"
@@ -79,10 +79,16 @@
 
         <activity
             android:name=".maps.MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".event.EventActivity"
-            android:label="@string/title_activity_event"></activity>
+            android:label="@string/title_activity_event"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".show_events.ShowEventsActivity"
+            android:label="@string/title_activity_show_events"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

@@ -9,9 +9,13 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 public class MenuContracts {
     public interface IMenuPresenter<IMenuView> extends BaseContracts.Presenter {
         void navigateToCreateNewEvents();
+
+        void navigateToShowEvents();
     }
 
     public interface IMenuView<IMenuPresenter> extends BaseContracts.View {
         void newEventButtonPressed();
+
+        void showEventsButtonPressed();
     }
 }
