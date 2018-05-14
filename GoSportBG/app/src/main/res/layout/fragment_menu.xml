@@ -19,6 +19,12 @@
             android:layout_height="wrap_content"
             android:text="Предстоящи събития"
             />
+        <Button
+            android:id="@+id/logout_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Отписване"
+            />
     </LinearLayout>
 
 </FrameLayout>

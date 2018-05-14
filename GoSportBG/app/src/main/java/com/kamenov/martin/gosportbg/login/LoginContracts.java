@@ -33,6 +33,10 @@ public class LoginContracts {
 
         void registerButtonPressed();
 
+        void showLogin();
+
+        void showRegister();
+
         void notifyUserOnMainTread(String message);
 
         void showProgressBar();

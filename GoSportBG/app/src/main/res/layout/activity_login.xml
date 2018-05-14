@@ -15,27 +15,30 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="1">
-            <EditText
-                android:id="@+id/username_txt"
-                android:layout_width="500px"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="120dp"
+            <LinearLayout
                 android:layout_gravity="center_horizontal"
-                android:textColorHint="#ccededed"
-                android:textColor="#fff"
-                android:hint="username"
-                android:textAlignment="center"/>
-            <EditText
-                android:id="@+id/password_txt"
-                android:layout_width="500px"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_gravity="center_horizontal"
-                android:textColorHint="#ccededed"
-                android:textColor="#fff"
-                android:hint="password"
-                android:textAlignment="center"
-                android:inputType="textPassword"/>
+                android:background="#aaffffff"
+                android:orientation="vertical"
+                android:layout_marginTop="120dp">
+                <EditText
+                    android:id="@+id/username_txt"
+                    android:layout_width="500px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="username"
+                    android:textAlignment="center"/>
+                <EditText
+                    android:id="@+id/password_txt"
+                    android:layout_width="500px"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="password"
+                    android:textAlignment="center"
+                    android:inputType="textPassword"/>
+            </LinearLayout>
             <Button
                 android:id="@+id/login_user"
                 android:layout_marginTop="30dp"
@@ -126,6 +129,12 @@
                 android:layout_width="500px"
                 android:layout_height="wrap_content"
                 android:text="Sign Up"/>
+            <Button
+                android:id="@+id/show_login"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="500px"
+                android:layout_height="wrap_content"
+                android:text="Login"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/progress_bar_form"

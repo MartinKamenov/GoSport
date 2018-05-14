@@ -1,14 +1,18 @@
 package com.kamenov.martin.gosportbg.new_event;
 
+import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.constants.Sport;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 import com.kamenov.martin.gosportbg.models.DateTime;
+import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
+import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -26,13 +30,26 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
         this.mRequester = requester;
         this.mEventNavigationCommand = eventNavigationCommand;
     }
+
+    @Override
+    public LocalUser getUser() {
+        GenericCacheRepository<LocalUser, Long> repo = mView.getGoSportApplication().getLocalUserRepository();
+        List<LocalUser> users = repo.getAll();
+        if(users.size()==1) {
+            return users.get(0);
+        }
+
+        return null;
+    }
+
     @Override
     public void createNewEvent(String name, Sport sport, DateTime date, double longitude, double latitude, int neededPlayers) {
-        String myId = "";
+        LocalUser user = getUser();
+        int myId = user.getOnlineId();
         String bodySport = sport.toString();
         String body = String.format("{\"name\":\"%s\",\"sport\":\"%s\",\"year\":\"%s\",\"month\":\"%s\"," +
                 "\"day\":\"%s\",\"hours\":\"%s\",\"minutes\":\"%s\",\"longitude\":\"%s\"," +
-                "\"latitude\":\"%s\",\"neededPlayers\":\"%d\",\"adminId\":\"%s\"" +
+                "\"latitude\":\"%s\",\"neededPlayers\":\"%d\",\"adminId\":\"%d\"" +
                 "}", name, bodySport, date.year, date.month, date.dayOfMonth, date.hour,
                 date.minute, longitude, latitude, neededPlayers, myId);
         mView.showLoadingBar();

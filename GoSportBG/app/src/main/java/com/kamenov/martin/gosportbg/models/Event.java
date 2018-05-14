@@ -7,9 +7,9 @@ public class Event {
     public String name;
     public String sport;
     public Location location;
-    public String admin;
+    public User admin;
     public DateTime datetime;
     public int neededPlayers;
-    public List<String> players;
+    public List<User> players;
 }
 

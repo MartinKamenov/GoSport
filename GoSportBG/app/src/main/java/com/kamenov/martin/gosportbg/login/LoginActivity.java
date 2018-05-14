@@ -48,6 +48,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
     private Button loginUserButton;
     private Button registerUserButton;
     private Button showRegisterFormButton;
+    private Button showLoginFormButton;
     private View loginForm;
     private View registerForm;
     private View progressBarForm;
@@ -110,6 +111,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         loginUserButton.setOnClickListener(this);
         registerUserButton.setOnClickListener(this);
         showRegisterFormButton.setOnClickListener(this);
+        showLoginFormButton.setOnClickListener(this);
     }
 
     @Override
@@ -120,11 +122,10 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
                 loginButtonPressed();
                 break;
             case R.id.show_register:
-                LinearLayout loginForm = findViewById(R.id.login_form);
-                loginForm.setVisibility(View.GONE);
-                LinearLayout registerForm =  findViewById(R.id.register_form);
-                registerForm.setVisibility(View.VISIBLE);
-                lastForm = "register";
+                showRegister();
+                break;
+            case R.id.show_login:
+                showLogin();
                 break;
             case R.id.register_user:
                 registerButtonPressed();
@@ -156,6 +157,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         loginForm = findViewById(R.id.login_form);
         registerForm = findViewById(R.id.register_form);
         progressBarForm = findViewById(R.id.progress_bar_form);
+        showLoginFormButton = findViewById(R.id.show_login);
     }
 
     @Override
@@ -183,6 +185,26 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         }
 
         mPresenter.register(emailTxt, usernameTxtView, password1Txt, cityTxt);
+    }
+
+    @Override
+    public void showLogin() {
+        lastForm = "login";
+
+        LinearLayout registerForm =  findViewById(R.id.register_form);
+        registerForm.setVisibility(View.GONE);
+        LinearLayout loginForm = findViewById(R.id.login_form);
+        loginForm.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showRegister() {
+        lastForm = "register";
+
+        LinearLayout loginForm = findViewById(R.id.login_form);
+        loginForm.setVisibility(View.GONE);
+        LinearLayout registerForm =  findViewById(R.id.register_form);
+        registerForm.setVisibility(View.VISIBLE);
     }
 
     @Override

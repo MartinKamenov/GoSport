@@ -91,12 +91,12 @@ public class ShowEventsActivity extends FragmentActivity implements ShowEventsCo
                         iconBitmap = iconGenerator.makeIcon(events[i].sport + "\n" +
                                 events[i].players.size() + "/" + events[i].neededPlayers + "\n" +
                                 events[i].datetime.dayOfMonth + " " + Constants.MONTHS[events[i].datetime.month] + "\n" +
-                                events[i].datetime.hour + ":" + events[i].datetime.minute);
+                                events[i].datetime.hour + ":" + String.format("%02d", events[i].datetime.minute));
                     } else {
                         iconBitmap = iconGenerator.makeIcon(events[i].sport + "\n" +
                                 "Неограничен брой" + "\n" +
                         events[i].datetime.dayOfMonth + " " + Constants.MONTHS[events[i].datetime.month] + "\n" +
-                        events[i].datetime.hour + ":" + events[i].datetime.minute);
+                        events[i].datetime.hour + ":" + String.format("%02d", events[i].datetime.minute));
                     }
                     LatLng latLng = new LatLng(events[i].location.latitude, events[i].location.longitude);
                     mMap.addMarker(new MarkerOptions().position(latLng)

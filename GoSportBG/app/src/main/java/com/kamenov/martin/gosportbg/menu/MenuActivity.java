@@ -27,6 +27,7 @@ public class MenuActivity extends Activity {
         mMenuFragment = new MenuFragment();
         MenuPresenter menuPresenter = new MenuPresenter(newEventNavigationCommand, showEventsNavigationCommand);
         mMenuFragment.setPresenter(menuPresenter);
+        menuPresenter.subscribe(mMenuFragment);
 
 
         getFragmentManager()

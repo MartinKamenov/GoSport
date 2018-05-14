@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
@@ -140,13 +141,18 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         this.hourOfDay = hourOfDay;
         this.minute = minute;
         chosenTime = root.findViewById(R.id.chosen_time);
-        String str = hourOfDay + ":" + minute + " часа";
+        String str = hourOfDay + ":" + String.format("%02d", minute) + " часа";
         chosenTime.setText(str);
     }
 
     @Override
     public void setPresenter(BaseContracts.Presenter presenter) {
         this.mPresenter = (NewEventContracts.INewEventPresenter)presenter;
+    }
+
+    @Override
+    public GoSportApplication getGoSportApplication() {
+        return (GoSportApplication)getActivity().getApplication();
     }
 
     @Override
@@ -233,7 +239,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
     private void chooseTime() {
         Date date = new Date();
-        year = date.getYear();
+        year = 2018;
         month = date.getMonth();
         dayOfMonth = date.getDay();
         hourOfDay = date.getHours();

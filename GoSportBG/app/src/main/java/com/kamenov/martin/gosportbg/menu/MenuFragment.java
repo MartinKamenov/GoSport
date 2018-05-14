@@ -11,8 +11,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
+import com.kamenov.martin.gosportbg.login.LoginActivity;
 import com.kamenov.martin.gosportbg.new_event.NewEventActivity;
 
 /**
@@ -53,6 +55,9 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
             case R.id.incoming_event:
                 showEventsButtonPressed();
                 break;
+            case R.id.logout_btn:
+                logoutButtonPressed();
+                break;
         }
 
     }
@@ -63,11 +68,19 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
 
         Button incomingEventButton = root.findViewById(R.id.incoming_event);
         incomingEventButton.setOnClickListener(this);
+
+        Button logoutButton = root.findViewById(R.id.logout_btn);
+        logoutButton.setOnClickListener(this);
     }
 
     @Override
     public void setPresenter(BaseContracts.Presenter presenter) {
         this.presenter = (MenuContracts.IMenuPresenter) presenter;
+    }
+
+    @Override
+    public GoSportApplication getGoSportApplication() {
+        return (GoSportApplication)getActivity().getApplication();
     }
 
     @Override
@@ -78,5 +91,17 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
     @Override
     public void showEventsButtonPressed() {
         presenter.navigateToShowEvents();
+    }
+
+    @Override
+    public void logoutButtonPressed() {
+        presenter.logout();
+    }
+
+    @Override
+    public void navigateToLogin() {
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }

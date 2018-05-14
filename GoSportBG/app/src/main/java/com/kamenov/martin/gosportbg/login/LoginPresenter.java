@@ -102,12 +102,12 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
         }
 
         // Parse date from responseBody
-        User event = mGson.fromJson(jsonInString, User.class);
+        User user = mGson.fromJson(jsonInString, User.class);
         // Handles login calls
         if (url.contains("login")) {
             // Successful login case
             if(jsonInString.contains("email")) {
-                loginLocal(event);
+                loginLocal(user);
                 mView.hideProgressBar();
                 navigateToMenu();
             } // Unsuccessful login
@@ -119,7 +119,7 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
         // Handles registration calls
         else if(url.contains("register")) {
             if(response.body().toString().contains("Successful")) {
-                loginLocal(event);
+                loginLocal(user);
                 mView.hideProgressBar();
                 navigateToMenu();
             } else if(jsonInString.contains("Username Taken")) {

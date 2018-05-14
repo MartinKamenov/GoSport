@@ -2,7 +2,12 @@ package com.kamenov.martin.gosportbg.event;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +17,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
@@ -19,7 +25,7 @@ import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
 
-public class EventActivity extends FragmentActivity implements EventContracts.IEventView,OnMapReadyCallback {
+public class EventActivity extends FragmentActivity implements EventContracts.IEventView,OnMapReadyCallback, View.OnClickListener {
 
     private EventContracts.IEventPresenter mPresenter;
     private Event mEvent;
@@ -27,7 +33,8 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private TextView mNameTextView;
     private TextView mDateTextView;
     private TextView mTimeTextView;
-
+    private LinearLayout mPlayersContainer;
+    private Button mAddUserToEventBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,11 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         mNameTextView = findViewById(R.id.name_txt);
         mDateTextView = findViewById(R.id.date_txt);
         mTimeTextView = findViewById(R.id.time_txt);
+        mPlayersContainer = findViewById(R.id.players_container);
+
+        mAddUserToEventBtn = findViewById(R.id.addUserToEvent);
+        mAddUserToEventBtn.setOnClickListener(this);
+
         int id = 2;
         if(getIntent().hasExtra("id")) {
             id = getIntent().getIntExtra("id", 0);
@@ -72,14 +84,42 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     }
 
     @Override
+    public GoSportApplication getGoSportApplication() {
+        return (GoSportApplication)getApplication();
+    }
+
+    @Override
+    public void addUserToEventButtonPressed() {
+        mPresenter.addUserToEvent();
+    }
+
+    @Override
+    public void showMessageOnUITread(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(EventActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
     public void showEventOnUITread(final Event event) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mNameTextView.setText(event.name);
                 DateTime dateTime = event.datetime;
-                mDateTextView.setText(dateTime.year + " " + Constants.MONTHS[dateTime.month] + " " + dateTime.dayOfMonth);
-                mTimeTextView.setText(dateTime.hour + " " + dateTime.minute + " часа");
+                mDateTextView.setText(dateTime.dayOfMonth + " " + Constants.MONTHS[dateTime.month] + " " + dateTime.year);
+                mTimeTextView.setText(String.format("%d:%02d часа", dateTime.hour, dateTime.minute));
+                mPlayersContainer.removeAllViews();
+                for(int i = 0; i < event.players.size(); i++) {
+                    TextView textView = new TextView(EventActivity.this);
+                    textView.setTextSize(15);
+                    textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    textView.setText(event.players.get(i).username);
+                    mPlayersContainer.addView(textView);
+                }
                 LatLng place = new LatLng(event.location.latitude, event.location.longitude);
                 mMap.addMarker(new MarkerOptions().position(place).title("Place"));
                 MarkerOptions markerOptions = new MarkerOptions().position(place).title("Selected place").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
@@ -88,5 +128,10 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 // Show event information, hide progressbar
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        addUserToEventButtonPressed();
     }
 }
