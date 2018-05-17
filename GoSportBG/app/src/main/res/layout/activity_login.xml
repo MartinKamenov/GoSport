@@ -15,29 +15,44 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                android:text="Влизане"
+                android:textColor="#5BB85D"
+                android:textSize="30dp"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold|italic"
+                android:fontFamily="sans-serif-condensed" />
             <LinearLayout
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#aaffffff"
                 android:orientation="vertical"
-                android:layout_marginTop="120dp">
+                android:layout_marginTop="60dp">
                 <EditText
                     android:id="@+id/username_txt"
                     android:layout_width="500px"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:hint="username"
-                    android:textAlignment="center"/>
+                    android:hint="потребителско име"
+                    android:textAlignment="center"
+                    android:fontFamily="sans-serif-condensed"
+                    android:theme="@style/SuccessButton"/>
                 <EditText
                     android:id="@+id/password_txt"
                     android:layout_width="500px"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_gravity="center_horizontal"
-                    android:hint="password"
+                    android:hint="парола"
                     android:textAlignment="center"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:fontFamily="sans-serif-condensed"
+                    android:theme="@style/SuccessButton"/>
             </LinearLayout>
             <Button
                 android:id="@+id/login_user"
@@ -46,21 +61,27 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
-                android:text="login"/>
+                android:text="Влизане"
+                android:textColor="#fff"
+                android:fontFamily="sans-serif-condensed"
+                android:theme="@style/SuccessButton"/>
             <Button
                 android:id="@+id/show_register"
                 android:layout_width="500px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Sign Up"
+                android:text="Регистрация"
+                android:fontFamily="sans-serif-condensed"
                 android:textAlignment="center"
                 />
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
-                android:layout_width="wrap_content"
+                android:layout_width="500px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp" />
+                android:layout_marginTop="30dp"
+                xmlns:facebook="http://schemas.android.com/apk/res-auto"
+                facebook:com_facebook_login_text="Влизане през фейсбук"/>
 
         </LinearLayout>
 
@@ -70,38 +91,55 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_gravity="center_horizontal"
+                android:text="Регистрация"
+                android:textColor="#5BC0DE"
+                android:textSize="30dp"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold|italic"
+                android:fontFamily="sans-serif-condensed" />
             <LinearLayout
                 android:layout_gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="#aaffffff"
                 android:orientation="vertical"
-                android:layout_marginTop="50dp">
+                android:layout_marginTop="40dp">
                 <EditText
                     android:layout_width="500px"
                     android:layout_height="wrap_content"
-                    android:hint="email"
+                    android:hint="имейл"
                     android:id="@+id/email_txt"
                     android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif-condensed"
+                    android:theme="@style/SuccessButton"
                     />
                 <EditText
                     android:layout_width="500px"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:hint="username"
+                    android:hint="потребителско име"
                     android:id="@+id/username_txt1"
                     android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif-condensed"
+                    android:theme="@style/SuccessButton"
                     />
                 <EditText
                     android:layout_width="500px"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:hint="city"
+                    android:hint="град"
                     android:id="@+id/city_txt"
                     android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif-condensed"
+                    android:theme="@style/SuccessButton"
                     />
                 <EditText
                     android:id="@+id/password_txt1"
@@ -109,18 +147,22 @@
                     android:layout_width="500px"
                     android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content"
-                    android:hint="password"
+                    android:hint="парола"
                     android:textAlignment="center"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:fontFamily="sans-serif-condensed"
+                    android:theme="@style/SuccessButton"/>
                 <EditText
                     android:id="@+id/password_txt2"
                     android:layout_marginTop="30dp"
                     android:layout_width="500px"
                     android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content"
-                    android:hint="repeat password"
+                    android:hint="повторна парола"
                     android:textAlignment="center"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword"
+                    android:fontFamily="sans-serif-condensed"
+                    android:theme="@style/SuccessButton"/>
             </LinearLayout>
             <Button
                 android:id="@+id/register_user"
@@ -128,13 +170,17 @@
                 android:layout_marginTop="30dp"
                 android:layout_width="500px"
                 android:layout_height="wrap_content"
-                android:text="Sign Up"/>
+                android:text="Регистриране"
+                android:textColor="#fff"
+                android:fontFamily="sans-serif-condensed"
+                android:theme="@style/InfoButton"/>
             <Button
                 android:id="@+id/show_login"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="500px"
                 android:layout_height="wrap_content"
-                android:text="Login"/>
+                android:fontFamily="sans-serif-condensed"
+                android:text="Влизане"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/progress_bar_form"
@@ -145,13 +191,14 @@
             android:gravity="center">
             <ProgressBar
                 android:layout_width="200px"
-                android:layout_height="200px"/>
+                android:layout_height="200px"
+                android:theme="@style/SuccessButton"/>
             <TextView
                 android:id="@+id/progress_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="45px"
-                android:text="..."/>
+                android:fontFamily="sans-serif-condensed"/>
         </LinearLayout>
     </RelativeLayout>
 

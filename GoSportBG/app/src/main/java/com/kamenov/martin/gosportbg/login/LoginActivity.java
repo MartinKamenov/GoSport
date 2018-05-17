@@ -2,6 +2,7 @@ package com.kamenov.martin.gosportbg.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -52,6 +53,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
     private View loginForm;
     private View registerForm;
     private View progressBarForm;
+    private TextView progressBarTxt;
     private String lastForm;
 
     @Override
@@ -158,12 +160,17 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         registerForm = findViewById(R.id.register_form);
         progressBarForm = findViewById(R.id.progress_bar_form);
         showLoginFormButton = findViewById(R.id.show_login);
+        progressBarTxt = findViewById(R.id.progress_txt);
     }
 
     @Override
     public void loginButtonPressed() {
         String username = loginUsernameTextView.getText().toString();
         String password = loginPasswordTextView.getText().toString();
+        if(username.length() == 0 || password.length() == 0) {
+            Toast.makeText(this, "Моля попълнете всички полета", Toast.LENGTH_SHORT).show();
+            return;
+        }
         mPresenter.login(username, password);
     }
 
@@ -195,6 +202,8 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         registerForm.setVisibility(View.GONE);
         LinearLayout loginForm = findViewById(R.id.login_form);
         loginForm.setVisibility(View.VISIBLE);
+        progressBarTxt.setText("Влизане...");
+        progressBarTxt.setTextColor(Color.parseColor("#5BB85D"));
     }
 
     @Override
@@ -205,6 +214,8 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         loginForm.setVisibility(View.GONE);
         LinearLayout registerForm =  findViewById(R.id.register_form);
         registerForm.setVisibility(View.VISIBLE);
+        progressBarTxt.setText("Регистриране...");
+        progressBarTxt.setTextColor(Color.parseColor("#5BC0DE"));
     }
 
     @Override
