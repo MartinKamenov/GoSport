@@ -36,5 +36,7 @@ public class NewEventContracts {
         void showLoadingBar();
 
         void hideLoginBarOnUIThread();
+
+        void clearHistory();
     }
 }

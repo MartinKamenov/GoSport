@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -14,6 +14,30 @@
     <style name="InfoButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#fff</item>
         <item name="colorButtonNormal">#5BC0DE</item>
+    </style>
+    <style name="DefaultButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">#7f7f7f</item>
+    </style>
+    <style name="DangerButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">#DB524B</item>
+    </style>
+    <style name="MenuButton1" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">#995BB85D</item>
+    </style>
+    <style name="MenuButton2" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">#995BC0DE</item>
+    </style>
+    <style name="MenuButton3" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">#99DB524B</item>
+    </style>
+    <style name="MenuButton4" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">#99e8d210</item>
     </style>
 
 </resources>

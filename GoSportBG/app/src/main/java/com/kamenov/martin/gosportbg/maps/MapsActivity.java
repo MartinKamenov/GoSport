@@ -2,6 +2,7 @@ package com.kamenov.martin.gosportbg.maps;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
@@ -19,15 +20,17 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 import com.kamenov.martin.gosportbg.R;
+import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.new_event.NewEventActivity;
 import com.kamenov.martin.gosportbg.new_event.NewEventFragment;
+import com.kamenov.martin.gosportbg.show_events.ShowEventsActivity;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, View.OnClickListener {
 
     private GoogleMap mMap;
     private Marker myMarker;
-    private MarkerOptions markerOptions;
     private Button btn;
 
     @Override
@@ -58,7 +61,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Add a marker in Sofia and move the camera
         LatLng sofia = new LatLng(42.698334, 23.319941);
-        markerOptions = new MarkerOptions().position(sofia).title("Selected place").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mMap.setOnMapClickListener(this);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sofia, 13.0f));
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
@@ -66,11 +68,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapClick(LatLng latLng) {
+        IconGenerator iconGenerator = new IconGenerator(this);
+        iconGenerator.setStyle(Constants.STYLES[5]);
+        Bitmap iconBitmap = iconGenerator.makeIcon("Избраното място");
         if(myMarker != null) {
             myMarker.remove();
         }
-        markerOptions.position(latLng);
-        myMarker = mMap.addMarker(markerOptions);
+        myMarker = mMap.addMarker(new MarkerOptions().position(latLng)
+                .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap)).anchor(0.5f, 0.6f));
     }
 
     @Override

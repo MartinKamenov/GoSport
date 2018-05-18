@@ -107,9 +107,11 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == locationRequestCode) {
-            longitude = data.getDoubleExtra("longitude", 0);
-            latitude = data.getDoubleExtra("latitude", 0);
-            changeLocationStatus();
+            if(data != null) {
+                longitude = data.getDoubleExtra("longitude", 0);
+                latitude = data.getDoubleExtra("latitude", 0);
+                changeLocationStatus();
+            }
         }
     }
 
@@ -235,6 +237,11 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
                 newEventContainer.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    @Override
+    public void clearHistory() {
+        getActivity().finish();
     }
 
     private void chooseTime() {

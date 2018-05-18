@@ -26,9 +26,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Описание на събитието"
+                        android:text="Създаване на събитие"
+                        android:textColor="#5BB85D"
+                        android:textSize="30dp"
                         android:textAlignment="center"
-                        android:textColor="#fff"/>
+                        android:textStyle="bold|italic"
+                        android:fontFamily="sans-serif-condensed"/>
 
                     <EditText
                         android:id="@+id/event_name_txt"
@@ -38,7 +41,10 @@
                         android:scrollbars="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#fff"/>
+                        android:textColor="#fff"
+                        android:hint="Описание на събитието..."
+                        android:fontFamily="sans-serif-condensed"
+                        />
 
                     <CheckBox
                         android:id="@+id/checkbox_limit"
@@ -47,7 +53,8 @@
                         android:text="Ограничен брой необходими играчи"
                         android:textColor="#fff"
                         android:buttonTint="#fff"
-                        android:layout_gravity="center_horizontal"/>
+                        android:layout_gravity="center_horizontal"
+                        android:fontFamily="sans-serif-condensed"/>
                     <LinearLayout
                         android:id="@+id/show_limit"
                         android:visibility="gone"
@@ -59,7 +66,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Брой необходими играчи:"
-                            android:textColor="#fff"/>
+                            android:textColor="#fff"
+                            android:fontFamily="sans-serif-condensed"/>
                         <EditText
                             android:id="@+id/players_limit_txt"
                             android:layout_width="250px"
@@ -68,13 +76,15 @@
                             android:maxLength="3"
                             app:backgroundTint="#fff"
                             android:textColor="#fff"
-                            android:textAlignment="center"/>
+                            android:textAlignment="center"
+                            android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                     <CalendarView
                         android:id="@+id/calendarView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#aaffffff"/>
+                        android:background="#aaffffff"
+                        android:fontFamily="sans-serif-condensed"/>
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -84,13 +94,17 @@
                             android:id="@+id/show_date"
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
-                            android:text="Избор на дата"/>
+                            android:text="Избор на дата"
+                            android:textColor="#fff"
+                            android:fontFamily="sans-serif-condensed"
+                            android:theme="@style/InfoButton"/>
                         <TextView
                             android:id="@+id/chosen_date"
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:text="Не е избрана"
-                            android:textColor="#fff"/>
+                            android:textColor="#fff"
+                            android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                     <TimePicker
                         android:layout_marginTop="50px"
@@ -108,13 +122,17 @@
                             android:id="@+id/show_time"
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
-                            android:text="Избор на час"/>
+                            android:text="Избор на час"
+                            android:textColor="#fff"
+                            android:fontFamily="sans-serif-condensed"
+                            android:theme="@style/InfoButton"/>
                         <TextView
                             android:id="@+id/chosen_time"
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:text="Не е избран"
-                            android:textColor="#fff"/>
+                            android:textColor="#fff"
+                            android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -125,13 +143,17 @@
                             android:id="@+id/location_btn"
                             android:text="Изберете място"
                             android:layout_width="300px"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textColor="#fff"
+                            android:fontFamily="sans-serif-condensed"
+                            android:theme="@style/InfoButton"/>
                         <TextView
                             android:id="@+id/chosen_place"
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:text="Не е избрано"
-                            android:textColor="#fff"/>
+                            android:textColor="#fff"
+                            android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                 </LinearLayout>
             </ScrollView>
@@ -140,7 +162,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Създай събитие"
-                android:layout_alignParentBottom="true"/>
+                android:layout_alignParentBottom="true"
+                android:textColor="#fff"
+                android:fontFamily="sans-serif-condensed"
+                android:theme="@style/SuccessButton"/>
         </RelativeLayout>
         <LinearLayout
             android:id="@+id/progress_bar_form"

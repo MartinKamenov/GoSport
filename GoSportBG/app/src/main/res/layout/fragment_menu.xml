@@ -3,28 +3,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.kamenov.martin.gosportbg.menu.MenuFragment">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <Button
-            android:id="@+id/new_event"
+        android:layout_height="match_parent">
+        <VideoView
+            android:id="@+id/menu_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"/>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ново събитие"
-            />
-        <Button
-            android:id="@+id/incoming_event"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Предстоящи събития"
-            />
-        <Button
-            android:id="@+id/logout_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Отписване"
-            />
-    </LinearLayout>
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <Button
+                    android:id="@+id/new_event"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="60dp"
+                    android:text="Ново събитие"
+                    android:textColor="#fff"
+                    android:fontFamily="sans-serif-condensed"
+                    android:theme="@style/MenuButton1"/>
+                <Button
+                    android:id="@+id/incoming_event"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="60dp"
+                    android:textColor="#fff"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Предстоящи събития"
+                    android:theme="@style/MenuButton2"/>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <Button
+                    android:id="@+id/settings_btn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="60dp"
+                    android:textColor="#fff"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Настройки"
+                    android:theme="@style/MenuButton4"/>
+            <Button
+                android:id="@+id/logout_btn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:textColor="#fff"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Отписване"
+                android:theme="@style/MenuButton3"/>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
 </FrameLayout>

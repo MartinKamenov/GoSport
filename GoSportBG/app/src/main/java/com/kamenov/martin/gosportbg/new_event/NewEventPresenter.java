@@ -80,6 +80,8 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
             mView.hideLoginBarOnUIThread();
             int id = Integer.parseInt(findFieldFromJsonString("id", body));
             mEventNavigationCommand.putExtraInteger("id", id);
+            mView.clearHistory();
+            unsubscribe();
             mEventNavigationCommand.navigate();
         } else {
             this.mView.showMessageOnMainTread(body);

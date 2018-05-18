@@ -59,7 +59,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_width="500px"
                 android:layout_gravity="center_horizontal"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:textAlignment="center"
                 android:text="Влизане"
                 android:textColor="#fff"
@@ -68,18 +68,23 @@
             <Button
                 android:id="@+id/show_register"
                 android:layout_width="500px"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:text="Регистрация"
                 android:fontFamily="sans-serif-condensed"
                 android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:theme="@style/DefaultButton"
                 />
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
-                android:layout_width="500px"
+                android:layout_width="490px"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="7dp"
+                android:textSize="15dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
                 xmlns:facebook="http://schemas.android.com/apk/res-auto"
                 facebook:com_facebook_login_text="Влизане през фейсбук"/>
 
@@ -169,7 +174,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 android:layout_width="500px"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:text="Регистриране"
                 android:textColor="#fff"
                 android:fontFamily="sans-serif-condensed"
@@ -178,9 +183,11 @@
                 android:id="@+id/show_login"
                 android:layout_gravity="center_horizontal"
                 android:layout_width="500px"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Влизане"/>
+                android:text="Влизане"
+                android:textColor="#ffffff"
+                android:theme="@style/DefaultButton"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/progress_bar_form"
@@ -198,7 +205,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="45px"
-                android:fontFamily="sans-serif-condensed"/>
+                android:fontFamily="sans-serif-condensed"
+                android:text="Влизане..."/>
         </LinearLayout>
     </RelativeLayout>
 

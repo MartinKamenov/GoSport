@@ -15,10 +15,13 @@
             tools:context="com.kamenov.martin.gosportbg.maps.MapsActivity" />
         <Button
             android:id="@+id/select_location_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
             android:text="Избор"
-            android:layout_alignParentBottom="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ffffff"
+            android:theme="@style/InfoButton"/>
     </RelativeLayout>
 </FrameLayout>
 
