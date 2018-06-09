@@ -74,7 +74,6 @@
                             android:layout_height="wrap_content"
                             android:inputType="number"
                             android:maxLength="3"
-                            app:backgroundTint="#fff"
                             android:textColor="#fff"
                             android:textAlignment="center"
                             android:fontFamily="sans-serif-condensed"/>

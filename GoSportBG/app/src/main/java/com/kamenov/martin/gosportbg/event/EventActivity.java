@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +27,8 @@ import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
+import com.kamenov.martin.gosportbg.models.Message;
+import com.kamenov.martin.gosportbg.models.User;
 
 public class EventActivity extends FragmentActivity implements EventContracts.IEventView,OnMapReadyCallback, View.OnClickListener {
 
@@ -35,6 +40,13 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private TextView mTimeTextView;
     private LinearLayout mPlayersContainer;
     private Button mAddUserToEventBtn;
+    private RelativeLayout mEventContainer;
+    private RelativeLayout mMessengerContainer;
+    private TextView messagesText;
+    private EditText message;
+    private Button submitButton;
+    private ScrollView scrollView;
+    private String lastMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +57,13 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         mDateTextView = findViewById(R.id.date_txt);
         mTimeTextView = findViewById(R.id.time_txt);
         mPlayersContainer = findViewById(R.id.players_container);
+        mEventContainer = findViewById(R.id.event_container);
+        mMessengerContainer = findViewById(R.id.messenger_container);
+        scrollView = findViewById(R.id.scrollView);
+        messagesText = findViewById(R.id.messages_txt);
+        message = findViewById(R.id.message);
+        submitButton = findViewById(R.id.submit);
+        submitButton.setOnClickListener(this);
 
         mAddUserToEventBtn = findViewById(R.id.addUserToEvent);
         mAddUserToEventBtn.setOnClickListener(this);
@@ -108,6 +127,14 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                String userUsername = mPresenter.getLocalUser().getUsername();
+                for(int i = 0; i < event.players.size(); i++) {
+                    User user = event.players.get(i);
+                    if(user.username.equals(userUsername)) {
+                        showMessenger();
+                        return;
+                    }
+                }
                 mNameTextView.setText(event.name);
                 DateTime dateTime = event.datetime;
                 mDateTextView.setText(dateTime.dayOfMonth + " " + Constants.MONTHS[dateTime.month] + " " + dateTime.year);
@@ -131,7 +158,64 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     }
 
     @Override
+    public void showMessenger() {
+        mEventContainer.setVisibility(View.GONE);
+        mMessengerContainer.setVisibility(View.VISIBLE);
+        mPresenter.startChat();
+    }
+
+    @Override
+    public void addMessageButtonPressed() {
+        String messageText = message.getText().toString();
+        message.setText("");
+        mPresenter.addMessage(messageText);
+    }
+
+    @Override
+    public void addMessagesOnUIThread(final Message[] messages) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                String result = "";
+                for(int i = 0; i < messages.length; i++) {
+                    result += messages[i].text + "\n";
+                }
+
+                messagesText.setText(result);
+                if(lastMessage == null) {
+                    scrollView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.fullScroll(View.FOCUS_DOWN);
+                        }
+                    });
+                } else if(messages.length > 0 &&!lastMessage.equals(messages[messages.length - 1].text)) {
+                    scrollView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            scrollView.fullScroll(View.FOCUS_DOWN);
+                        }
+                    });
+                }
+
+                if(messages.length != 0) {
+                    lastMessage = messages[messages.length - 1].text;
+                }
+
+                mPresenter.finishQuery();
+            }
+        });
+    }
+
+    @Override
     public void onClick(View view) {
-        addUserToEventButtonPressed();
+        switch (view.getId()) {
+            case R.id.addUserToEvent:
+                addUserToEventButtonPressed();
+                break;
+            case R.id.submit:
+                addMessageButtonPressed();
+                break;
+        }
     }
 }

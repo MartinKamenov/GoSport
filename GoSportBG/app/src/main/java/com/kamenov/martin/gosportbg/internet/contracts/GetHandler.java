@@ -9,4 +9,6 @@ import okhttp3.Response;
 
 public interface GetHandler {
     void handleGet(Call call, Response response);
+
+    void handleError(Call call, Exception ex);
 }

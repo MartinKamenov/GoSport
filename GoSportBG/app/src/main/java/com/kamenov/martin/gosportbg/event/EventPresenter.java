@@ -8,6 +8,7 @@ import com.kamenov.martin.gosportbg.internet.contracts.GetHandler;
 import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.LocalUser;
+import com.kamenov.martin.gosportbg.models.MessageCollection;
 import com.kamenov.martin.gosportbg.models.User;
 
 import java.io.IOException;
@@ -24,11 +25,13 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
     private final Gson mGson;
     private EventContracts.IEventView mView;
     private HttpRequester mRequester;
+    private EventThread mThread;
     private int id;
 
     public EventPresenter(HttpRequester requester, Gson gson, int id) {
         this.mRequester = requester;
         this.mGson = gson;
+        this.mThread = new EventThread(this, requester, id);
         this.id = id;
     }
 
@@ -67,6 +70,24 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
     }
 
     @Override
+    public void finishQuery() {
+        mThread.setFinished(true);
+    }
+
+    @Override
+    public void startChat() {
+        mThread.setRunning(true);
+        mThread.start();
+    }
+
+    @Override
+    public void addMessage(String message) {
+        mThread.setFinished(false);
+        String body = String.format("{\"username\":\"%s\",\"text\":\"%s\"}", getLocalUser().getUsername(), message);
+        mRequester.post(this, Constants.DOMAIN + "/messages/" + id + "/addMessage", body);
+    }
+
+    @Override
     public void handleGet(Call call, Response response) {
         String jsonInString = "";
         try {
@@ -74,10 +95,21 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if(call.request().url().toString().contains("message")) {
+            MessageCollection messageCollection = mGson.fromJson(jsonInString, MessageCollection.class);
+            mView.addMessagesOnUIThread(messageCollection.collection);
+            return;
+        }
+
         if(jsonInString.contains("{")) {
             Event event = mGson.fromJson(jsonInString, Event.class);
             mView.showEventOnUITread(event);
         }
+    }
+
+    @Override
+    public void handleError(Call call, Exception ex) {
+        mThread.setFinished(true);
     }
 
     @Override
@@ -87,6 +119,11 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
             jsonInString = response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+
+        if(call.request().url().toString().contains("message")) {
+            mThread.setFinished(true);
+            return;
         }
 
         if(jsonInString.contains("{")) {

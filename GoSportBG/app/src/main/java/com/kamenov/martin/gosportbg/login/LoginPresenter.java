@@ -131,4 +131,9 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
             }
         }
     }
+
+    @Override
+    public void handleError(Call call, Exception ex) {
+
+    }
 }

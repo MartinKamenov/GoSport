@@ -89,6 +89,11 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
         }
     }
 
+    @Override
+    public void handleError(Call call, Exception ex) {
+
+    }
+
     private String findFieldFromJsonString(String fieldName, String text) {
         int index = text.indexOf(fieldName);
         if(index < 0) {

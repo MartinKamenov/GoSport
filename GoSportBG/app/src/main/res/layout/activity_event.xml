@@ -32,7 +32,8 @@
                     android:text="Футбол"
                     android:textAlignment="center"
                     android:textSize="20dp"
-                    android:textColor="#000"/>
+                    android:textColor="#000"
+                    android:fontFamily="sans-serif-condensed"/>
                 <TextView
                     android:id="@+id/date_txt"
                     android:layout_width="match_parent"
@@ -40,7 +41,8 @@
                     android:text="Date"
                     android:textSize="20dp"
                     android:textColor="#000"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:fontFamily="sans-serif-condensed"/>
                 <TextView
                     android:id="@+id/time_txt"
                     android:layout_width="match_parent"
@@ -48,13 +50,15 @@
                     android:text="Time"
                     android:textSize="20dp"
                     android:textColor="#000"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:fontFamily="sans-serif-condensed"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Описание:"
                     android:textAlignment="center"
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    android:fontFamily="sans-serif-condensed"/>
                 <TextView
                     android:id="@+id/name_txt"
                     android:layout_width="match_parent"
@@ -62,13 +66,15 @@
                     android:text="Name"
                     android:textSize="20dp"
                     android:textColor="#000"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center"
+                    android:fontFamily="sans-serif-condensed"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Участници:"
                     android:textAlignment="center"
-                    android:textSize="20dp"/>
+                    android:textSize="20dp"
+                    android:fontFamily="sans-serif-condensed"/>
                 <LinearLayout
                     android:id="@+id/players_container"
                     android:layout_width="match_parent"
@@ -83,5 +89,58 @@
             android:layout_height="wrap_content"
             android:text="Присъединяване към събитие"
             android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/messenger_container"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="200px"
+            android:background="#aaffffff">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Съобщения"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:fontFamily="sans-serif-condensed"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/messages_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+            <EditText
+                android:id="@+id/message"
+                android:hint="Текст..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/submit"
+                android:theme="@style/InfoButton"
+                android:textColor="#fff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Изпращане"
+                android:fontFamily="sans-serif-condensed"/>
+        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

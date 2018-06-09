@@ -64,4 +64,9 @@ public class ShowEventsPresenter implements ShowEventsContracts.IShowEventsPrese
             mView.showEventsOnUITread(events);
         }
     }
+
+    @Override
+    public void handleError(Call call, Exception ex) {
+
+    }
 }
