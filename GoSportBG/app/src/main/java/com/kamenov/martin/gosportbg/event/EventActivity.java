@@ -1,9 +1,14 @@
 package com.kamenov.martin.gosportbg.event;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -42,11 +47,11 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private Button mAddUserToEventBtn;
     private RelativeLayout mEventContainer;
     private RelativeLayout mMessengerContainer;
-    private TextView messagesText;
     private EditText message;
     private Button submitButton;
     private ScrollView scrollView;
     private String lastMessage;
+    private LinearLayout messageContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +65,11 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         mEventContainer = findViewById(R.id.event_container);
         mMessengerContainer = findViewById(R.id.messenger_container);
         scrollView = findViewById(R.id.scrollView);
-        messagesText = findViewById(R.id.messages_txt);
         message = findViewById(R.id.message);
         submitButton = findViewById(R.id.submit);
         submitButton.setOnClickListener(this);
+        messageContainer = findViewById(R.id.messages_container);
+        
 
         mAddUserToEventBtn = findViewById(R.id.addUserToEvent);
         mAddUserToEventBtn.setOnClickListener(this);
@@ -176,12 +182,52 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                String result = "";
+                String currentUserUsername = mPresenter.getLocalUser().getUsername();
+                messageContainer.removeAllViews();
+                String lastUser = "";
                 for(int i = 0; i < messages.length; i++) {
-                    result += messages[i].text + "\n";
-                }
+                    RelativeLayout relativeLayout = new RelativeLayout(EventActivity.this);
+                    boolean shouldBeRight = false;
+                    if(!lastUser.equals(messages[i].username)) {
+                        lastUser = messages[i].username;
+                        TextView usernameTextView = new TextView(EventActivity.this);
+                        usernameTextView.setText(messages[i].username);
+                        usernameTextView.setTypeface(null, Typeface.BOLD);
+                        usernameTextView.setGravity(Gravity.CENTER);
+                        usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
+                        relativeLayout.addView(usernameTextView);
 
-                messagesText.setText(result);
+                        if(currentUserUsername.equals(messages[i].username)) {
+                            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) usernameTextView.getLayoutParams();
+                            lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                            usernameTextView.setLayoutParams(lp);
+                        }
+                        messageContainer.addView(relativeLayout);
+                        i--;
+                        continue;
+                    }
+                    TextView textView = new TextView(EventActivity.this);
+                    textView.setPadding(20, 20, 20 , 20);
+                    textView.setText(messages[i].text);
+                    textView.setGravity(Gravity.CENTER);
+                    textView.setTextColor(Color.WHITE);
+                    textView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                    if(currentUserUsername.equals(messages[i].username)) {
+                        textView.setBackgroundResource(R.drawable.back);
+                        //textView.setTextColor(Color.WHITE);
+                        shouldBeRight = true;
+                    } else {
+                        textView.setBackgroundResource(R.drawable.others);
+                    }
+                    relativeLayout.addView(textView);
+                    messageContainer.addView(relativeLayout);
+                    if(shouldBeRight) {
+                        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) textView.getLayoutParams();
+                        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                        textView.setLayoutParams(lp);
+                    }
+                }
                 if(lastMessage == null) {
                     scrollView.post(new Runnable() {
                         @Override
