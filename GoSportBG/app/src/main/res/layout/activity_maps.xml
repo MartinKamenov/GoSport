@@ -4,22 +4,34 @@
     android:layout_height="match_parent" >
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:map="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_height="match_parent"
+        android:background="#000">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="com.kamenov.martin.gosportbg.maps.MapsActivity" />
+            android:orientation="vertical"
+            android:layout_marginBottom="65dp">
+            <fragment
+                android:id="@+id/place_autocomplete_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                />
+            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="com.kamenov.martin.gosportbg.maps.MapsActivity" />
+        </LinearLayout>
+
         <Button
             android:id="@+id/select_location_id"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
             android:text="Избор"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
             android:textColor="#ffffff"
             android:theme="@style/InfoButton"/>
     </RelativeLayout>

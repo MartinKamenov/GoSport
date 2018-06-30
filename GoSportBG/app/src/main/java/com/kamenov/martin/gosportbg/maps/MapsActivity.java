@@ -11,6 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,6 +47,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                selectPlace(place.getLatLng(), place.getAddress().toString());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Toast.makeText(MapsActivity.this, status.getStatus().toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -68,14 +88,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapClick(LatLng latLng) {
-        IconGenerator iconGenerator = new IconGenerator(this);
-        iconGenerator.setStyle(Constants.STYLES[5]);
-        Bitmap iconBitmap = iconGenerator.makeIcon("Избраното място");
-        if(myMarker != null) {
-            myMarker.remove();
-        }
-        myMarker = mMap.addMarker(new MarkerOptions().position(latLng)
-                .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap)).anchor(0.5f, 0.6f));
+        selectPlace(latLng, "Избрано място");
     }
 
     @Override
@@ -86,5 +99,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         result.putExtra("latitude", position.latitude);
         setResult(Activity.RESULT_OK, result);
         finish();
+    }
+
+    private void selectPlace(LatLng latLng, String place) {
+        IconGenerator iconGenerator = new IconGenerator(this);
+        iconGenerator.setStyle(Constants.STYLES[5]);
+        StringBuilder str = new StringBuilder();
+        str.append("Мястото е:\n");
+
+        int symbolsOnRow = 20;
+        for(int i = 0; i < place.length() / symbolsOnRow - 1; i++) {
+            str.append(place.substring(i * symbolsOnRow, (i + 1) * symbolsOnRow));
+            if(i < place.length() / symbolsOnRow - 2) {
+                str.append("\n");
+            }
+        }
+        Bitmap iconBitmap = iconGenerator.makeIcon(str.toString());
+        if(myMarker != null) {
+            myMarker.remove();
+        }
+        myMarker = mMap.addMarker(new MarkerOptions().position(latLng)
+                .icon(BitmapDescriptorFactory.fromBitmap(iconBitmap)).anchor(0.5f, 0.6f));
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 14.5f);
+        mMap.animateCamera(cameraUpdate);
     }
 }
