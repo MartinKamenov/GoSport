@@ -1,7 +1,5 @@
 package com.kamenov.martin.gosportbg.login;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;

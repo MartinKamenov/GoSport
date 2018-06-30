@@ -25,19 +25,19 @@
     </style>
     <style name="MenuButton1" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#fff</item>
-        <item name="colorButtonNormal">#995BB85D</item>
+        <item name="colorButtonNormal">#BB5BB85D</item>
     </style>
     <style name="MenuButton2" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#fff</item>
-        <item name="colorButtonNormal">#995BC0DE</item>
+        <item name="colorButtonNormal">#BB5BC0DE</item>
     </style>
     <style name="MenuButton3" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#fff</item>
-        <item name="colorButtonNormal">#99DB524B</item>
+        <item name="colorButtonNormal">#BBDB524B</item>
     </style>
     <style name="MenuButton4" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#fff</item>
-        <item name="colorButtonNormal">#99e8d210</item>
+        <item name="colorButtonNormal">#BBe8d210</item>
     </style>
 
 </resources>

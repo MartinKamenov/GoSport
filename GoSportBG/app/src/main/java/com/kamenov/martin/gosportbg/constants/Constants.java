@@ -16,7 +16,8 @@ public class Constants {
             "Май", "Юни", "Юли", "Август",
             "Септември", "Октомври", "Ноември", "Декември"};
     public static String[] SPORTS = {"Футбол", "Баскетбол", "Тенис на маса", "Шах",
-            "Волейбол"};
+            "Волейбол", "Тенис на корт", "Катерене", "Планинарство", "Ски", "Бейсбол", "Колоездене",
+    "Друг"};
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
     public static String DOMAIN;

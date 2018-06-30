@@ -1,8 +1,9 @@
 package com.kamenov.martin.gosportbg.new_event;
 
+import android.widget.ArrayAdapter;
+
 import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
-import com.kamenov.martin.gosportbg.constants.Sport;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 
@@ -14,8 +15,10 @@ public class NewEventContracts {
     public interface INewEventPresenter extends BaseContracts.Presenter {
         LocalUser getUser();
 
-        void createNewEvent(String name, Sport sport, DateTime date,
+        void createNewEvent(String name, String sport, DateTime date,
                             double longitude, double latitude, int neededPlayers);
+
+        String[] getAllSports();
     }
 
     public interface INewEventView extends BaseContracts.View {
@@ -38,5 +41,9 @@ public class NewEventContracts {
         void hideLoginBarOnUIThread();
 
         void clearHistory();
+
+        void showMessage(String message);
+
+        ArrayAdapter<String> getSportAdapter();
     }
 }

@@ -1,9 +1,7 @@
 package com.kamenov.martin.gosportbg.new_event;
 
-import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
-import com.kamenov.martin.gosportbg.constants.Sport;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 import com.kamenov.martin.gosportbg.models.DateTime;
@@ -43,17 +41,21 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
     }
 
     @Override
-    public void createNewEvent(String name, Sport sport, DateTime date, double longitude, double latitude, int neededPlayers) {
+    public void createNewEvent(String name, String sport, DateTime date, double longitude, double latitude, int neededPlayers) {
         LocalUser user = getUser();
         int myId = user.getOnlineId();
-        String bodySport = sport.toString();
         String body = String.format("{\"name\":\"%s\",\"sport\":\"%s\",\"year\":\"%s\",\"month\":\"%s\"," +
                 "\"day\":\"%s\",\"hours\":\"%s\",\"minutes\":\"%s\",\"longitude\":\"%s\"," +
                 "\"latitude\":\"%s\",\"neededPlayers\":\"%d\",\"adminId\":\"%d\"" +
-                "}", name, bodySport, date.year, date.month, date.dayOfMonth, date.hour,
+                "}", name, sport, date.year, date.month, date.dayOfMonth, date.hour,
                 date.minute, longitude, latitude, neededPlayers, myId);
         mView.showLoadingBar();
         mRequester.post(this, Constants.DOMAIN + "/events/createEvent", body);
+    }
+
+    @Override
+    public String[] getAllSports() {
+        return Constants.SPORTS;
     }
 
     @Override

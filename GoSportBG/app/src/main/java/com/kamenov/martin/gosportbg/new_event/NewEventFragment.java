@@ -8,9 +8,11 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -19,7 +21,6 @@ import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
-import com.kamenov.martin.gosportbg.constants.Sport;
 import com.kamenov.martin.gosportbg.maps.MapsActivity;
 import com.kamenov.martin.gosportbg.models.DateTime;
 
@@ -53,6 +54,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     private TextView chosenPlace;
     private CheckBox checkBoxLimitations;
     private View viewForLimitations;
+    private Spinner mSportSpinner;
 
     public NewEventFragment() {
         // Required empty public constructor
@@ -70,6 +72,8 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         checkBoxLimitations = root.findViewById(R.id.checkbox_limit);
         viewForLimitations = root.findViewById(R.id.show_limit);
         chooseTime();
+        mSportSpinner = root.findViewById(R.id.sport_type_spinner);
+        mSportSpinner.setAdapter(getSportAdapter());
         chosenDate = root.findViewById(R.id.chosen_date);
         chosenDate.setText(dayOfMonth + " " + Constants.MONTHS[month] + " " + year);
         chosenTime = root.findViewById(R.id.chosen_time);
@@ -79,6 +83,17 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
         setListeners();
         return root;
+    }
+
+
+    public ArrayAdapter<String> getSportAdapter() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_spinner_dropdown_item,
+                mPresenter.getAllSports()
+        );
+
+        return adapter;
     }
 
     @Override
@@ -130,12 +145,17 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     }
 
     @Override
-    public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
+    public void onSelectedDayChange(@NonNull CalendarView calendarView,
+                                    int year,
+                                    int month,
+                                    int dayOfMonth) {
         this.year = year;
         this.month = month;
         this.dayOfMonth = dayOfMonth;
         String str = dayOfMonth + " " + Constants.MONTHS[month] + " " + year;
         chosenDate.setText(str);
+        switchCalendarVisibility();
+        showMessage("Датата е избрана:\n" + str);
     }
 
     @Override
@@ -160,7 +180,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     @Override
     public void createEventButtonPressed() {
         String name = ((TextView)root.findViewById(R.id.event_name_txt)).getText().toString();
-        Sport sport = Sport.Football;
+        String sport = mSportSpinner.getSelectedItem().toString();
 
         DateTime date = new DateTime();
         date.year = year;
@@ -205,7 +225,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
     @Override
     public void changeLocationStatus() {
-        chosenPlace.setText("Избрана е");
+        chosenPlace.setText("Избрано е");
     }
 
     @Override
@@ -242,6 +262,11 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     @Override
     public void clearHistory() {
         getActivity().finish();
+    }
+
+    @Override
+    public void showMessage(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
     private void chooseTime() {

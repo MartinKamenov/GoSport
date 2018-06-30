@@ -16,7 +16,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="100px">
+                android:layout_marginBottom="65dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -45,7 +45,18 @@
                         android:hint="Описание на събитието..."
                         android:fontFamily="sans-serif-condensed"
                         />
-
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Спорт:"
+                        android:textColor="#fff"
+                        android:fontFamily="sans-serif-condensed"/>
+                    <Spinner
+                        android:id="@+id/sport_type_spinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#fff"
+                        android:spinnerMode="dropdown"></Spinner>
                     <CheckBox
                         android:id="@+id/checkbox_limit"
                         android:layout_width="wrap_content"
@@ -159,7 +170,7 @@
             <Button
                 android:id="@+id/create_event"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:text="Създай събитие"
                 android:layout_alignParentBottom="true"
                 android:textColor="#fff"

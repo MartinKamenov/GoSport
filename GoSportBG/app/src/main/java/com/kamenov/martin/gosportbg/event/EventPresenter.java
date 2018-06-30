@@ -82,6 +82,9 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
 
     @Override
     public void addMessage(String message) {
+        if(message == null || message.length() == 0) {
+            return;
+        }
         mThread.setFinished(false);
         String body = String.format("{\"username\":\"%s\",\"text\":\"%s\"}", getLocalUser().getUsername(), message);
         mRequester.post(this, Constants.DOMAIN + "/messages/" + id + "/addMessage", body);

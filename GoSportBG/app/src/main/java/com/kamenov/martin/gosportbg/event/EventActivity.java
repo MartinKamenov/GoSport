@@ -38,7 +38,6 @@ import com.kamenov.martin.gosportbg.models.User;
 public class EventActivity extends FragmentActivity implements EventContracts.IEventView,OnMapReadyCallback, View.OnClickListener {
 
     private EventContracts.IEventPresenter mPresenter;
-    private Event mEvent;
     private GoogleMap mMap;
     private TextView mNameTextView;
     private TextView mDateTextView;
@@ -49,6 +48,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private RelativeLayout mMessengerContainer;
     private EditText message;
     private Button submitButton;
+    private Button showMessengerButton;
     private ScrollView scrollView;
     private String lastMessage;
     private LinearLayout messageContainer;
@@ -66,6 +66,8 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         mMessengerContainer = findViewById(R.id.messenger_container);
         scrollView = findViewById(R.id.scrollView);
         message = findViewById(R.id.message);
+        showMessengerButton = findViewById(R.id.showMessenger);
+        showMessengerButton.setOnClickListener(this);
         submitButton = findViewById(R.id.submit);
         submitButton.setOnClickListener(this);
         messageContainer = findViewById(R.id.messages_container);
@@ -137,8 +139,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 for(int i = 0; i < event.players.size(); i++) {
                     User user = event.players.get(i);
                     if(user.username.equals(userUsername)) {
-                        showMessenger();
-                        return;
+                        showButtonForMessenger();
                     }
                 }
                 mNameTextView.setText(event.name);
@@ -161,6 +162,11 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 // Show event information, hide progressbar
             }
         });
+    }
+
+    public void showButtonForMessenger() {
+        this.mAddUserToEventBtn.setVisibility(View.GONE);
+        this.showMessengerButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -192,7 +198,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                         lastUser = messages[i].username;
                         TextView usernameTextView = new TextView(EventActivity.this);
                         usernameTextView.setText(messages[i].username);
-                        usernameTextView.setTypeface(null, Typeface.BOLD);
+                        usernameTextView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
                         usernameTextView.setGravity(Gravity.CENTER);
                         usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
                         relativeLayout.addView(usernameTextView);
@@ -210,12 +216,12 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                     textView.setPadding(20, 20, 20 , 20);
                     textView.setText(messages[i].text);
                     textView.setGravity(Gravity.CENTER);
-                    textView.setTextColor(Color.WHITE);
+                    textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
                     textView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
 
                     if(currentUserUsername.equals(messages[i].username)) {
                         textView.setBackgroundResource(R.drawable.back);
-                        //textView.setTextColor(Color.WHITE);
+                        textView.setTextColor(Color.WHITE);
                         shouldBeRight = true;
                     } else {
                         textView.setBackgroundResource(R.drawable.others);
@@ -261,6 +267,9 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 break;
             case R.id.submit:
                 addMessageButtonPressed();
+                break;
+            case R.id.showMessenger:
+                showMessenger();
                 break;
         }
     }

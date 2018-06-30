@@ -85,18 +85,25 @@ public class ShowEventsActivity extends FragmentActivity implements ShowEventsCo
                 mMap.setOnMarkerClickListener(ShowEventsActivity.this);
 
                 for(int i = 0; i < events.length; i++) {
-                    iconGenerator.setStyle(Constants.STYLES[i % Constants.STYLES.length]);
-                    Bitmap iconBitmap = null;
-                    if(events[i].neededPlayers > 0) {
-                        iconBitmap = iconGenerator.makeIcon(events[i].sport + "\n" +
-                                events[i].players.size() + "/" + events[i].neededPlayers + "\n" +
-                                events[i].datetime.dayOfMonth + " " + Constants.MONTHS[events[i].datetime.month] + "\n" +
-                                events[i].datetime.hour + ":" + String.format("%02d", events[i].datetime.minute));
+                    Event event = events[i];
+                    int styleIndex = chooseStyle(event.sport);
+                    iconGenerator.setStyle(styleIndex);
+                    Bitmap iconBitmap;
+                    String info = event.name;
+                    if(event.name.length() >= 20) {
+                        info = info.substring(0, 19);
+                    }
+                    if(event.neededPlayers > 0) {
+                        iconBitmap = iconGenerator.makeIcon(event.sport + "\n" +
+                                info + "\n" +
+                                event.players.size() + "/" + event.neededPlayers + "\n" +
+                                event.datetime.dayOfMonth + " " + Constants.MONTHS[event.datetime.month] + "\n" +
+                                event.datetime.hour + ":" + String.format("%02d", event.datetime.minute));
                     } else {
-                        iconBitmap = iconGenerator.makeIcon(events[i].sport + "\n" +
-                                "Неограничен брой" + "\n" +
-                        events[i].datetime.dayOfMonth + " " + Constants.MONTHS[events[i].datetime.month] + "\n" +
-                        events[i].datetime.hour + ":" + String.format("%02d", events[i].datetime.minute));
+                        iconBitmap = iconGenerator.makeIcon(event.sport + "\n" +
+                                info + "\n" +
+                                event.datetime.dayOfMonth + " " + Constants.MONTHS[event.datetime.month] + "\n" +
+                                event.datetime.hour + ":" + String.format("%02d", event.datetime.minute));
                     }
                     LatLng latLng = new LatLng(events[i].location.latitude, events[i].location.longitude);
                     mMap.addMarker(new MarkerOptions().position(latLng)
@@ -105,6 +112,17 @@ public class ShowEventsActivity extends FragmentActivity implements ShowEventsCo
                 }
             }
         });
+    }
+
+    private int chooseStyle(String sport) {
+        switch (sport) {
+            case "Футбол":
+                return Constants.STYLES[1];
+            case "Баскетбол":
+                return Constants.STYLES[3];
+            default:
+                return Constants.STYLES[5];
+        }
     }
 
     @Override

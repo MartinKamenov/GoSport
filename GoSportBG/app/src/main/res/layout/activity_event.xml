@@ -12,14 +12,13 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="100px"
+            android:layout_marginBottom="65dp"
             android:background="#aaffffff">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:map="http://schemas.android.com/apk/res-auto"
                     xmlns:tools="http://schemas.android.com/tools"
                     android:id="@+id/map"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -86,9 +85,22 @@
         <Button
             android:id="@+id/addUserToEvent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:text="Присъединяване към събитие"
+            android:fontFamily="sans-serif-condensed"
+            android:theme="@style/SuccessButton"
+            android:textColor="#fff"
             android:layout_alignParentBottom="true"/>
+        <Button
+            android:id="@+id/showMessenger"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:text="Отваряне на чат"
+            android:fontFamily="sans-serif-condensed"
+            android:theme="@style/InfoButton"
+            android:textColor="#fff"
+            android:visibility="gone"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/messenger_container"
@@ -99,7 +111,7 @@
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="200px"
+            android:layout_marginBottom="230px"
             android:background="#aaffffff">
             <LinearLayout
                 android:id="@+id/messages_container"
@@ -112,12 +124,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff">
             <EditText
                 android:id="@+id/message"
                 android:hint="Текст..."
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:theme="@style/SuccessButton"/>
             <Button
                 android:id="@+id/submit"
                 android:theme="@style/InfoButton"
