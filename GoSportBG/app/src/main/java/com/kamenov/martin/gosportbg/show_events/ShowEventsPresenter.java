@@ -1,15 +1,19 @@
 package com.kamenov.martin.gosportbg.show_events;
 
 import com.google.gson.Gson;
+import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.event.EventContracts;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.internet.contracts.GetHandler;
 import com.kamenov.martin.gosportbg.models.Event;
+import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
+import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -28,6 +32,17 @@ public class ShowEventsPresenter implements ShowEventsContracts.IShowEventsPrese
         this.mRequester = requester;
         this.mGson = gson;
         this.mEventNavigationCommand = eventNavigationCommand;
+    }
+
+    @Override
+    public LocalUser getUser() {
+        GenericCacheRepository<LocalUser, Long> repo = mView.getGoSportApplication().getLocalUserRepository();
+        List<LocalUser> users = repo.getAll();
+        if(users.size()==1) {
+            return users.get(0);
+        }
+
+        return null;
     }
 
     @Override

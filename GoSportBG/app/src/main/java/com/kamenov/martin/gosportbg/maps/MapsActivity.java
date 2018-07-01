@@ -85,10 +85,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sofia and move the camera
-        LatLng sofia = new LatLng(42.698334, 23.319941);
+        LatLng startingLatLng = new LatLng(42.698334, 23.319941);
+        if(getIntent().hasExtra("cityLatitude")) {
+            startingLatLng = new LatLng(getIntent().getDoubleExtra("cityLatitude", 42.698334),
+                    getIntent().getDoubleExtra("cityLongitude", 23.319941));
+
+        }
+
         mMap.setOnMapClickListener(this);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sofia, 13.0f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingLatLng, 13.0f));
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
     }
 

@@ -16,13 +16,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 import com.google.maps.android.ui.IconGenerator;
+import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.event.EventActivity;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.models.Event;
+import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
+
+import java.util.Arrays;
 
 import static com.google.maps.android.ui.IconGenerator.STYLE_BLUE;
 import static com.google.maps.android.ui.IconGenerator.STYLE_GREEN;
@@ -66,14 +70,27 @@ public class ShowEventsActivity extends FragmentActivity implements ShowEventsCo
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sofia = new LatLng(42.698334, 23.319941);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sofia, 13.0f));
+        LatLng startingLatLng = new LatLng(42.698334, 23.319941);
+        if(mPresenter.getUser() != null && mPresenter.getUser().getCity() != null) {
+            String userCity = mPresenter.getUser().getCity();
+            int index = Arrays.asList(Constants.CITIES).indexOf(userCity);
+            if(index >= 0) {
+                double cityLatitude = Arrays.asList(Constants.CITIESCOORDINATES).get(index)[0];
+                double cityLongitude = Arrays.asList(Constants.CITIESCOORDINATES).get(index)[1];
+                startingLatLng = new LatLng(cityLatitude, cityLongitude);
+            }
+        }
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingLatLng, 13.0f));
     }
 
     @Override
     public void setPresenter(BaseContracts.Presenter presenter) {
         this.mPresenter = (ShowEventsContracts.IShowEventsPresenter) presenter;
+    }
+
+    @Override
+    public GoSportApplication getGoSportApplication() {
+        return (GoSportApplication)getApplication();
     }
 
     @Override

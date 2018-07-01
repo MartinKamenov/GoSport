@@ -24,6 +24,7 @@ import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.maps.MapsActivity;
 import com.kamenov.martin.gosportbg.models.DateTime;
 
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -108,6 +109,15 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
                 break;
             case R.id.location_btn:
                 Intent intent = new Intent(getActivity(), MapsActivity.class);
+                String userCity = mPresenter.getUser().getCity();
+                int index = Arrays.asList(Constants.CITIES).indexOf(userCity);
+                if(index >= 0) {
+                    double cityLatitude = Arrays.asList(Constants.CITIESCOORDINATES).get(index)[0];
+                    double cityLongitude = Arrays.asList(Constants.CITIESCOORDINATES).get(index)[1];
+                    intent.putExtra("cityLatitude", cityLatitude);
+                    intent.putExtra("cityLongitude", cityLongitude);
+                }
+
                 startActivityForResult(intent, locationRequestCode);
                 break;
             case R.id.checkbox_limit:

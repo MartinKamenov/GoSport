@@ -22,5 +22,7 @@ public class Constants {
     public static int SCREEN_HEIGHT;
     public static String DOMAIN;
     public static int[] STYLES = {STYLE_RED, STYLE_GREEN, STYLE_BLUE, STYLE_ORANGE, STYLE_PURPLE, STYLE_WHITE};
-    public static String[] CITIES = {"София", "Пловдив", "Варна", "Бургас"};
+    public static String[] CITIES = new String[] {"София", "Пловдив", "Варна", "Бургас"};
+    public static double[][] CITIESCOORDINATES = {{42.698334, 23.319941}, {42.1499994, 24.749997},
+            {43.2166658, 27.916663}, {42.499998, 27.4666648}};
 }
