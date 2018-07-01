@@ -39,5 +39,11 @@
         <item name="colorControlHighlight">#fff</item>
         <item name="colorButtonNormal">#BBe8d210</item>
     </style>
+    <style name="Widget.App.Spinner" parent="@style/Widget.AppCompat.Spinner">
+        <item name="spinnerStyle">@style/Widget.App.Spinner</item>
+        <item name="android:spinnerStyle">@style/Widget.App.Spinner</item>
+        <item name="overlapAnchor">true</item>
+        <item name="android:background">@drawable/spinner_background</item>
+    </style>
 
 </resources>

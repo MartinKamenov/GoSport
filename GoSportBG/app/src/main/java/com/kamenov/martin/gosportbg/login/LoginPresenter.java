@@ -81,6 +81,11 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     }
 
     @Override
+    public String[] getAllCities() {
+        return Constants.CITIES;
+    }
+
+    @Override
     public void subscribe(BaseContracts.View view) {
         this.mView = (LoginContracts.ILoginView) view;
     }

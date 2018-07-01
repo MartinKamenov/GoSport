@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -31,16 +33,22 @@ import com.kamenov.martin.gosportbg.new_event.NewEventActivity;
 import com.kamenov.martin.gosportbg.new_event.NewEventFragment;
 import com.kamenov.martin.gosportbg.show_events.ShowEventsActivity;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, View.OnClickListener {
 
     private GoogleMap mMap;
     private Marker myMarker;
     private Button btn;
+    private String mPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        mPlace = "Избрано място";
         btn = findViewById(R.id.select_location_id);
         btn.setOnClickListener(this);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -53,13 +61,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
                 selectPlace(place.getLatLng(), place.getAddress().toString());
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 Toast.makeText(MapsActivity.this, status.getStatus().toString(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -88,7 +94,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapClick(LatLng latLng) {
-        selectPlace(latLng, "Избрано място");
+        Geocoder geocoder;
+        geocoder = new Geocoder(this, Locale.getDefault());
+
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        String address = addresses.get(0).getAddressLine(0);
+        selectPlace(latLng, address);
     }
 
     @Override
@@ -97,15 +114,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng position = myMarker.getPosition();
         result.putExtra("longitude", position.longitude);
         result.putExtra("latitude", position.latitude);
+        result.putExtra("place", mPlace);
         setResult(Activity.RESULT_OK, result);
         finish();
     }
 
     private void selectPlace(LatLng latLng, String place) {
+        mPlace = place;
         IconGenerator iconGenerator = new IconGenerator(this);
         iconGenerator.setStyle(Constants.STYLES[5]);
         StringBuilder str = new StringBuilder();
-        str.append("Мястото е:\n");
+        str.append("Избрано място:\n");
 
         int symbolsOnRow = 20;
         for(int i = 0; i < place.length() / symbolsOnRow - 1; i++) {

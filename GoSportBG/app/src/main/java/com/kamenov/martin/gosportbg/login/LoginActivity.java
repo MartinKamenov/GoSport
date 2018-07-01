@@ -7,8 +7,12 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +49,8 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
     private TextView registerEmailTextView;
     private TextView registerPasswordTextView;
     private TextView registerPassword2TextView;
-    private TextView registerCityTextView;
+    //private TextView registerCityTextView;
+    private Spinner registerCitySpinner;
     private Button loginUserButton;
     private Button registerUserButton;
     private Button showRegisterFormButton;
@@ -152,7 +157,9 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         registerEmailTextView = findViewById(R.id.email_txt);
         registerPasswordTextView = findViewById(R.id.password_txt1);
         registerPassword2TextView = findViewById(R.id.password_txt2);
-        registerCityTextView = findViewById(R.id.city_txt);
+        // registerCityTextView = findViewById(R.id.city_txt);
+        registerCitySpinner = findViewById(R.id.city_spinner);
+        registerCitySpinner.setAdapter(getCityAdapter());
         loginUserButton = findViewById(R.id.login_user);
         registerUserButton =  findViewById(R.id.register_user);
         showRegisterFormButton = findViewById(R.id.show_register);
@@ -175,10 +182,21 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
     }
 
     @Override
+    public ArrayAdapter<String> getCityAdapter() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_dropdown_item,
+                mPresenter.getAllCities()
+        );
+
+        return adapter;
+    }
+
+    @Override
     public void registerButtonPressed() {
         String emailTxt = registerEmailTextView.getText().toString();
         String usernameTxtView = registerUsernameTextView.getText().toString();
-        String cityTxt = registerCityTextView.getText().toString();
+        String cityTxt = registerCitySpinner.getSelectedItem().toString();
         String password1Txt = registerPasswordTextView.getText().toString();
         String password2Txt = registerPassword2TextView.getText().toString();
         if(emailTxt.length() == 0 || usernameTxtView.length() == 0 || cityTxt.length() == 0 ||

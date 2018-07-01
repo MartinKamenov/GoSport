@@ -55,6 +55,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     private CheckBox checkBoxLimitations;
     private View viewForLimitations;
     private Spinner mSportSpinner;
+    private String place;
 
     public NewEventFragment() {
         // Required empty public constructor
@@ -122,10 +123,11 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == locationRequestCode) {
-            if(data != null) {
+            if(data != null && data.hasExtra("longitude")) {
                 longitude = data.getDoubleExtra("longitude", 0);
                 latitude = data.getDoubleExtra("latitude", 0);
-                changeLocationStatus();
+                place = data.getStringExtra("place");
+                changeLocationStatus(place);
             }
         }
     }
@@ -193,7 +195,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
             TextView playersLimitTxt = root.findViewById(R.id.players_limit_txt);
             neededPlayers = Integer.parseInt(playersLimitTxt.getText().toString());
         }
-        mPresenter.createNewEvent(name, sport, date, longitude, latitude, neededPlayers);
+        mPresenter.createNewEvent(name, sport, date, longitude, latitude, place, neededPlayers);
     }
 
     @Override
@@ -224,8 +226,8 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     }
 
     @Override
-    public void changeLocationStatus() {
-        chosenPlace.setText("Избрано е");
+    public void changeLocationStatus(String address) {
+        chosenPlace.setText(address);
     }
 
     @Override

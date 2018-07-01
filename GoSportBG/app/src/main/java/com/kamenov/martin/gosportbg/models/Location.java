@@ -7,4 +7,5 @@ package com.kamenov.martin.gosportbg.models;
 public class Location {
     public double latitude;
     public double longitude;
+    public String address;
 }

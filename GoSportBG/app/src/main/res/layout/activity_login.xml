@@ -135,17 +135,15 @@
                     android:fontFamily="sans-serif-condensed"
                     android:theme="@style/SuccessButton"
                     />
-                <EditText
+                <Spinner
+                    android:id="@+id/city_spinner"
                     android:layout_width="500px"
-                    android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:hint="град"
-                    android:id="@+id/city_txt"
-                    android:textAlignment="center"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="sans-serif-condensed"
-                    android:theme="@style/SuccessButton"
-                    />
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textAlignment="center"/>
                 <EditText
                     android:id="@+id/password_txt1"
                     android:layout_marginTop="30dp"

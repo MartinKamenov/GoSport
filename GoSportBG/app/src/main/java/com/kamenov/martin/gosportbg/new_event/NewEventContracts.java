@@ -16,7 +16,7 @@ public class NewEventContracts {
         LocalUser getUser();
 
         void createNewEvent(String name, String sport, DateTime date,
-                            double longitude, double latitude, int neededPlayers);
+                            double longitude, double latitude, String address, int neededPlayers);
 
         String[] getAllSports();
     }
@@ -32,7 +32,7 @@ public class NewEventContracts {
 
         void switchTimeVisibility();
 
-        void changeLocationStatus();
+        void changeLocationStatus(String address);
 
         void showMessageOnMainTread(String message);
 

@@ -1,5 +1,7 @@
 package com.kamenov.martin.gosportbg.login;
 
+import android.widget.ArrayAdapter;
+
 import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.models.LocalUser;
@@ -22,6 +24,8 @@ public class LoginContracts {
         void register(String email, String username, String password, String city);
 
         void loginLocal(User user);
+
+        String[] getAllCities();
     }
 
     public interface ILoginView<ILoginPresenter> extends BaseContracts.View {
@@ -42,5 +46,7 @@ public class LoginContracts {
         void showProgressBar();
 
         void hideProgressBar();
+
+        ArrayAdapter<String> getCityAdapter();
     }
 }
