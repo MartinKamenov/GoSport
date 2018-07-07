@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -181,6 +182,11 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         mPresenter.login(username, password);
     }
 
+    public void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(loginForm.getWindowToken(), 0);
+    }
+
     @Override
     public ArrayAdapter<String> getCityAdapter() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
@@ -221,7 +227,6 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         LinearLayout loginForm = findViewById(R.id.login_form);
         loginForm.setVisibility(View.VISIBLE);
         progressBarTxt.setText("Влизане...");
-        progressBarTxt.setTextColor(Color.parseColor("#5BB85D"));
     }
 
     @Override
@@ -233,7 +238,6 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         LinearLayout registerForm =  findViewById(R.id.register_form);
         registerForm.setVisibility(View.VISIBLE);
         progressBarTxt.setText("Регистриране...");
-        progressBarTxt.setTextColor(Color.parseColor("#5BC0DE"));
     }
 
     @Override
@@ -255,6 +259,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         loginForm.setVisibility(View.GONE);
         registerForm.setVisibility(View.GONE);
         progressBarForm.setVisibility(View.VISIBLE);
+        hideKeyboardFrom();
     }
 
     @Override

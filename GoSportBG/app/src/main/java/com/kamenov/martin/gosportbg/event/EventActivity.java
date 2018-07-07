@@ -5,6 +5,9 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.text.method.ScrollingMovementMethod;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -52,6 +55,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private ScrollView scrollView;
     private String lastMessage;
     private LinearLayout messageContainer;
+    private TextView mSportTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +65,13 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         mNameTextView = findViewById(R.id.name_txt);
         mDateTextView = findViewById(R.id.date_txt);
         mTimeTextView = findViewById(R.id.time_txt);
+        mSportTextView = findViewById(R.id.sport_txt);
         mPlayersContainer = findViewById(R.id.players_container);
         mEventContainer = findViewById(R.id.event_container);
         mMessengerContainer = findViewById(R.id.messenger_container);
         scrollView = findViewById(R.id.scrollView);
         message = findViewById(R.id.message);
+        message.setMovementMethod(new ScrollingMovementMethod());
         showMessengerButton = findViewById(R.id.showMessenger);
         showMessengerButton.setOnClickListener(this);
         submitButton = findViewById(R.id.submit);
@@ -135,6 +141,8 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                int backgroundRes = getBackGroundSource(event.sport);
+                mEventContainer.setBackgroundResource(backgroundRes);
                 String userUsername = mPresenter.getLocalUser().getUsername();
                 for(int i = 0; i < event.players.size(); i++) {
                     User user = event.players.get(i);
@@ -144,14 +152,17 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 }
                 mNameTextView.setText(event.name);
                 DateTime dateTime = event.datetime;
+                mSportTextView.setText(event.sport);
                 mDateTextView.setText(dateTime.dayOfMonth + " " + Constants.MONTHS[dateTime.month] + " " + dateTime.year);
                 mTimeTextView.setText(String.format("%d:%02d часа", dateTime.hour, dateTime.minute));
                 mPlayersContainer.removeAllViews();
+                float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
                 for(int i = 0; i < event.players.size(); i++) {
                     TextView textView = new TextView(EventActivity.this);
-                    textView.setTextSize(15);
-                    textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    textView.setText(event.players.get(i).username);
+                    textView.setTextSize(pixels);
+                    textView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
+                    textView.setText((i + 1) + ". " + event.players.get(i).username);
+                    textView.setTextColor(Color.parseColor("#222222"));
                     mPlayersContainer.addView(textView);
                 }
                 LatLng place = new LatLng(event.location.latitude, event.location.longitude);
@@ -162,6 +173,16 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 // Show event information, hide progressbar
             }
         });
+    }
+
+    private int getBackGroundSource(String sport) {
+        /*switch (sport) {
+            case "Тенис на маса":
+                return R.drawable.tennis_table;
+            default:
+                return R.drawable.running;
+        }*/
+        return R.drawable.running;
     }
 
     public void showButtonForMessenger() {
@@ -188,6 +209,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                int margin = 15;
                 String currentUserUsername = mPresenter.getLocalUser().getUsername();
                 messageContainer.removeAllViews();
                 String lastUser = "";
@@ -202,16 +224,22 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                         usernameTextView.setGravity(Gravity.CENTER);
                         usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
                         relativeLayout.addView(usernameTextView);
-
+                        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) usernameTextView.getLayoutParams();
+                        lp.setMargins(margin, 0, margin, 0);
                         if(currentUserUsername.equals(messages[i].username)) {
-                            RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) usernameTextView.getLayoutParams();
+
                             lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                            usernameTextView.setLayoutParams(lp);
                         }
+                        usernameTextView.setLayoutParams(lp);
                         messageContainer.addView(relativeLayout);
                         i--;
                         continue;
                     }
+                    CardView cardView = new CardView(EventActivity.this);
+                    cardView.setPreventCornerOverlap(true);
+                    cardView.setRadius(45);
+                    cardView.setElevation(10);
+
                     TextView textView = new TextView(EventActivity.this);
                     textView.setPadding(20, 20, 20 , 20);
                     textView.setText(messages[i].text);
@@ -226,13 +254,16 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                     } else {
                         textView.setBackgroundResource(R.drawable.others);
                     }
-                    relativeLayout.addView(textView);
+
+                    cardView.addView(textView);
+                    relativeLayout.addView(cardView);
                     messageContainer.addView(relativeLayout);
+                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) cardView.getLayoutParams();
+                    lp.setMargins(margin, margin, margin, 0);
                     if(shouldBeRight) {
-                        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) textView.getLayoutParams();
                         lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                        textView.setLayoutParams(lp);
                     }
+                    cardView.setLayoutParams(lp);
                 }
                 if(lastMessage == null) {
                     scrollView.post(new Runnable() {

@@ -203,8 +203,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="45px"
+                android:textStyle="bold"
                 android:fontFamily="sans-serif-condensed"
-                android:text="Влизане..."/>
+                android:text="Влизане..."
+                android:textColor="#5BC0DE"/>
         </LinearLayout>
     </RelativeLayout>
 

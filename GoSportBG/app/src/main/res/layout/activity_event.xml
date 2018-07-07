@@ -2,12 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.kamenov.martin.gosportbg.event.EventActivity">
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/event_container"
-        android:background="@drawable/football_icon">
+        android:background="@drawable/running">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -18,68 +19,196 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="250px"
-                    tools:context="com.kamenov.martin.gosportbg.event.EventActivity" />
-                <TextView
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Футбол"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:textColor="#000"
-                    android:fontFamily="sans-serif-condensed"/>
-                <TextView
-                    android:id="@+id/date_txt"
+                    app:cardCornerRadius="11dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:cardElevation="2dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:contentPadding="0dp">
+                    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/map"
+                        android:name="com.google.android.gms.maps.SupportMapFragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="250px"
+                        tools:context="com.kamenov.martin.gosportbg.event.EventActivity" />
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Date"
-                    android:textSize="20dp"
-                    android:textColor="#000"
-                    android:textAlignment="center"
-                    android:fontFamily="sans-serif-condensed"/>
-                <TextView
-                    android:id="@+id/time_txt"
+                    app:cardCornerRadius="7dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    app:cardElevation="2dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:contentPadding="0dp">
+
+                    <!-- your layout stuff here -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Спорт:"
+                            android:textSize="20dp"
+                            android:textColor="#222222"
+                            android:gravity="left"
+                            android:fontFamily="sans-serif-condensed"/>
+                        <TextView
+                            android:id="@+id/sport_txt"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:textSize="20dp"
+                            android:gravity="left"
+                            android:textColor="#222222"
+                            android:fontFamily="sans-serif-condensed"/>
+                    </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Time"
-                    android:textSize="20dp"
-                    android:textColor="#000"
-                    android:textAlignment="center"
-                    android:fontFamily="sans-serif-condensed"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Описание:"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:fontFamily="sans-serif-condensed"/>
-                <TextView
-                    android:id="@+id/name_txt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Name"
-                    android:textSize="20dp"
-                    android:textColor="#000"
-                    android:textAlignment="center"
-                    android:fontFamily="sans-serif-condensed"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Участници:"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:fontFamily="sans-serif-condensed"/>
-                <LinearLayout
-                    android:id="@+id/players_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="2dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:contentPadding="0dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Дата:"
+                            android:textSize="20dp"
+                            android:textColor="#222222"
+                            android:gravity="left"
+                            android:fontFamily="sans-serif-condensed"/>
+                        <TextView
+                            android:id="@+id/date_txt"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:textSize="20dp"
+                            android:gravity="left"
+                            android:textColor="#222222"
+                            android:fontFamily="sans-serif-condensed"/>
                 </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="2dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:contentPadding="0dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:text="Час:"
+                            android:textSize="20dp"
+                            android:textColor="#222222"
+                            android:gravity="left"
+                            android:fontFamily="sans-serif-condensed"/>
+                        <TextView
+                            android:id="@+id/time_txt"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:textSize="20dp"
+                            android:gravity="left"
+                            android:textColor="#222222"
+                            android:fontFamily="sans-serif-condensed"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="2dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:contentPadding="0dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="2"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:text="Описание:"
+                        android:textSize="20dp"
+                        android:textColor="#222222"
+                        android:gravity="left"
+                        android:fontFamily="sans-serif-condensed"/>
+                    <TextView
+                        android:id="@+id/name_txt"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:gravity="left"
+                        android:textColor="#222222"
+                        android:fontFamily="sans-serif-condensed"/>
+                </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="2dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:contentPadding="0dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Участници:"
+                            android:textAlignment="center"
+                            android:textColor="#222222"
+                            android:textSize="20dp"
+                            android:fontFamily="sans-serif-condensed"/>
+                        <LinearLayout
+                            android:id="@+id/players_container"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
             </LinearLayout>
         </ScrollView>
         <Button
@@ -127,6 +256,15 @@
             android:layout_alignParentBottom="true"
             android:background="#ffffff">
             <EditText
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                style="@style/Widget.AppCompat.EditText"
+                android:background="@drawable/messageinputbackground"
+                android:maxLines = "3"
+                android:scrollbars = "vertical"
                 android:id="@+id/message"
                 android:hint="Текст..."
                 android:layout_width="match_parent"
@@ -139,6 +277,9 @@
                 android:textColor="#fff"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
                 android:text="Изпращане"
                 android:fontFamily="sans-serif-condensed"/>
         </LinearLayout>
