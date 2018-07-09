@@ -1,8 +1,12 @@
 package com.kamenov.martin.gosportbg.login;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -34,12 +38,17 @@ import com.kamenov.martin.gosportbg.menu.MenuActivity;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Arrays;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LoginActivity extends Activity implements LoginContracts.ILoginView, View.OnClickListener {
 
 
     private static final String EMAIL = "email";
+    private static final int SELECT_PHOTO = 1;
 
     private CallbackManager callbackManager;
     private LoginButton loginButton;
@@ -50,7 +59,6 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
     private TextView registerEmailTextView;
     private TextView registerPasswordTextView;
     private TextView registerPassword2TextView;
-    //private TextView registerCityTextView;
     private Spinner registerCitySpinner;
     private Button loginUserButton;
     private Button registerUserButton;
@@ -61,6 +69,9 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
     private View progressBarForm;
     private TextView progressBarTxt;
     private String lastForm;
+    private CircleImageView profileImage;
+    private Button profileImageBtn;
+    private Bitmap profileImageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +122,35 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SELECT_PHOTO) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    // Get the URI of the selected file
+                    final Uri uri = data.getData();
+                    profileImageBitmap = decodeUriToBitmap(this, uri);
+                    profileImage.setImageBitmap(profileImageBitmap);
+                }
+            }
+        } else {
+            callbackManager.onActivityResult(requestCode, resultCode, data);
+        }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private static Bitmap decodeUriToBitmap(Context mContext, Uri sendUri) {
+        Bitmap getBitmap = null;
+        try {
+            InputStream image_stream;
+            try {
+                image_stream = mContext.getContentResolver().openInputStream(sendUri);
+                getBitmap = BitmapFactory.decodeStream(image_stream);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getBitmap;
     }
 
     private void setListeners() {
@@ -120,6 +158,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         registerUserButton.setOnClickListener(this);
         showRegisterFormButton.setOnClickListener(this);
         showLoginFormButton.setOnClickListener(this);
+        profileImageBtn.setOnClickListener(this);
     }
 
     @Override
@@ -137,7 +176,17 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
                 break;
             case R.id.register_user:
                 registerButtonPressed();
+                break;
+            case R.id.profile_image_button:
+                changePictureButtonPressed();
+                break;
         }
+    }
+
+    private void changePictureButtonPressed() {
+        Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+        photoPickerIntent.setType("image/*");
+        startActivityForResult(photoPickerIntent, SELECT_PHOTO);
     }
 
     @Override
@@ -158,7 +207,6 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         registerEmailTextView = findViewById(R.id.email_txt);
         registerPasswordTextView = findViewById(R.id.password_txt1);
         registerPassword2TextView = findViewById(R.id.password_txt2);
-        // registerCityTextView = findViewById(R.id.city_txt);
         registerCitySpinner = findViewById(R.id.city_spinner);
         registerCitySpinner.setAdapter(getCityAdapter());
         loginUserButton = findViewById(R.id.login_user);
@@ -169,6 +217,8 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         progressBarForm = findViewById(R.id.progress_bar_form);
         showLoginFormButton = findViewById(R.id.show_login);
         progressBarTxt = findViewById(R.id.progress_txt);
+        profileImage = findViewById(R.id.profile_image);
+        profileImageBtn = findViewById(R.id.profile_image_button);
     }
 
     @Override

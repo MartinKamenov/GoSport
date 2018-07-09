@@ -1,5 +1,7 @@
 package com.kamenov.martin.gosportbg.event;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -32,11 +35,18 @@ import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
+import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.Message;
 import com.kamenov.martin.gosportbg.models.User;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class EventActivity extends FragmentActivity implements EventContracts.IEventView,OnMapReadyCallback, View.OnClickListener {
 
@@ -53,9 +63,10 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private Button submitButton;
     private Button showMessengerButton;
     private ScrollView scrollView;
-    private String lastMessage;
+    private String lastMessageString;
     private LinearLayout messageContainer;
     private TextView mSportTextView;
+    private Message lastMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -209,6 +220,15 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(lastMessage != null && lastMessage.username.equals(messages[messages.length - 1].username)
+                        && lastMessage.text.equals(messages[messages.length - 1].text)
+                        && lastMessage.dateTime.minute == messages[messages.length - 1].dateTime.minute) {
+                    lastMessage = messages[messages.length - 1];
+                    return;
+                }
+                if(messages.length > 0) {
+                    lastMessage = messages[messages.length - 1];
+                }
                 int margin = 15;
                 String currentUserUsername = mPresenter.getLocalUser().getUsername();
                 messageContainer.removeAllViews();
@@ -218,19 +238,30 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                     boolean shouldBeRight = false;
                     if(!lastUser.equals(messages[i].username)) {
                         lastUser = messages[i].username;
+                        LinearLayout linearLayout = new LinearLayout(EventActivity.this);
+                        linearLayout.setOrientation(LinearLayout.VERTICAL);
                         TextView usernameTextView = new TextView(EventActivity.this);
                         usernameTextView.setText(messages[i].username);
                         usernameTextView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
                         usernameTextView.setGravity(Gravity.CENTER);
                         usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        relativeLayout.addView(usernameTextView);
-                        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) usernameTextView.getLayoutParams();
+                        CircleImageView img = new CircleImageView(EventActivity.this);
+                        new DownloadImageTask(img)
+                                .execute("https://twistedsifter.files.wordpress.com/2016/02/manny-the-cat-takes-better-selfies-than-you-5.jpg?w=640&h=640");
+                        linearLayout.addView(img);
+                        img.getLayoutParams().height = 150;
+                        img.setBorderWidth(4);
+                        linearLayout.addView(usernameTextView);
+                        relativeLayout.addView(linearLayout);
+                        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
                         lp.setMargins(margin, 0, margin, 0);
                         if(currentUserUsername.equals(messages[i].username)) {
-
                             lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                            img.setBorderColor(Color.parseColor("#1780BC"));
+                        } else {
+                            img.setBorderColor(Color.parseColor("#cccccc"));
                         }
-                        usernameTextView.setLayoutParams(lp);
+                        linearLayout.setLayoutParams(lp);
                         messageContainer.addView(relativeLayout);
                         i--;
                         continue;
@@ -265,14 +296,14 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                     }
                     cardView.setLayoutParams(lp);
                 }
-                if(lastMessage == null) {
+                if(lastMessageString == null) {
                     scrollView.post(new Runnable() {
                         @Override
                         public void run() {
                             scrollView.fullScroll(View.FOCUS_DOWN);
                         }
                     });
-                } else if(messages.length > 0 &&!lastMessage.equals(messages[messages.length - 1].text)) {
+                } else if(messages.length > 0 &&!lastMessageString.equals(messages[messages.length - 1].text)) {
                     scrollView.post(new Runnable() {
                         @Override
                         public void run() {
@@ -282,7 +313,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 }
 
                 if(messages.length != 0) {
-                    lastMessage = messages[messages.length - 1].text;
+                    lastMessageString = messages[messages.length - 1].text;
                 }
 
                 mPresenter.finishQuery();
