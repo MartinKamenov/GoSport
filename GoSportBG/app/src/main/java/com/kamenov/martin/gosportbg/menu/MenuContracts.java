@@ -18,6 +18,10 @@ public class MenuContracts {
         void clearLocalUser();
 
         void logout();
+
+        void navigateToShowMapEvents();
+
+        void navigateToShowListEvents();
     }
 
     public interface IMenuView<IMenuPresenter> extends BaseContracts.View {
@@ -30,5 +34,7 @@ public class MenuContracts {
         void logoutButtonPressed();
 
         void navigateToLogin();
+
+        void showEventsDialog();
     }
 }

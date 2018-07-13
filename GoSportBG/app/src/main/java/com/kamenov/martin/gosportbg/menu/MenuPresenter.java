@@ -1,5 +1,6 @@
 package com.kamenov.martin.gosportbg.menu;
 
+import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
@@ -13,11 +14,15 @@ import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 public class MenuPresenter implements MenuContracts.IMenuPresenter {
     private MenuContracts.IMenuView mView;
     private NavigationCommand mNewEventCommand;
-    private NavigationCommand mShowEventsCommand;
+    private NavigationCommand mShowEventsListCommand;
+    private NavigationCommand mShowEventsMapCommand;
 
-    public MenuPresenter(NavigationCommand newEventCommand, NavigationCommand showEventsCommand) {
+    public MenuPresenter(NavigationCommand newEventCommand,
+                         NavigationCommand showEventsMapCommand,
+                         NavigationCommand showEventsListCommand) {
         this.mNewEventCommand = newEventCommand;
-        this.mShowEventsCommand = showEventsCommand;
+        this.mShowEventsMapCommand = showEventsMapCommand;
+        this.mShowEventsListCommand = showEventsListCommand;
     }
     @Override
     public void subscribe(BaseContracts.View view) {
@@ -36,7 +41,7 @@ public class MenuPresenter implements MenuContracts.IMenuPresenter {
 
     @Override
     public void navigateToShowEvents() {
-        mShowEventsCommand.navigate();
+        mView.showEventsDialog();
     }
 
     @Override
@@ -50,5 +55,15 @@ public class MenuPresenter implements MenuContracts.IMenuPresenter {
     public void logout() {
         clearLocalUser();
         mView.navigateToLogin();
+    }
+
+    @Override
+    public void navigateToShowMapEvents() {
+        mShowEventsMapCommand.navigate();
+    }
+
+    @Override
+    public void navigateToShowListEvents() {
+        mShowEventsListCommand.navigate();
     }
 }

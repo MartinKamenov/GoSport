@@ -11,6 +11,7 @@ import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 import com.kamenov.martin.gosportbg.new_event.NewEventActivity;
 import com.kamenov.martin.gosportbg.show_events.ShowEventsActivity;
+import com.kamenov.martin.gosportbg.show_events.ShowEventsListActivity;
 
 public class MenuActivity extends Activity {
     private MenuFragment mMenuFragment;
@@ -21,11 +22,14 @@ public class MenuActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_menu);
         ActivityNavigationCommand newEventNavigationCommand = new ActivityNavigationCommand(this, NewEventActivity.class);
-        ActivityNavigationCommand showEventsNavigationCommand = new ActivityNavigationCommand(this, ShowEventsActivity.class);
+        ActivityNavigationCommand showEventsMapsNavigationCommand = new ActivityNavigationCommand(this, ShowEventsActivity.class);
+        ActivityNavigationCommand showEventsListNavigationCommand = new ActivityNavigationCommand(this, ShowEventsListActivity.class);
 
 
         mMenuFragment = new MenuFragment();
-        MenuPresenter menuPresenter = new MenuPresenter(newEventNavigationCommand, showEventsNavigationCommand);
+        MenuPresenter menuPresenter = new MenuPresenter(newEventNavigationCommand,
+                showEventsMapsNavigationCommand,
+                showEventsListNavigationCommand);
         mMenuFragment.setPresenter(menuPresenter);
         menuPresenter.subscribe(mMenuFragment);
 

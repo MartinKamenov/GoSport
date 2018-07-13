@@ -254,7 +254,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                         linearLayout.addView(usernameTextView);
                         relativeLayout.addView(linearLayout);
                         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
-                        lp.setMargins(margin, 0, margin, 0);
+                        lp.setMargins(margin, margin, margin, margin);
                         if(currentUserUsername.equals(messages[i].username)) {
                             lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
                             img.setBorderColor(Color.parseColor("#1780BC"));

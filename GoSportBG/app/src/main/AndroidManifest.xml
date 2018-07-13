@@ -81,15 +81,19 @@
         <activity
             android:name=".maps.MapsActivity"
             android:label="@string/title_activity_maps"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".event.EventActivity"
             android:label="@string/title_activity_event"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".show_events.ShowEventsActivity"
             android:label="@string/title_activity_show_events"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".show_events.ShowEventsListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".menu.DialogActivity"></activity>
     </application>
 
 </manifest>

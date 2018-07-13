@@ -127,4 +127,10 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
+
+    @Override
+    public void showEventsDialog() {
+        CustomDialogClass customDialog = new CustomDialogClass(getActivity(), presenter);
+        customDialog.show();
+    }
 }
