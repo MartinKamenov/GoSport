@@ -7,5 +7,6 @@ public class User {
     public String city;
     public String email;
     public String password;
+    public String profileImg;
 }
 

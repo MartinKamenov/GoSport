@@ -86,7 +86,8 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
             return;
         }
         mThread.setFinished(false);
-        String body = String.format("{\"username\":\"%s\",\"text\":\"%s\"}", getLocalUser().getUsername(), message);
+        String body = String.format("{\"username\":\"%s\",\"text\":\"%s\", \"profileImg\":\"%s\"}",
+                getLocalUser().getUsername(), message.replace("\n", "\\n"), getLocalUser().getProfileImg());
         mRequester.post(this, Constants.DOMAIN + "/messages/" + id + "/addMessage", body);
     }
 

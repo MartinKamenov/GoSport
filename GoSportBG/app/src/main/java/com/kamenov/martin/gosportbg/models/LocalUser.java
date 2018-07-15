@@ -28,19 +28,22 @@ public class LocalUser {
     @Property(nameInDb = "city")
     private String city;
 
-    public LocalUser() {
+    @Property(nameInDb = "profileImg")
+    private String profileImg;
 
+    public LocalUser() {
     }
 
-    public LocalUser(int onlineId, String email, String username, String password, String city) {
+    public LocalUser(int onlineId, String email, String username, String password,
+                     String city, String profileImg) {
         setOnlineId(onlineId);
         setEmail(email);
         setUsername(username);
         setPassword(password);
         setCity(city);
+        setProfileImg(profileImg);
     }
 
-    @Generated(hash = 1807929179)
     public LocalUser(Long id, int onlineId, String email, String username, String password, String city) {
         this.id = id;
         this.onlineId = onlineId;
@@ -48,6 +51,18 @@ public class LocalUser {
         this.username = username;
         this.password = password;
         this.city = city;
+    }
+
+    @Generated(hash = 561538469)
+    public LocalUser(Long id, int onlineId, String email, String username, String password, String city,
+            String profileImg) {
+        this.id = id;
+        this.onlineId = onlineId;
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.city = city;
+        this.profileImg = profileImg;
     }
 
     public Long getId() {
@@ -97,4 +112,8 @@ public class LocalUser {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public String getProfileImg() { return this.profileImg; }
+
+    public void setProfileImg(String profileImg) { this.profileImg = profileImg; }
 }

@@ -246,8 +246,9 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                         usernameTextView.setGravity(Gravity.CENTER);
                         usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
                         CircleImageView img = new CircleImageView(EventActivity.this);
+                        String url = Constants.DOMAIN + messages[i].profileImg;
                         new DownloadImageTask(img)
-                                .execute("https://twistedsifter.files.wordpress.com/2016/02/manny-the-cat-takes-better-selfies-than-you-5.jpg?w=640&h=640");
+                                .execute(url);
                         linearLayout.addView(img);
                         img.getLayoutParams().height = 150;
                         img.setBorderWidth(4);

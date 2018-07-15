@@ -63,10 +63,10 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     }
 
     @Override
-    public void register(String email, String username, String password, String city) {
+    public void register(String email, String username, String password, String city, String pictureString) {
         String registerBody = String.format("{\"email\":\"%s\",\"username\":\"%s\""+
-                        ",\"city\":\"%s\",\"password\":\"%s\"}",
-                email, username, city, password);
+                        ",\"city\":\"%s\",\"password\":\"%s\", \"profileImg\":\"%s\"}",
+                email, username, city, password, pictureString.replace("\n", "\\n"));
 
         mView.showProgressBar();
         this.mRequester.post(this, Constants.DOMAIN + "/register", registerBody);
@@ -77,7 +77,7 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
         // TO DO: Implement method
         GenericCacheRepository<LocalUser, Long> repo = mView.getGoSportApplication().getLocalUserRepository();
         repo.clearAll();
-        repo.add(new LocalUser(user.id, user.email, user.username, user.password, user.city));
+        repo.add(new LocalUser(user.id, user.email, user.username, user.password, user.city, user.profileImg));
     }
 
     @Override
@@ -97,6 +97,7 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
 
     @Override
     public void handlePost(Call call, Response response) {
+
         String url = call.request().url().toString();
         String jsonInString = "";
         try {
@@ -104,6 +105,8 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
         } catch (IOException e) {
             mView.notifyUserOnMainTread(e.toString());
         }
+
+        mView.showMessageOnUIThread(jsonInString);
 
         // Handles login calls
         if (url.contains("login")) {

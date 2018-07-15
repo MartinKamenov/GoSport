@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
@@ -38,6 +39,7 @@ import com.kamenov.martin.gosportbg.menu.MenuActivity;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -255,6 +257,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         String cityTxt = registerCitySpinner.getSelectedItem().toString();
         String password1Txt = registerPasswordTextView.getText().toString();
         String password2Txt = registerPassword2TextView.getText().toString();
+        String pictureString = bitMapToString(profileImageBitmap);
         if(emailTxt.length() == 0 || usernameTxtView.length() == 0 || cityTxt.length() == 0 ||
                 password1Txt.length() == 0 || password2Txt.length() == 0) {
             Toast.makeText(this, "Моля попълнете всички полета", Toast.LENGTH_SHORT).show();
@@ -265,7 +268,15 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
             return;
         }
 
-        mPresenter.register(emailTxt, usernameTxtView, password1Txt, cityTxt);
+        mPresenter.register(emailTxt, usernameTxtView, password1Txt, cityTxt, pictureString);
+    }
+
+    public String bitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte [] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
     }
 
     @Override
@@ -330,5 +341,17 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
                 }
             }
         });
+    }
+
+    @Override
+    public void showMessageOnUIThread(final String message) {
+        runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
     }
 }

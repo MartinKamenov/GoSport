@@ -21,7 +21,7 @@ public class LoginContracts {
 
         void login(String username, String password);
 
-        void register(String email, String username, String password, String city);
+        void register(String email, String username, String password, String city, String pictureString);
 
         void loginLocal(User user);
 
@@ -46,6 +46,8 @@ public class LoginContracts {
         void showProgressBar();
 
         void hideProgressBar();
+
+        void showMessageOnUIThread(String message);
 
         ArrayAdapter<String> getCityAdapter();
     }

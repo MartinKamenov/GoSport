@@ -8,4 +8,5 @@ public class Message {
     public String text;
     public String username;
     public DateTime dateTime;
+    public String profileImg;
 }
