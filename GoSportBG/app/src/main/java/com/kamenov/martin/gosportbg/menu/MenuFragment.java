@@ -3,6 +3,8 @@ package com.kamenov.martin.gosportbg.menu;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;

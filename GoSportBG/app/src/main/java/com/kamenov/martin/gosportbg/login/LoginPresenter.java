@@ -63,10 +63,25 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     }
 
     @Override
+    public void facebookLogin(String email, String username, String pictureUrl) {
+        String body = String.format("{\"username\":\"%s\",\"email\":\"%s\", \"pictureUrl\":\"%s\"}",
+                username, email, pictureUrl);
+        this.mRequester.post(this, Constants.DOMAIN + "/facebooklogin", body);
+    }
+
+    @Override
     public void register(String email, String username, String password, String city, String pictureString) {
-        String registerBody = String.format("{\"email\":\"%s\",\"username\":\"%s\""+
-                        ",\"city\":\"%s\",\"password\":\"%s\", \"profileImg\":\"%s\"}",
-                email, username, city, password, pictureString.replace("\n", "\\n"));
+        String registerBody = "";
+        if(pictureString != null) {
+            registerBody = String.format("{\"email\":\"%s\",\"username\":\"%s\""+
+                            ",\"city\":\"%s\",\"password\":\"%s\", \"profileImg\":\"%s\"}",
+                    email, username, city, password, pictureString.replace("\n", "\\n"));
+        }
+        else {
+            registerBody = String.format("{\"email\":\"%s\",\"username\":\"%s\"" +
+                            ",\"city\":\"%s\",\"password\":\"%s\"}",
+                    email, username, city, password);
+        }
 
         mView.showProgressBar();
         this.mRequester.post(this, Constants.DOMAIN + "/register", registerBody);

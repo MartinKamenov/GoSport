@@ -246,9 +246,17 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                         usernameTextView.setGravity(Gravity.CENTER);
                         usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
                         CircleImageView img = new CircleImageView(EventActivity.this);
-                        String url = Constants.DOMAIN + messages[i].profileImg;
-                        new DownloadImageTask(img)
-                                .execute(url);
+                        if(messages[i].profileImg != null && messages[i].profileImg.startsWith("https://graph.facebook")) {
+                            new DownloadImageTask(img)
+                                    .execute(messages[i].profileImg);
+                        }
+                        else if(messages[i].profileImg != null && !messages[i].profileImg.contains("default.jpg")) {
+                            String url = Constants.DOMAIN + messages[i].profileImg;
+                            new DownloadImageTask(img)
+                                    .execute(url);
+                        } else {
+                            img.setImageResource(R.drawable.anonymous);
+                        }
                         linearLayout.addView(img);
                         img.getLayoutParams().height = 150;
                         img.setBorderWidth(4);

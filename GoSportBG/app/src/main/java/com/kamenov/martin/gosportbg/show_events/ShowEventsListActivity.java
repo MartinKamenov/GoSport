@@ -5,9 +5,12 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -24,14 +27,20 @@ import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.kamenov.martin.gosportbg.constants.Constants.SPORTS;
 
-public class ShowEventsListActivity extends Activity implements ShowEventsContracts.IShowEventsView, View.OnClickListener {
+public class ShowEventsListActivity extends Activity implements ShowEventsContracts.IShowEventsView, View.OnClickListener, TextWatcher {
 
     private ShowEventsContracts.IShowEventsPresenter mPresenter;
     private LinearLayout mEventsContainer;
     private ProgressBar mProgressBar;
-    private Button mSearchButton;
+    private EditText mSearchText;
+    private TextView mResultCountTxt;
+    private Event[] events;
+    private boolean eventsFromWeb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +49,23 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
 
         mEventsContainer = findViewById(R.id.events_container);
         mProgressBar = findViewById(R.id.event_list_progressbar);
-        mSearchButton = findViewById(R.id.search_btn);
-        mSearchButton.setOnClickListener(this);
+        mSearchText = findViewById(R.id.search_text);
+        mResultCountTxt = findViewById(R.id.result_count);
+        mSearchText.addTextChangedListener(this);
 
         ShowEventsContracts.IShowEventsPresenter presenter = new ShowEventsPresenter(new HttpRequester(),
                 new Gson(),
                 new ActivityNavigationCommand(this, EventActivity.class));
         setPresenter(presenter);
         presenter.subscribe(this);
-        presenter.getEvents();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //setContentView(R.layout.activity_show_events_list);
+        eventsFromWeb = true;
+        mPresenter.getEvents();
     }
 
     @Override
@@ -68,11 +85,17 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
 
     @Override
     public void showEventsOnUITread(final Event[] events) {
+        if(eventsFromWeb) {
+            this.events = events;
+        }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 showContainer();
+                mEventsContainer.removeAllViews();
                 int margin = 10;
+                mResultCountTxt.setText("Брой намерени събития:" + events.length);
+
                 for(int i = 0; i < events.length; i++) {
                     Event event = events[i];
                     CardView cardView = new CardView(ShowEventsListActivity.this);
@@ -134,7 +157,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        ((CardView)view).setCardBackgroundColor(Color.parseColor("#aaaaaa"));
+        ((CardView) view).setCardBackgroundColor(Color.parseColor("#aaaaaa"));
         markerPressed(id);
     }
 
@@ -147,5 +170,38 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
             default:
                 return -1;
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        if(this.events == null) {
+            return;
+        }
+        eventsFromWeb = false;
+
+        ArrayList<Event> newEvents = new ArrayList<>();
+
+        String searchingWord = charSequence.toString();
+        for(int j = 0; j < this.events.length; j++) {
+            if(events[j].name.toLowerCase().contains(searchingWord.toLowerCase()) ||
+                    events[j].sport.toLowerCase().contains(searchingWord.toLowerCase()) ||
+                    events[j].location.address.toLowerCase().contains(searchingWord.toLowerCase()) ||
+                    events[j].name.toLowerCase().contains(searchingWord.toLowerCase()) ||
+                    events[j].admin.username.toLowerCase().contains(searchingWord.toLowerCase())) {
+                newEvents.add(events[j]);
+            }
+        }
+
+        showEventsOnUITread(newEvents.toArray(new Event[newEvents.size()]));
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 }

@@ -26,6 +26,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -38,6 +40,9 @@ import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.menu.MenuActivity;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -98,7 +103,8 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         lastForm = "login";
 
         loginButton = findViewById(R.id.login_button);
-        loginButton.setReadPermissions(Arrays.asList(EMAIL));
+        loginButton.setReadPermissions(Arrays.asList(
+                "public_profile", "email", "user_birthday"));
         mPresenter.tryLoginAuthomaticly();
         // If you are using in a fragment, call loginButton.setFragment(this);
 
@@ -106,8 +112,27 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(LoginActivity.this, "Logged", Toast.LENGTH_SHORT).show();
-                mPresenter.navigateToMenu();
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                try {
+                                    String email = object.getString("email");
+                                    String username = object.getString("first_name") + " " +
+                                            object.getString("last_name");
+                                    String id = object.getString("id");
+                                    String picture = "https://graph.facebook.com/" + id + "/picture?type=large";
+                                    mPresenter.facebookLogin(email, username, picture);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,first_name,last_name,email,gender,birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override
@@ -257,7 +282,10 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         String cityTxt = registerCitySpinner.getSelectedItem().toString();
         String password1Txt = registerPasswordTextView.getText().toString();
         String password2Txt = registerPassword2TextView.getText().toString();
-        String pictureString = bitMapToString(profileImageBitmap);
+        String pictureString = null;
+        if(profileImageBitmap != null) {
+            pictureString = bitMapToString(profileImageBitmap);
+        }
         if(emailTxt.length() == 0 || usernameTxtView.length() == 0 || cityTxt.length() == 0 ||
                 password1Txt.length() == 0 || password2Txt.length() == 0) {
             Toast.makeText(this, "Моля попълнете всички полета", Toast.LENGTH_SHORT).show();

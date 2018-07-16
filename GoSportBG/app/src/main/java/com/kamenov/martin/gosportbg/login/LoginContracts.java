@@ -21,6 +21,8 @@ public class LoginContracts {
 
         void login(String username, String password);
 
+        void facebookLogin(String email, String username, String picture);
+
         void register(String email, String username, String password, String city, String pictureString);
 
         void loginLocal(User user);
