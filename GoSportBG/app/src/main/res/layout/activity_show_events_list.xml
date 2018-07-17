@@ -8,28 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <!--<LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="4"
-            android:orientation="horizontal">
-            <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
-                android:maxLines="3"
-                android:fontFamily="sans-serif-condensed"
-                android:hint="Търсене..."/>
-            <Button
-                android:id="@+id/search_btn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="Намери"
-                android:textColor="#ffffff"
-                android:fontFamily="sans-serif-condensed"
-                android:theme="@style/DangerButton"/>
-        </LinearLayout>-->
         <EditText
             android:id="@+id/search_text"
             android:layout_height="wrap_content"

@@ -46,7 +46,12 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     public void tryLoginAuthomaticly() {
         LocalUser user = getLoggedUser();
         if(getLoggedUser() != null) {
-            login(user.getUsername(), user.getPassword());
+            // If user doesn't have password that means he has logged with Facebook
+            if(user.getPassword() != null && user.getPassword().length() > 0) {
+                login(user.getUsername(), user.getPassword());
+            } else {
+                facebookLogin(user.getEmail(), user.getUsername(), user.getProfileImg());
+            }
         }
     }
 
@@ -66,6 +71,7 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     public void facebookLogin(String email, String username, String pictureUrl) {
         String body = String.format("{\"username\":\"%s\",\"email\":\"%s\", \"pictureUrl\":\"%s\"}",
                 username, email, pictureUrl);
+        mView.showProgressBar();
         this.mRequester.post(this, Constants.DOMAIN + "/facebooklogin", body);
     }
 
@@ -120,8 +126,6 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
         } catch (IOException e) {
             mView.notifyUserOnMainTread(e.toString());
         }
-
-        mView.showMessageOnUIThread(jsonInString);
 
         // Handles login calls
         if (url.contains("login")) {

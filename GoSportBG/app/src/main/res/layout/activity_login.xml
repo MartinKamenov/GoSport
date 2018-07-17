@@ -33,26 +33,38 @@
                 android:padding="10dp"
                 android:orientation="vertical"
                 android:layout_marginTop="60dp">
-                <EditText
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/username_txt"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:hint="Потребителско име"
+                        android:fontFamily="sans-serif-condensed"/>
+                </android.support.design.widget.TextInputLayout>
+                <!--<EditText
                     android:id="@+id/username_txt"
                     android:layout_width="220dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:hint="потребителско име"
                     android:textAlignment="center"
-                    android:fontFamily="sans-serif-condensed"
-                    android:theme="@style/SuccessButton"/>
-                <EditText
-                    android:id="@+id/password_txt"
-                    android:layout_width="220dp"
+                    android:fontFamily="sans-serif-condensed"/>-->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_gravity="center_horizontal"
-                    android:hint="парола"
-                    android:textAlignment="center"
-                    android:inputType="textPassword"
-                    android:fontFamily="sans-serif-condensed"
-                    android:theme="@style/SuccessButton"/>
+                    android:layout_marginTop="30dp">
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/password_txt"
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:hint="Парола"
+                        android:inputType="textPassword"
+                        android:fontFamily="sans-serif-condensed"/>
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <Button
                 android:id="@+id/login_user"
@@ -144,50 +156,56 @@
                                 android:theme="@style/InfoButton"
                                 android:layout_gravity="center_horizontal"
                                 android:fontFamily="sans-serif-condensed"/>
-                            <EditText
-                                android:layout_width="220dp"
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="30dp"
-                                android:hint="имейл"
-                                android:id="@+id/email_txt"
-                                android:textAlignment="center"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="sans-serif-condensed"
-                                android:theme="@style/SuccessButton"
-                                />
-                            <EditText
-                                android:layout_width="220dp"
+                                android:layout_marginTop="30dp">
+                                <android.support.design.widget.TextInputEditText
+                                    android:layout_width="220dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Имейл"
+                                    android:id="@+id/email_txt"
+                                    android:layout_gravity="center_horizontal"
+                                    android:fontFamily="sans-serif-condensed"/>
+                            </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="30dp"
-                                android:hint="потребителско име"
-                                android:id="@+id/username_txt1"
-                                android:textAlignment="center"
-                                android:layout_gravity="center_horizontal"
-                                android:fontFamily="sans-serif-condensed"
-                                android:theme="@style/SuccessButton"
-                                />
-                            <EditText
-                                android:id="@+id/password_txt1"
-                                android:layout_marginTop="30dp"
-                                android:layout_width="220dp"
-                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="30dp">
+                                <android.support.design.widget.TextInputEditText
+                                    android:layout_width="220dp"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Потребителско име"
+                                    android:id="@+id/username_txt1"
+                                    android:layout_gravity="center_horizontal"
+                                    android:fontFamily="sans-serif-condensed"/>
+                            </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="парола"
-                                android:textAlignment="center"
-                                android:inputType="textPassword"
-                                android:fontFamily="sans-serif-condensed"
-                                android:theme="@style/SuccessButton"/>
-                            <EditText
-                                android:id="@+id/password_txt2"
-                                android:layout_marginTop="30dp"
-                                android:layout_width="220dp"
-                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="30dp">
+                                <android.support.design.widget.TextInputEditText
+                                    android:id="@+id/password_txt1"
+                                    android:layout_width="220dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Парола"
+                                    android:inputType="textPassword"
+                                    android:fontFamily="sans-serif-condensed"/>
+                            </android.support.design.widget.TextInputLayout>
+                            <android.support.design.widget.TextInputLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="повторна парола"
-                                android:textAlignment="center"
-                                android:inputType="textPassword"
-                                android:fontFamily="sans-serif-condensed"
-                                android:theme="@style/SuccessButton"/>
+                                android:layout_marginTop="30dp">
+                                <android.support.design.widget.TextInputEditText
+                                    android:id="@+id/password_txt2"
+                                    android:layout_width="220dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_height="wrap_content"
+                                    android:hint="Повторна парола"
+                                    android:inputType="textPassword"
+                                    android:fontFamily="sans-serif-condensed"/>
+                            </android.support.design.widget.TextInputLayout>
                             <Spinner
                                 android:id="@+id/city_spinner"
                                 android:layout_width="220dp"
