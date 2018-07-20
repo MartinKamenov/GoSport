@@ -25,21 +25,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:baselineAligned="false"
                 android:weightSum="2">
                 <Button
+                    android:drawableLeft="@android:drawable/ic_input_add"
                     android:id="@+id/new_event"
+                    android:textStyle="bold"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:text="Ново събитие"
                     android:textColor="#fff"
                     android:fontFamily="sans-serif-condensed"
                     android:theme="@style/MenuButton1"/>
                 <Button
+                    android:drawableLeft="@android:drawable/ic_menu_search"
                     android:id="@+id/incoming_event"
+                    android:textStyle="bold"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
                     android:textColor="#fff"
                     android:fontFamily="sans-serif-condensed"
                     android:text="Предстоящи събития"
@@ -50,25 +55,60 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:baselineAligned="false">
                 <Button
-                    android:id="@+id/settings_btn"
+                    android:drawableLeft="@android:drawable/ic_dialog_email"
+                    android:id="@+id/messages_btn"
+                    android:textStyle="bold"
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="60dp"
+                    android:layout_height="80dp"
+                    android:textColor="#fff"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Съобщения"
+                    android:theme="@style/MenuButton5"/>
+                <Button
+                    android:drawableLeft="@android:drawable/ic_menu_myplaces"
+                    android:id="@+id/teams_btn"
+                    android:textStyle="bold"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="80dp"
+                    android:textColor="#fff"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Отбори"
+                    android:theme="@style/MenuButton6"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:baselineAligned="false">
+                <Button
+                    android:drawableLeft="@android:drawable/ic_menu_manage"
+                    android:id="@+id/settings_btn"
+                    android:textStyle="bold"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="80dp"
                     android:textColor="#fff"
                     android:fontFamily="sans-serif-condensed"
                     android:text="Настройки"
                     android:theme="@style/MenuButton4"/>
-            <Button
-                android:id="@+id/logout_btn"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="60dp"
-                android:textColor="#fff"
-                android:fontFamily="sans-serif-condensed"
-                android:text="Отписване"
-                android:theme="@style/MenuButton3"/>
+                <Button
+                    android:drawableLeft="@android:drawable/ic_delete"
+                    android:id="@+id/logout_btn"
+                    android:textStyle="bold"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="80dp"
+                    android:textColor="#fff"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="Отписване"
+                    android:theme="@style/MenuButton3"/>
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

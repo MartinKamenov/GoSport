@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/sportsmedicine">
+        android:background="@drawable/login">
         <LinearLayout
             android:id="@+id/login_form"
             android:layout_width="match_parent"
@@ -69,18 +69,20 @@
             <Button
                 android:id="@+id/login_user"
                 android:layout_marginTop="30dp"
-                android:layout_width="220dp"
+                android:layout_width="240dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_height="60dp"
                 android:textAlignment="center"
                 android:text="Влизане"
                 android:textColor="#fff"
+                android:textStyle="bold"
                 android:fontFamily="sans-serif-condensed"
                 android:theme="@style/SuccessButton"/>
             <Button
                 android:id="@+id/show_register"
                 android:layout_width="220dp"
                 android:layout_height="60dp"
+                android:layout_marginTop="30dp"
                 android:layout_gravity="center_horizontal"
                 android:text="Регистрация"
                 android:fontFamily="sans-serif-condensed"

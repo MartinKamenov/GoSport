@@ -2,6 +2,7 @@ package com.kamenov.martin.gosportbg.show_events;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -112,6 +113,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                     sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     sport.setText("Спорт: " + event.sport);
                     sport.setGravity(Gravity.CENTER_HORIZONTAL);
+                    sport.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                     TextView date = new TextView(ShowEventsListActivity.this);
                     DateTime dt = event.datetime;
                     date.setText(String.format("%02d %s %d\n%02d:%02d",
@@ -122,6 +124,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                             dt.minute));
                     date.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     date.setGravity(Gravity.CENTER_HORIZONTAL);
+                    date.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                     if(color != -1) {
                         cardView.setCardBackgroundColor(color);
                         sport.setTextColor(Color.parseColor("#ffffff"));
@@ -135,6 +138,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                         description.setText(event.name);
                         description.setGravity(Gravity.CENTER_HORIZONTAL);
                         description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                         if(color != -1) {
                             description.setTextColor(Color.parseColor("#ffffff"));
                         }

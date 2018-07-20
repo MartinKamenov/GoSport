@@ -1,5 +1,6 @@
 package com.kamenov.martin.gosportbg.event;
 
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -266,7 +267,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                         lp.setMargins(margin, margin, margin, margin);
                         if(currentUserUsername.equals(messages[i].username)) {
                             lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                            img.setBorderColor(Color.parseColor("#1780BC"));
+                            img.setBorderColor(fetchAccentColor());
                         } else {
                             img.setBorderColor(Color.parseColor("#cccccc"));
                         }
@@ -328,6 +329,17 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 mPresenter.finishQuery();
             }
         });
+    }
+
+    private int fetchAccentColor() {
+        TypedValue typedValue = new TypedValue();
+
+        TypedArray a = obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
+        int color = a.getColor(0, 0);
+
+        a.recycle();
+
+        return color;
     }
 
     @Override

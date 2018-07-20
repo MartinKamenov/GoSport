@@ -15,6 +15,10 @@
         <item name="colorControlHighlight">#fff</item>
         <item name="colorButtonNormal">#5BC0DE</item>
     </style>
+    <style name="SendButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">@color/colorAccent</item>
+    </style>
     <style name="DefaultButton" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#fff</item>
         <item name="colorButtonNormal">#7f7f7f</item>
@@ -38,6 +42,14 @@
     <style name="MenuButton4" parent="Theme.AppCompat.Light">
         <item name="colorControlHighlight">#fff</item>
         <item name="colorButtonNormal">#BBe8d210</item>
+    </style>
+    <style name="MenuButton5" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">#BBad37ce</item>
+    </style>
+    <style name="MenuButton6" parent="Theme.AppCompat.Light">
+        <item name="colorControlHighlight">#fff</item>
+        <item name="colorButtonNormal">#BBff8114</item>
     </style>
     <style name="Widget.App.Spinner" parent="@style/Widget.AppCompat.Spinner">
         <item name="spinnerStyle">@style/Widget.App.Spinner</item>
