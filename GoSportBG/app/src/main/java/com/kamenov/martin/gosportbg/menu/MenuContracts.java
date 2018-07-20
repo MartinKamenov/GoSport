@@ -22,6 +22,12 @@ public class MenuContracts {
         void navigateToShowMapEvents();
 
         void navigateToShowListEvents();
+
+        void navigateToTeams();
+
+        void navigateToSettings();
+
+        void navigateToMessages();
     }
 
     public interface IMenuView<IMenuPresenter> extends BaseContracts.View {
@@ -32,6 +38,12 @@ public class MenuContracts {
         void showEventsButtonPressed();
 
         void logoutButtonPressed();
+
+        void teamsButtonPressed();
+
+        void messagesButtonPressed();
+
+        void settingsButtonPressed();
 
         void navigateToLogin();
 

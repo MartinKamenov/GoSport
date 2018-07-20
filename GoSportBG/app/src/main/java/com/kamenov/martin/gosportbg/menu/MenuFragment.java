@@ -83,6 +83,15 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
             case R.id.logout_btn:
                 logoutButtonPressed();
                 break;
+            case R.id.messages_btn:
+                messagesButtonPressed();
+                break;
+            case R.id.teams_btn:
+                teamsButtonPressed();
+                break;
+            case R.id.settings_btn:
+                settingsButtonPressed();
+                break;
         }
 
     }
@@ -96,6 +105,15 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
 
         Button logoutButton = root.findViewById(R.id.logout_btn);
         logoutButton.setOnClickListener(this);
+
+        Button messagesButton = root.findViewById(R.id.messages_btn);
+        messagesButton.setOnClickListener(this);
+
+        Button teamsButton = root.findViewById(R.id.teams_btn);
+        teamsButton.setOnClickListener(this);
+
+        Button settingsButton = root.findViewById(R.id.settings_btn);
+        settingsButton.setOnClickListener(this);
     }
 
     @Override
@@ -121,6 +139,21 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
     @Override
     public void logoutButtonPressed() {
         presenter.logout();
+    }
+
+    @Override
+    public void teamsButtonPressed() {
+        presenter.navigateToTeams();
+    }
+
+    @Override
+    public void messagesButtonPressed() {
+        presenter.navigateToMessages();
+    }
+
+    @Override
+    public void settingsButtonPressed() {
+        presenter.navigateToSettings();
     }
 
     @Override

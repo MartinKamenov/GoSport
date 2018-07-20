@@ -7,11 +7,14 @@ import android.view.Window;
 
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
+import com.kamenov.martin.gosportbg.messages.MessagesActivity;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 import com.kamenov.martin.gosportbg.new_event.NewEventActivity;
+import com.kamenov.martin.gosportbg.settings.SettingsActivity;
 import com.kamenov.martin.gosportbg.show_events.ShowEventsActivity;
 import com.kamenov.martin.gosportbg.show_events.ShowEventsListActivity;
+import com.kamenov.martin.gosportbg.teams.TeamsActivity;
 
 public class MenuActivity extends Activity {
     private MenuFragment mMenuFragment;
@@ -21,15 +24,20 @@ public class MenuActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_menu);
-        ActivityNavigationCommand newEventNavigationCommand = new ActivityNavigationCommand(this, NewEventActivity.class);
-        ActivityNavigationCommand showEventsMapsNavigationCommand = new ActivityNavigationCommand(this, ShowEventsActivity.class);
-        ActivityNavigationCommand showEventsListNavigationCommand = new ActivityNavigationCommand(this, ShowEventsListActivity.class);
+
+        ActivityNavigationCommand[] activityNavigationCommands = {
+                new ActivityNavigationCommand(this, NewEventActivity.class),
+                new ActivityNavigationCommand(this, ShowEventsActivity.class),
+                new ActivityNavigationCommand(this, ShowEventsListActivity.class),
+                new ActivityNavigationCommand(this, MessagesActivity.class),
+                new ActivityNavigationCommand(this, TeamsActivity.class),
+                new ActivityNavigationCommand(this, SettingsActivity.class),
+        };
+
 
 
         mMenuFragment = new MenuFragment();
-        MenuPresenter menuPresenter = new MenuPresenter(newEventNavigationCommand,
-                showEventsMapsNavigationCommand,
-                showEventsListNavigationCommand);
+        MenuPresenter menuPresenter = new MenuPresenter(activityNavigationCommands);
         mMenuFragment.setPresenter(menuPresenter);
         menuPresenter.subscribe(mMenuFragment);
 

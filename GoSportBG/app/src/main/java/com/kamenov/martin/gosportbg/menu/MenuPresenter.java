@@ -16,13 +16,17 @@ public class MenuPresenter implements MenuContracts.IMenuPresenter {
     private NavigationCommand mNewEventCommand;
     private NavigationCommand mShowEventsListCommand;
     private NavigationCommand mShowEventsMapCommand;
+    private NavigationCommand mTeamsCommand;
+    private NavigationCommand mMessagesCommand;
+    private NavigationCommand mSettingsCommand;
 
-    public MenuPresenter(NavigationCommand newEventCommand,
-                         NavigationCommand showEventsMapCommand,
-                         NavigationCommand showEventsListCommand) {
-        this.mNewEventCommand = newEventCommand;
-        this.mShowEventsMapCommand = showEventsMapCommand;
-        this.mShowEventsListCommand = showEventsListCommand;
+    public MenuPresenter(NavigationCommand[] navigationCommands) {
+        this.mNewEventCommand = navigationCommands[0];
+        this.mShowEventsMapCommand = navigationCommands[1];
+        this.mShowEventsListCommand = navigationCommands[2];
+        this.mMessagesCommand = navigationCommands[3];
+        this.mTeamsCommand = navigationCommands[4];
+        this.mSettingsCommand = navigationCommands[5];
     }
     @Override
     public void subscribe(BaseContracts.View view) {
@@ -37,6 +41,21 @@ public class MenuPresenter implements MenuContracts.IMenuPresenter {
     @Override
     public void navigateToCreateNewEvents() {
         mNewEventCommand.navigate();
+    }
+
+    @Override
+    public void navigateToTeams() {
+        mTeamsCommand.navigate();
+    }
+
+    @Override
+    public void navigateToSettings() {
+        mSettingsCommand.navigate();
+    }
+
+    @Override
+    public void navigateToMessages() {
+        mMessagesCommand.navigate();
     }
 
     @Override

@@ -93,7 +93,10 @@
         <activity
             android:name=".show_events.ShowEventsListActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".menu.DialogActivity"></activity>
+        <activity android:name=".menu.DialogActivity" />
+        <activity android:name=".messages.MessagesActivity" />
+        <activity android:name=".teams.TeamsActivity" />
+        <activity android:name=".settings.SettingsActivity"></activity>
     </application>
 
 </manifest>
