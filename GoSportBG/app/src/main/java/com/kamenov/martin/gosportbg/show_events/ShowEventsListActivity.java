@@ -23,6 +23,7 @@ import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.event.EventActivity;
+import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
@@ -30,6 +31,8 @@ import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.kamenov.martin.gosportbg.constants.Constants.SPORTS;
 
@@ -106,9 +109,43 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                     cardView.setCardElevation(10);
                     int color = getColorForSport(event.sport);
 
+                    LinearLayout linearLayoutContainer = new LinearLayout(ShowEventsListActivity.this);
+                    linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
+                    linearLayoutContainer.setWeightSum(2);
+
+                    CircleImageView img = new CircleImageView(ShowEventsListActivity.this);
+                    if(event.admin.profileImg != null && event.admin.profileImg.startsWith("https://graph.facebook")) {
+                        new DownloadImageTask(img)
+                                .execute(event.admin.profileImg);
+                    }
+                    else if(event.admin.profileImg != null && !event.admin.profileImg.contains("default.jpg")) {
+                        String url = Constants.DOMAIN + event.admin.profileImg;
+                        new DownloadImageTask(img)
+                                .execute(url);
+                    } else {
+                        img.setImageResource(R.drawable.anonymous);
+                    }
+
+                    linearLayoutContainer.addView(img);
+
+                    LinearLayout.LayoutParams imageLayoutParams = (LinearLayout.LayoutParams) img.getLayoutParams();
+                    imageLayoutParams.height = 150;
+                    imageLayoutParams.width = 150;
+                    imageLayoutParams.setMargins(10, 0, 10, 0);
+                    imageLayoutParams.gravity = Gravity.CENTER;
+                    img.setLayoutParams(imageLayoutParams);
+
                     LinearLayout linearLayout = new LinearLayout(ShowEventsListActivity.this);
                     linearLayout.setOrientation(LinearLayout.VERTICAL);
-                    cardView.addView(linearLayout);
+
+                    linearLayoutContainer.addView(linearLayout);
+
+                    LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+                    lParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+                    lParams.gravity = Gravity.CENTER;
+                    linearLayout.setLayoutParams(lParams);
+
+                    cardView.addView(linearLayoutContainer);
                     TextView sport = new TextView(ShowEventsListActivity.this);
                     sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     sport.setText("Спорт: " + event.sport);

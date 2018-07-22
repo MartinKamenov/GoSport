@@ -96,7 +96,8 @@
         <activity android:name=".menu.DialogActivity" />
         <activity android:name=".messages.MessagesActivity" />
         <activity android:name=".teams.TeamsActivity" />
-        <activity android:name=".settings.SettingsActivity"></activity>
+        <activity android:name=".settings.SettingsActivity" />
+        <activity android:name=".teams.TeamActivity"></activity>
     </application>
 
 </manifest>
