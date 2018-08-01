@@ -5,13 +5,14 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.internet.contracts.GetHandler;
-import com.kamenov.martin.gosportbg.models.Event;
+import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.Team;
-import com.kamenov.martin.gosportbg.models.User;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
+import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
@@ -20,7 +21,7 @@ import okhttp3.Response;
  * Created by Martin on 21.7.2018 г..
  */
 
-public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandler {
+public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandler, PostHandler {
 
     private final NavigationCommand mTeamNavigationCommand;
     private final HttpRequester mRequester;
@@ -44,6 +45,16 @@ public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandle
     }
 
     @Override
+    public LocalUser getUser() {
+        GenericCacheRepository<LocalUser, Long> repo = mView.getGoSportApplication().getLocalUserRepository();
+        List<LocalUser> list = repo.getAll();
+        if(list.size() == 1) {
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
     public void requestTeams() {
         String url = Constants.DOMAIN + "/teams";
         mRequester.get(this, url);
@@ -51,13 +62,38 @@ public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandle
 
     @Override
     public void showTeams(Team[] teams) {
-        mView.hideProgressBar();
         mView.showTeamsOnUITread(teams);
     }
 
     @Override
+    public String[] getAllSports() {
+        return Constants.SPORTS;
+    }
+
+    @Override
+    public void createTeam(String name, String sport, String picture) {
+        if(name == null || name.length() < 3 || sport == null) {
+            mView.showMessageOnUIThread("Попълнете всички полета\nза отбора");
+        }
+        String url = Constants.DOMAIN + "/teams/addTeam";
+        int adminId = getUser().getOnlineId();
+        String body = "";
+        if(picture != null) {
+            body = String.format("{\"name\":\"%s\",\"sport\":\"%s\"" +
+                            ",\"adminId\":\"%d\", \"imageString\":\"%s\"}",
+                    name, sport, adminId, picture.replace("\n", "\\n"));
+        } else {
+            body = String.format("{\"name\":\"%s\",\"sport\":\"%s\"" +
+                            ",\"adminId\":\"%d\"}",
+                    name, sport, adminId);
+        }
+        String finalPic = String.format("%s", picture.replace("\n", "\\n"));
+        mView.showProgressBar();
+        mRequester.post(this, url, body);
+    }
+
+    @Override
     public void handleGet(Call call, Response response) {
-        String url = call.request().url().toString();
         String jsonInString = "";
         try {
             jsonInString = response.body().string();
@@ -74,7 +110,26 @@ public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandle
     }
 
     @Override
-    public void handleError(Call call, Exception ex) {
+    public void handlePost(Call call, Response response) {
+        String jsonInString = "";
+        try {
+            jsonInString = response.body().string();
+        } catch (IOException e) {
+            // TO DO: Notify user the error
+            // mView.notifyUserOnMainTread(e.toString());
+        }
+        if(jsonInString.contains("name")) {
+            // TO DO: After team is created should navigate to it's page
+            mView.refreshView();
+        } else {
+            // Handle error
+            mView.showMessageOnUIThread(jsonInString);
+        }
+    }
 
+    @Override
+    public void handleError(Call call, Exception ex) {
+        // TO DO: Notify user
+        mView.hideProgressBar();
     }
 }

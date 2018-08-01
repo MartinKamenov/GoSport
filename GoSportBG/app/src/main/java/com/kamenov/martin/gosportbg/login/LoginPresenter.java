@@ -95,7 +95,6 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
 
     @Override
     public void loginLocal(User user) {
-        // TO DO: Implement method
         GenericCacheRepository<LocalUser, Long> repo = mView.getGoSportApplication().getLocalUserRepository();
         repo.clearAll();
         repo.add(new LocalUser(user.id, user.email, user.username, user.password, user.city, user.profileImg));

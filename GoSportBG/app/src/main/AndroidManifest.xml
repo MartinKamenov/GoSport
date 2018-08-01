@@ -92,12 +92,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".show_events.ShowEventsListActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".menu.DialogActivity" />
-        <activity android:name=".messages.MessagesActivity" />
-        <activity android:name=".teams.TeamsActivity" />
-        <activity android:name=".settings.SettingsActivity" />
-        <activity android:name=".teams.TeamActivity"></activity>
+            android:screenOrientation="portrait"/>
+        <activity android:name=".menu.DialogActivity"/>
+        <activity android:name=".messages.MessagesActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".teams.TeamsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".settings.SettingsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".teams.TeamActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

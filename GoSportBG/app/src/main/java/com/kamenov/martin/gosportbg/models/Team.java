@@ -5,9 +5,10 @@ package com.kamenov.martin.gosportbg.models;
  */
 
 public class Team {
+    public int id;
     public String name;
     public String sport;
     public User[] users;
-    public String iconUrl;
+    public String pictureUrl;
     public DateTime dateTime;
 }

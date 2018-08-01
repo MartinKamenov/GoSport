@@ -104,7 +104,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
 
         loginButton = findViewById(R.id.login_button);
         loginButton.setReadPermissions(Arrays.asList(
-                "public_profile", "email", "user_birthday"));
+                "public_profile", "email"));
         mPresenter.tryLoginAuthomaticly();
         // If you are using in a fragment, call loginButton.setFragment(this);
 
@@ -130,7 +130,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,first_name,last_name,email,gender,birthday");
+                parameters.putString("fields", "id,first_name,last_name,email,gender");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
@@ -289,6 +289,11 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         if(emailTxt.length() == 0 || usernameTxtView.length() == 0 || cityTxt.length() == 0 ||
                 password1Txt.length() == 0 || password2Txt.length() == 0) {
             Toast.makeText(this, "Моля попълнете всички полета", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(usernameTxtView.contains(" ") || password1Txt.contains(" ") ||
+                usernameTxtView.contains("\n") || password1Txt.contains("\n")) {
+            Toast.makeText(this, "Потребителското име и паролата не трябва да имат идентации.", Toast.LENGTH_SHORT).show();
             return;
         }
         if(!password1Txt.equals(password2Txt)) {
