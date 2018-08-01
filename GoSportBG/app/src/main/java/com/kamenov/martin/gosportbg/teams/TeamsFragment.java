@@ -149,20 +149,20 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                     linearLayout.setLayoutParams(lParams);
 
                     cardView.addView(linearLayoutContainer);
+
+                    TextView description = new TextView(getActivity());
+                    description.setText(team.name);
+                    description.setGravity(Gravity.CENTER_HORIZONTAL);
+                    description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                    description.setTextSize(24);
+                    description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD_ITALIC);
+                    linearLayout.addView(description);
                     TextView sport = new TextView(getActivity());
                     sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                    sport.setText("Спорт: " + team.sport);
+                    sport.setText(team.sport);
                     sport.setGravity(Gravity.CENTER_HORIZONTAL);
                     sport.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                     linearLayout.addView(sport);
-                    if(team.name.length() > 0) {
-                        TextView description = new TextView(getActivity());
-                        description.setText(team.name);
-                        description.setGravity(Gravity.CENTER_HORIZONTAL);
-                        description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
-                        linearLayout.addView(description);
-                    }
                     linearLayout.setPadding(50, 50, 50, 50);
                     mTeamsContainer.addView(cardView);
                     LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardView.getLayoutParams();

@@ -153,6 +153,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                final int margin = 50;
                 int backgroundRes = getBackGroundSource(event.sport);
                 mEventContainer.setBackgroundResource(backgroundRes);
                 String userUsername = mPresenter.getLocalUser().getUsername();
@@ -170,12 +171,45 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 mPlayersContainer.removeAllViews();
                 float pixels = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
                 for(int i = 0; i < event.players.size(); i++) {
+                    RelativeLayout playerInfoContainer = new RelativeLayout(EventActivity.this);
                     TextView textView = new TextView(EventActivity.this);
                     textView.setTextSize(pixels);
                     textView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                     textView.setText((i + 1) + ". " + event.players.get(i).username);
                     textView.setTextColor(Color.parseColor("#222222"));
-                    mPlayersContainer.addView(textView);
+                    textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+                    playerInfoContainer.addView(textView);
+                    RelativeLayout.LayoutParams textViewParams = (RelativeLayout.LayoutParams)textView.getLayoutParams();
+                    textViewParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+                    textViewParams.leftMargin = margin;
+                    textViewParams.rightMargin = margin * 3;
+                    textView.setLayoutParams(textViewParams);
+                    CircleImageView img = new CircleImageView(EventActivity.this);
+                    if(event.players.get(i).profileImg != null && event.players.get(i).profileImg.startsWith("https://graph.facebook")) {
+                        new DownloadImageTask(img)
+                                .execute(event.players.get(i).profileImg);
+                    }
+                    else if(event.players.get(i).profileImg != null && !event.players.get(i).profileImg.contains("default.jpg")) {
+                        String url = Constants.DOMAIN + event.players.get(i).profileImg;
+                        new DownloadImageTask(img)
+                                .execute(url);
+                    } else {
+                        img.setImageResource(R.drawable.anonymous);
+                    }
+                    playerInfoContainer.addView(img);
+                    RelativeLayout.LayoutParams imgViewParams = (RelativeLayout.LayoutParams)img.getLayoutParams();
+                    imgViewParams.height = margin / 2 * 3;
+                    imgViewParams.width = margin / 2 * 3;
+                    imgViewParams.rightMargin = margin;
+                    imgViewParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+                    img.setLayoutParams(imgViewParams);
+
+                    mPlayersContainer.addView(playerInfoContainer);
+                    LinearLayout.LayoutParams playerContainerParams =
+                            (LinearLayout.LayoutParams)playerInfoContainer.getLayoutParams();
+                    playerContainerParams.weight = LinearLayout.LayoutParams.MATCH_PARENT;
+                    playerInfoContainer.setLayoutParams(playerContainerParams);
+                    playerContainerParams.bottomMargin = 20;
                 }
                 LatLng place = new LatLng(event.location.latitude, event.location.longitude);
                 mMap.addMarker(new MarkerOptions().position(place).title("Place"));

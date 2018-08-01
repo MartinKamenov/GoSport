@@ -87,7 +87,6 @@ public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandle
                             ",\"adminId\":\"%d\"}",
                     name, sport, adminId);
         }
-        String finalPic = String.format("%s", picture.replace("\n", "\\n"));
         mView.showProgressBar();
         mRequester.post(this, url, body);
     }
