@@ -23,6 +23,8 @@ public class EventContracts {
         void startChat();
 
         void addMessage(String message);
+
+        void onPause();
     }
 
     public interface IEventView extends BaseContracts.View {

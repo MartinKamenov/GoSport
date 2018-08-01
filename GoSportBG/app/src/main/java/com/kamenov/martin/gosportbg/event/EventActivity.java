@@ -390,4 +390,10 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 break;
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.onPause();
+    }
 }

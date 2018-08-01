@@ -92,6 +92,13 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
     }
 
     @Override
+    public void onPause() {
+        unsubscribe();
+        mThread.setRunning(false);
+        mThread.setFinished(true);
+    }
+
+    @Override
     public void handleGet(Call call, Response response) {
         String jsonInString = "";
         try {
