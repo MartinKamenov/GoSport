@@ -1,4 +1,4 @@
-package com.kamenov.martin.gosportbg.teams;
+package com.kamenov.martin.gosportbg.teams.multiple_teams;
 
 
 import android.app.Fragment;
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -104,7 +105,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                hideProgressBar();
+                updateTeams(teams.length);
                 mTeamsContainer.removeAllViews();
                 int margin = 10;
 
@@ -189,6 +190,12 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
         root.findViewById(R.id.progressbar_form).setVisibility(View.GONE);
         root.findViewById(R.id.new_team_form).setVisibility(View.GONE);
         root.findViewById(R.id.show_teams_form).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void updateTeams(int count) {
+        root.findViewById(R.id.event_list_progressbar).setVisibility(View.GONE);
+        ((TextView)root.findViewById(R.id.result_count)).setText("Брой намерени събития: " + count);
     }
 
     @Override
@@ -281,6 +288,12 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPresenter.requestTeams();
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.new_team_btn:
@@ -295,6 +308,10 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
             case R.id.profile_image_button:
                 selectPicture();
                 break;
+            default:
+                int id = view.getId();
+                ((CardView) view).setCardBackgroundColor(Color.parseColor("#aaaaaa"));
+                mPresenter.navigateToTeam(id);
         }
     }
 }

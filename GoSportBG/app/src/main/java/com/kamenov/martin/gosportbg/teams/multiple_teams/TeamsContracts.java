@@ -1,4 +1,4 @@
-package com.kamenov.martin.gosportbg.teams;
+package com.kamenov.martin.gosportbg.teams.multiple_teams;
 
 import android.widget.ArrayAdapter;
 
@@ -24,6 +24,8 @@ public class TeamsContracts {
         String[] getAllSports();
 
         void createTeam(String name, String sport, String picture);
+
+        void navigateToTeam(int id);
     }
 
     public interface ITeamsView extends BaseContracts.View {
@@ -32,6 +34,8 @@ public class TeamsContracts {
         void showTeamsOnUITread(Team[] teams);
 
         void refreshView();
+
+        void updateTeams(int count);
 
         void hideProgressBar();
 

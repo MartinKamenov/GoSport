@@ -1,4 +1,4 @@
-package com.kamenov.martin.gosportbg.teams;
+package com.kamenov.martin.gosportbg.teams.multiple_teams;
 
 import com.google.gson.Gson;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
@@ -10,6 +10,7 @@ import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.Team;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
+import com.kamenov.martin.gosportbg.teams.multiple_teams.TeamsContracts;
 
 import java.io.IOException;
 import java.util.List;
@@ -87,8 +88,18 @@ public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandle
                             ",\"adminId\":\"%d\"}",
                     name, sport, adminId);
         }
+        if(picture!=null) {
+            String str = picture.replace("\n", "\\n");
+            str.toString();
+        }
         mView.showProgressBar();
         mRequester.post(this, url, body);
+    }
+
+    @Override
+    public void navigateToTeam(int id) {
+        mTeamNavigationCommand.putExtraInteger("id", id);
+        mTeamNavigationCommand.navigate();
     }
 
     @Override
@@ -119,7 +130,7 @@ public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandle
         }
         if(jsonInString.contains("name")) {
             // TO DO: After team is created should navigate to it's page
-            mView.refreshView();
+            mTeamNavigationCommand.navigate();
         } else {
             // Handle error
             mView.showMessageOnUIThread(jsonInString);

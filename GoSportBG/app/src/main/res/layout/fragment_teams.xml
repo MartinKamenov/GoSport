@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".teams.TeamsFragment">
+    tools:context=".teams.multiple_teams.TeamsFragment">
 
     <LinearLayout
         android:id="@+id/show_teams_form"
@@ -19,15 +19,37 @@
             android:fontFamily="sans-serif-condensed"
             android:theme="@style/SuccessButton"
             android:textColor="#ffffff"/>
-        <ScrollView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:id="@+id/teams_container"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"/>
-        </ScrollView>
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <ProgressBar
+                        android:id="@+id/event_list_progressbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:id="@+id/teams_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </ScrollView>
+            <TextView
+                android:id="@+id/result_count"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textAlignment="center"
+                android:text="Брой намерени събития: Изчислява се..."/>
+        </RelativeLayout>
+
     </LinearLayout>
     <LinearLayout
         android:id="@+id/new_team_form"
@@ -124,7 +146,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Зареждане на отбори..."/>
+                    android:text="Създаване на отбор..."/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
