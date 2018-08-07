@@ -8,7 +8,7 @@ public class Team {
     public int id;
     public String name;
     public String sport;
-    public User[] users;
+    public User[] players;
     public User[] requestingPlayers;
     public String pictureUrl;
     public DateTime dateTime;

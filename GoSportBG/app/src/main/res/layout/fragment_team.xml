@@ -52,7 +52,7 @@
             </LinearLayout>
         </ScrollView>
         <Button
-            android:id="@+id/join_team_btn"
+            android:id="@+id/request_join_team_btn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_alignParentBottom="true"

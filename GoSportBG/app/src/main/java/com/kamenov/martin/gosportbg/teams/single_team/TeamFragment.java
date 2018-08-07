@@ -3,9 +3,11 @@ package com.kamenov.martin.gosportbg.teams.single_team;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,17 +19,21 @@ import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
+import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.Team;
 import com.kamenov.martin.gosportbg.models.User;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class TeamFragment extends Fragment implements TeamContracts.ITeamView {
+public class TeamFragment extends Fragment implements TeamContracts.ITeamView, View.OnClickListener {
 
 
     private TeamContracts.ITeamPresenter mPresenter;
     private View root;
+    private Button mRequestButton;
 
     public TeamFragment() {
         // Required empty public constructor
@@ -39,6 +45,8 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_team, container, false);
+        mRequestButton = root.findViewById(R.id.request_join_team_btn);
+        mRequestButton.setOnClickListener(this);
         return root;
     }
 
@@ -50,6 +58,22 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView {
     @Override
     public GoSportApplication getGoSportApplication() {
         return (GoSportApplication)getActivity().getApplication();
+    }
+
+    @Override
+    public void requestJoinButtonPressed() {
+        mPresenter.requestJoin();
+    }
+
+    @Override
+    public void refreshView() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().finish();
+                startActivity(getActivity().getIntent());
+            }
+        });
     }
 
     @Override
@@ -72,25 +96,84 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView {
                 LinearLayout playersContainer = root.findViewById(R.id.players_container);
 
                 boolean loggedPlayerPartOfTeamPlayers = false;
-                for(int i = 0; i < team.requestingPlayers.length; i += 1) {
-                    if(team.users[i].id == mPresenter.getLocalUser().getOnlineId()) {
+                int localUserId = mPresenter.getLocalUser().getOnlineId();
+                for(int i = 0; i < team.players.length; i += 1) {
+                    if(team.players[i].id == localUserId) {
                         loggedPlayerPartOfTeamPlayers = true;
                     }
                 }
 
                 requestingPlayersContainer.removeAllViews();
-                if(loggedPlayerPartOfTeamPlayers) {
+                if(loggedPlayerPartOfTeamPlayers && team.requestingPlayers != null) {
+
                     for (int i = 0; i < team.requestingPlayers.length; i += 1) {
                         User requestingPlayer = team.requestingPlayers[i];
-                        RelativeLayout relativeLayout = new RelativeLayout(getActivity());
-                        TextView nameOfPlayer = new TextView(getActivity());
-                        nameOfPlayer.setText(requestingPlayer.username);
-                        nameOfPlayer.setTextSize(40);
-                        relativeLayout.addView(nameOfPlayer);
-                        requestingPlayersContainer.addView(relativeLayout);
+                        makePlayerField(requestingPlayer, requestingPlayersContainer, true);
                     }
+                }
+
+                playersContainer.removeAllViews();
+                TextView header = new TextView(getActivity());
+                header.setText("Участници:");
+                header.setGravity(Gravity.CENTER);
+                header.setTextSize(18);
+                requestingPlayersContainer.addView(header);
+                for(int i = 0; i < team.players.length; i += 1) {
+                    User player = team.players[i];
+                    makePlayerField(player, playersContainer, false);
                 }
             }
         });
+    }
+
+    private void makePlayerField(User player, LinearLayout container, boolean isRequestingPlayer) {
+        int margin = 50;
+        RelativeLayout relativeLayout = new RelativeLayout(getActivity());
+
+        TextView nameOfPlayer = new TextView(getActivity());
+        nameOfPlayer.setText(player.username);
+        nameOfPlayer.setTextSize(18);
+        relativeLayout.addView(nameOfPlayer);
+
+        RelativeLayout.LayoutParams nameLayoutParams = (RelativeLayout.LayoutParams)nameOfPlayer
+                .getLayoutParams();
+        nameLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        nameOfPlayer.setLayoutParams(nameLayoutParams);
+
+        CircleImageView img = new CircleImageView(getActivity());
+        if(player.profileImg != null && player.profileImg.startsWith("https://graph.facebook")) {
+            new DownloadImageTask(img)
+                    .execute(player.profileImg);
+        }
+        else if(player.profileImg != null && !player.profileImg.contains("default.jpg")) {
+            String url = Constants.DOMAIN + player.profileImg;
+            new DownloadImageTask(img)
+                    .execute(url);
+        } else {
+            img.setImageResource(R.drawable.anonymous);
+        }
+        relativeLayout.addView(img);
+        RelativeLayout.LayoutParams imgLayoutParams = (RelativeLayout.LayoutParams)img
+                .getLayoutParams();
+        imgLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+        imgLayoutParams.height = margin / 2 * 3;
+        imgLayoutParams.width = margin / 2 * 3;
+        img.setLayoutParams(imgLayoutParams);
+
+        container.addView(relativeLayout);
+
+        LinearLayout.LayoutParams playerContainerParams =
+                (LinearLayout.LayoutParams)container.getLayoutParams();
+        playerContainerParams.setMargins(margin, margin / 2, margin, margin / 2);
+        container.setLayoutParams(playerContainerParams);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.request_join_team_btn:
+                requestJoinButtonPressed();
+                break;
+        }
     }
 }

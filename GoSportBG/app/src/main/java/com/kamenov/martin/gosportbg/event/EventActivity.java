@@ -208,8 +208,8 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                     LinearLayout.LayoutParams playerContainerParams =
                             (LinearLayout.LayoutParams)playerInfoContainer.getLayoutParams();
                     playerContainerParams.weight = LinearLayout.LayoutParams.MATCH_PARENT;
-                    playerInfoContainer.setLayoutParams(playerContainerParams);
                     playerContainerParams.bottomMargin = 20;
+                    playerInfoContainer.setLayoutParams(playerContainerParams);
                 }
                 LatLng place = new LatLng(event.location.latitude, event.location.longitude);
                 mMap.addMarker(new MarkerOptions().position(place).title("Place"));

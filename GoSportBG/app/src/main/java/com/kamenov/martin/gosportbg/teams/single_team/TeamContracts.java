@@ -13,11 +13,17 @@ public class TeamContracts {
     public interface ITeamPresenter extends BaseContracts.Presenter {
         LocalUser getLocalUser();
 
+        void requestJoin();
+
         void getTeam();
     }
 
     public interface ITeamView extends BaseContracts.View {
         GoSportApplication getGoSportApplication();
+
+        void requestJoinButtonPressed();
+
+        void refreshView();
 
         void showTeamOnUIThread(Team team);
     }

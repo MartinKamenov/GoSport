@@ -5,6 +5,7 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.internet.contracts.GetHandler;
+import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.Team;
@@ -19,7 +20,7 @@ import okhttp3.Response;
  * Created by Martin on 4.8.2018 г..
  */
 
-public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler {
+public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler, PostHandler {
     private final HttpRequester mRequester;
     private final Gson mGson;
     private final int id;
@@ -40,6 +41,13 @@ public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler {
         }
 
         return null;
+    }
+
+    @Override
+    public void requestJoin() {
+        String body = "{\"id\":\"" + getLocalUser().getOnlineId() + "\"}";
+        String url = Constants.DOMAIN + "/teams/request/" + id;
+        mRequester.post(this, url, body);
     }
 
     @Override
@@ -74,7 +82,12 @@ public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler {
     }
 
     @Override
-    public void handleError(Call call, Exception ex) {
+    public void handlePost(Call call, Response response) {
+        mView.refreshView();
+    }
 
+    @Override
+    public void handleError(Call call, Exception ex) {
+        mView.refreshView();
     }
 }
