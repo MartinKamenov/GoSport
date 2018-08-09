@@ -96,6 +96,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                 LinearLayout playersContainer = root.findViewById(R.id.players_container);
 
                 boolean loggedPlayerPartOfTeamPlayers = false;
+
                 int localUserId = mPresenter.getLocalUser().getOnlineId();
                 for(int i = 0; i < team.players.length; i += 1) {
                     if(team.players[i].id == localUserId) {
@@ -103,9 +104,19 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                     }
                 }
 
+                if(loggedPlayerPartOfTeamPlayers) {
+                    root.findViewById(R.id.request_join_team_btn).setVisibility(View.GONE);
+                    root.findViewById(R.id.open_chat_btn).setVisibility(View.VISIBLE);
+                }
+
                 requestingPlayersContainer.removeAllViews();
                 if(loggedPlayerPartOfTeamPlayers && team.requestingPlayers != null) {
-
+                    requestingPlayersContainer.removeAllViews();
+                    TextView requestingPlayersHeader = new TextView(getActivity());
+                    requestingPlayersHeader.setText("Заявки за нови участници:");
+                    requestingPlayersHeader.setGravity(Gravity.CENTER);
+                    requestingPlayersHeader.setTextSize(18);
+                    requestingPlayersContainer.addView(requestingPlayersHeader);
                     for (int i = 0; i < team.requestingPlayers.length; i += 1) {
                         User requestingPlayer = team.requestingPlayers[i];
                         makePlayerField(requestingPlayer, requestingPlayersContainer, true);
@@ -113,11 +124,11 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                 }
 
                 playersContainer.removeAllViews();
-                TextView header = new TextView(getActivity());
-                header.setText("Участници:");
-                header.setGravity(Gravity.CENTER);
-                header.setTextSize(18);
-                requestingPlayersContainer.addView(header);
+                TextView playersHeader = new TextView(getActivity());
+                playersHeader.setText("Участници:");
+                playersHeader.setGravity(Gravity.CENTER);
+                playersHeader.setTextSize(18);
+                playersContainer.addView(playersHeader);
                 for(int i = 0; i < team.players.length; i += 1) {
                     User player = team.players[i];
                     makePlayerField(player, playersContainer, false);

@@ -60,6 +60,16 @@
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:theme="@style/SuccessButton"/>
+        <Button
+            android:id="@+id/open_chat_btn"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:text="Отваряне на чат"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:theme="@style/InfoButton"/>
     </RelativeLayout>
 
 </FrameLayout>
