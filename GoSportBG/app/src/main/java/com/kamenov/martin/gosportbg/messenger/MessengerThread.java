@@ -1,14 +1,15 @@
-package com.kamenov.martin.gosportbg.event;
+package com.kamenov.martin.gosportbg.messenger;
 
 import com.kamenov.martin.gosportbg.constants.Constants;
+import com.kamenov.martin.gosportbg.event.EventPresenter;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 
 /**
- * Created by Martin on 6.6.2018 г..
+ * Created by Martin on 11.8.2018 г..
  */
 
-public class EventThread extends Thread {
-    private final EventPresenter presenter;
+public class MessengerThread  extends Thread {
+    private final MessengerPresenter presenter;
     private final HttpRequester requester;
     private boolean running;
     private boolean finished;
@@ -16,7 +17,7 @@ public class EventThread extends Thread {
     private int id;
     private int tries;
 
-    public EventThread(EventPresenter presenter, HttpRequester requester, int id) {
+    public MessengerThread(MessengerPresenter presenter, HttpRequester requester, int id) {
         this.presenter = presenter;
         this.requester = requester;
         this.id = id;

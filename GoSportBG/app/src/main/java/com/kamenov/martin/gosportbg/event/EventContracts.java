@@ -18,13 +18,7 @@ public class EventContracts {
 
         void addUserToEvent();
 
-        void finishQuery();
-
-        void startChat();
-
-        void addMessage(String message);
-
-        void onPause();
+        void navigateToMessenger();
     }
 
     public interface IEventView extends BaseContracts.View {
@@ -32,14 +26,10 @@ public class EventContracts {
 
         void addUserToEventButtonPressed();
 
-        void showMessageOnUITread(String message);
-
         void showEventOnUITread(Event event);
 
         void showMessenger();
 
-        void addMessageButtonPressed();
-
-        void addMessagesOnUIThread(Message[] messages);
+        void showMessageOnUITread(final String message);
     }
 }

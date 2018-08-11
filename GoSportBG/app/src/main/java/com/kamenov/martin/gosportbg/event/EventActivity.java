@@ -38,10 +38,13 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
+import com.kamenov.martin.gosportbg.messages.MessagesActivity;
+import com.kamenov.martin.gosportbg.messenger.MessengerActivity;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.Message;
 import com.kamenov.martin.gosportbg.models.User;
+import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -59,15 +62,8 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private LinearLayout mPlayersContainer;
     private Button mAddUserToEventBtn;
     private RelativeLayout mEventContainer;
-    private RelativeLayout mMessengerContainer;
-    private EditText message;
-    private Button submitButton;
     private Button showMessengerButton;
-    private ScrollView scrollView;
-    private String lastMessageString;
-    private LinearLayout messageContainer;
     private TextView mSportTextView;
-    private Message lastMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,25 +76,24 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         mSportTextView = findViewById(R.id.sport_txt);
         mPlayersContainer = findViewById(R.id.players_container);
         mEventContainer = findViewById(R.id.event_container);
-        mMessengerContainer = findViewById(R.id.messenger_container);
-        scrollView = findViewById(R.id.scrollView);
-        message = findViewById(R.id.message);
-        message.setMovementMethod(new ScrollingMovementMethod());
         showMessengerButton = findViewById(R.id.showMessenger);
         showMessengerButton.setOnClickListener(this);
-        submitButton = findViewById(R.id.submit);
-        submitButton.setOnClickListener(this);
-        messageContainer = findViewById(R.id.messages_container);
-        
 
         mAddUserToEventBtn = findViewById(R.id.addUserToEvent);
         mAddUserToEventBtn.setOnClickListener(this);
+
+        ActivityNavigationCommand navigationCommand =
+                new ActivityNavigationCommand(this, MessengerActivity.class);
 
         int id = 2;
         if(getIntent().hasExtra("id")) {
             id = getIntent().getIntExtra("id", 0);
         }
-        EventContracts.IEventPresenter presenter = new EventPresenter(new HttpRequester(),new Gson(), id);
+        EventContracts.IEventPresenter presenter = new EventPresenter(
+                new HttpRequester(),
+                new Gson(),
+                navigationCommand,
+                id);
         setPresenter(presenter);
         presenter.subscribe(this);
         presenter.getEvent();
@@ -238,142 +233,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
 
     @Override
     public void showMessenger() {
-        mEventContainer.setVisibility(View.GONE);
-        mMessengerContainer.setVisibility(View.VISIBLE);
-        mPresenter.startChat();
-    }
-
-    @Override
-    public void addMessageButtonPressed() {
-        String messageText = message.getText().toString();
-        message.setText("");
-        mPresenter.addMessage(messageText);
-    }
-
-    @Override
-    public void addMessagesOnUIThread(final Message[] messages) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if(lastMessage != null && lastMessage.username.equals(messages[messages.length - 1].username)
-                        && lastMessage.text.equals(messages[messages.length - 1].text)
-                        && lastMessage.dateTime.minute == messages[messages.length - 1].dateTime.minute) {
-                    lastMessage = messages[messages.length - 1];
-                    return;
-                }
-                if(messages.length > 0) {
-                    lastMessage = messages[messages.length - 1];
-                }
-                int margin = 15;
-                String currentUserUsername = mPresenter.getLocalUser().getUsername();
-                messageContainer.removeAllViews();
-                String lastUser = "";
-                for(int i = 0; i < messages.length; i++) {
-                    RelativeLayout relativeLayout = new RelativeLayout(EventActivity.this);
-                    boolean shouldBeRight = false;
-                    if(!lastUser.equals(messages[i].username)) {
-                        lastUser = messages[i].username;
-                        LinearLayout linearLayout = new LinearLayout(EventActivity.this);
-                        linearLayout.setOrientation(LinearLayout.VERTICAL);
-                        TextView usernameTextView = new TextView(EventActivity.this);
-                        usernameTextView.setText(messages[i].username);
-                        usernameTextView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
-                        usernameTextView.setGravity(Gravity.CENTER);
-                        usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        CircleImageView img = new CircleImageView(EventActivity.this);
-                        if(messages[i].profileImg != null && messages[i].profileImg.startsWith("https://graph.facebook")) {
-                            new DownloadImageTask(img)
-                                    .execute(messages[i].profileImg);
-                        }
-                        else if(messages[i].profileImg != null && !messages[i].profileImg.contains("default.jpg")) {
-                            String url = Constants.DOMAIN + messages[i].profileImg;
-                            new DownloadImageTask(img)
-                                    .execute(url);
-                        } else {
-                            img.setImageResource(R.drawable.anonymous);
-                        }
-                        linearLayout.addView(img);
-                        img.getLayoutParams().height = 150;
-                        img.setBorderWidth(4);
-                        linearLayout.addView(usernameTextView);
-                        relativeLayout.addView(linearLayout);
-                        RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
-                        lp.setMargins(margin, margin, margin, margin);
-                        if(currentUserUsername.equals(messages[i].username)) {
-                            lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                            img.setBorderColor(fetchAccentColor());
-                        } else {
-                            img.setBorderColor(Color.parseColor("#cccccc"));
-                        }
-                        linearLayout.setLayoutParams(lp);
-                        messageContainer.addView(relativeLayout);
-                        i--;
-                        continue;
-                    }
-                    CardView cardView = new CardView(EventActivity.this);
-                    cardView.setPreventCornerOverlap(true);
-                    cardView.setRadius(45);
-                    cardView.setElevation(10);
-
-                    TextView textView = new TextView(EventActivity.this);
-                    textView.setPadding(20, 20, 20 , 20);
-                    textView.setText(messages[i].text);
-                    textView.setGravity(Gravity.CENTER);
-                    textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
-                    textView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                    if(currentUserUsername.equals(messages[i].username)) {
-                        textView.setBackgroundResource(R.drawable.back);
-                        textView.setTextColor(Color.WHITE);
-                        shouldBeRight = true;
-                    } else {
-                        textView.setBackgroundResource(R.drawable.others);
-                    }
-
-                    cardView.addView(textView);
-                    relativeLayout.addView(cardView);
-                    messageContainer.addView(relativeLayout);
-                    RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) cardView.getLayoutParams();
-                    lp.setMargins(margin, margin, margin, 0);
-                    if(shouldBeRight) {
-                        lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                    }
-                    cardView.setLayoutParams(lp);
-                }
-                if(lastMessageString == null) {
-                    scrollView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            scrollView.fullScroll(View.FOCUS_DOWN);
-                        }
-                    });
-                } else if(messages.length > 0 &&!lastMessageString.equals(messages[messages.length - 1].text)) {
-                    scrollView.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            scrollView.fullScroll(View.FOCUS_DOWN);
-                        }
-                    });
-                }
-
-                if(messages.length != 0) {
-                    lastMessageString = messages[messages.length - 1].text;
-                }
-
-                mPresenter.finishQuery();
-            }
-        });
-    }
-
-    private int fetchAccentColor() {
-        TypedValue typedValue = new TypedValue();
-
-        TypedArray a = obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
-        int color = a.getColor(0, 0);
-
-        a.recycle();
-
-        return color;
+        mPresenter.navigateToMessenger();
     }
 
     @Override
@@ -382,18 +242,9 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
             case R.id.addUserToEvent:
                 addUserToEventButtonPressed();
                 break;
-            case R.id.submit:
-                addMessageButtonPressed();
-                break;
             case R.id.showMessenger:
                 showMessenger();
                 break;
         }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        mPresenter.onPause();
     }
 }

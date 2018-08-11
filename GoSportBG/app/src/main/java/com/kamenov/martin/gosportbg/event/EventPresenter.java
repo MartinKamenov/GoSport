@@ -10,6 +10,7 @@ import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.MessageCollection;
 import com.kamenov.martin.gosportbg.models.User;
+import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 
 import java.io.IOException;
 import java.util.List;
@@ -25,13 +26,14 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
     private final Gson mGson;
     private EventContracts.IEventView mView;
     private HttpRequester mRequester;
-    private EventThread mThread;
+    private final NavigationCommand mMessengerNavigationCommand;
     private int id;
 
-    public EventPresenter(HttpRequester requester, Gson gson, int id) {
+    public EventPresenter(HttpRequester requester, Gson gson,
+                          NavigationCommand navigationCommand, int id) {
         this.mRequester = requester;
         this.mGson = gson;
-        this.mThread = new EventThread(this, requester, id);
+        this.mMessengerNavigationCommand = navigationCommand;
         this.id = id;
     }
 
@@ -70,32 +72,9 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
     }
 
     @Override
-    public void finishQuery() {
-        mThread.setFinished(true);
-    }
-
-    @Override
-    public void startChat() {
-        mThread.setRunning(true);
-        mThread.start();
-    }
-
-    @Override
-    public void addMessage(String message) {
-        if(message == null || message.length() == 0) {
-            return;
-        }
-        mThread.setFinished(false);
-        String body = String.format("{\"username\":\"%s\",\"text\":\"%s\", \"profileImg\":\"%s\"}",
-                getLocalUser().getUsername(), message.replace("\n", "\\n"), getLocalUser().getProfileImg());
-        mRequester.post(this, Constants.DOMAIN + "/messages/" + id + "/addMessage", body);
-    }
-
-    @Override
-    public void onPause() {
-        unsubscribe();
-        mThread.setRunning(false);
-        mThread.setFinished(true);
+    public void navigateToMessenger() {
+        mMessengerNavigationCommand.putExtraInteger("id", id);
+        mMessengerNavigationCommand.navigate();
     }
 
     @Override
@@ -106,11 +85,6 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(call.request().url().toString().contains("message")) {
-            MessageCollection messageCollection = mGson.fromJson(jsonInString, MessageCollection.class);
-            mView.addMessagesOnUIThread(messageCollection.collection);
-            return;
-        }
 
         if(jsonInString.contains("{")) {
             Event event = mGson.fromJson(jsonInString, Event.class);
@@ -120,7 +94,6 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
 
     @Override
     public void handleError(Call call, Exception ex) {
-        mThread.setFinished(true);
     }
 
     @Override
@@ -132,17 +105,10 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
             e.printStackTrace();
         }
 
-        if(call.request().url().toString().contains("message")) {
-            mThread.setFinished(true);
-            return;
-        }
-
         if(jsonInString.contains("{")) {
             Event event = mGson.fromJson(jsonInString, Event.class);
             mView.showEventOnUITread(event);
             return;
         }
-
-        mView.showMessageOnUITread(jsonInString);
     }
 }
