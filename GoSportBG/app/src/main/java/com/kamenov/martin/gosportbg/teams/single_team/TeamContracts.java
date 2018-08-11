@@ -16,6 +16,8 @@ public class TeamContracts {
         void requestJoin();
 
         void getTeam();
+
+        void navigateToMessenger();
     }
 
     public interface ITeamView extends BaseContracts.View {
@@ -24,6 +26,8 @@ public class TeamContracts {
         void requestJoinButtonPressed();
 
         void refreshView();
+
+        void showMessengerButtonPressed();
 
         void showTeamOnUIThread(Team team);
     }

@@ -9,6 +9,7 @@ import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.Team;
+import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,11 +25,15 @@ public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler, 
     private final HttpRequester mRequester;
     private final Gson mGson;
     private final int id;
+    private final ActivityNavigationCommand mMessengerNavigationCommand;
     private TeamContracts.ITeamView mView;
+    private static final int teamIdMessegesDifference = 1000000;
 
-    public TeamPresenter(HttpRequester requester, Gson gson, int id) {
+    public TeamPresenter(HttpRequester requester, Gson gson,
+                         ActivityNavigationCommand navigationCommand, int id) {
         this.mRequester = requester;
         this.mGson = gson;
+        this.mMessengerNavigationCommand = navigationCommand;
         this.id = id;
     }
 
@@ -57,13 +62,19 @@ public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler, 
     }
 
     @Override
+    public void navigateToMessenger() {
+        mMessengerNavigationCommand.putExtraInteger("id", id + Constants.TEAMSIDDIFFERENCE);
+        mMessengerNavigationCommand.navigate();
+    }
+
+    @Override
     public void subscribe(BaseContracts.View view) {
         this.mView = (TeamContracts.ITeamView) view;
     }
 
     @Override
     public void unsubscribe() {
-
+        this.mView = null;
     }
 
     @Override

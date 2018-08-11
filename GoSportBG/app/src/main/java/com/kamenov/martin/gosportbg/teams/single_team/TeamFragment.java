@@ -34,6 +34,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
     private TeamContracts.ITeamPresenter mPresenter;
     private View root;
     private Button mRequestButton;
+    private Button mShowMessengerButton;
 
     public TeamFragment() {
         // Required empty public constructor
@@ -47,6 +48,9 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
         root = inflater.inflate(R.layout.fragment_team, container, false);
         mRequestButton = root.findViewById(R.id.request_join_team_btn);
         mRequestButton.setOnClickListener(this);
+        mShowMessengerButton = root.findViewById(R.id.open_chat_btn);
+        mShowMessengerButton.setOnClickListener(this);
+
         return root;
     }
 
@@ -74,6 +78,11 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                 startActivity(getActivity().getIntent());
             }
         });
+    }
+
+    @Override
+    public void showMessengerButtonPressed() {
+        mPresenter.navigateToMessenger();
     }
 
     @Override
@@ -184,6 +193,9 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
         switch (view.getId()) {
             case R.id.request_join_team_btn:
                 requestJoinButtonPressed();
+                break;
+            case R.id.open_chat_btn:
+                showMessengerButtonPressed();
                 break;
         }
     }

@@ -6,6 +6,8 @@ import android.os.Bundle;
 import com.google.gson.Gson;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
+import com.kamenov.martin.gosportbg.messenger.MessengerActivity;
+import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
 public class TeamActivity extends AppCompatActivity {
 
@@ -19,6 +21,7 @@ public class TeamActivity extends AppCompatActivity {
         TeamPresenter teamPresenter = new TeamPresenter(
                 new HttpRequester(),
                 new Gson(),
+                new ActivityNavigationCommand(this, MessengerActivity.class),
                 id
         );
 
