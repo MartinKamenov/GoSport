@@ -52,6 +52,7 @@ public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler, 
     public void requestJoin() {
         String body = "{\"id\":\"" + getLocalUser().getOnlineId() + "\"}";
         String url = Constants.DOMAIN + "/teams/request/" + id;
+        mView.showLoader();
         mRequester.post(this, url, body);
     }
 
@@ -65,6 +66,22 @@ public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler, 
     public void navigateToMessenger() {
         mMessengerNavigationCommand.putExtraInteger("id", id + Constants.TEAMSIDDIFFERENCE);
         mMessengerNavigationCommand.navigate();
+    }
+
+    @Override
+    public void acceptPlayer(int playerId) {
+        String body = "{\"id\":\"" + playerId + "\"}";
+        String url = Constants.DOMAIN + "/teams/join/" + this.id;
+        mView.showLoader();
+        mRequester.post(this, url, body);
+    }
+
+    @Override
+    public void rejectPlayer(int playerId) {
+        String body = "{\"id\":\"" + playerId + "\"}";
+        String url = Constants.DOMAIN + "/teams/reject/" + this.id;
+        mView.showLoader();
+        mRequester.post(this, url, body);
     }
 
     @Override
@@ -94,6 +111,7 @@ public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler, 
 
     @Override
     public void handlePost(Call call, Response response) {
+        mView.hideLoader();
         mView.refreshView();
     }
 

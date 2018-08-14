@@ -18,6 +18,10 @@ public class TeamContracts {
         void getTeam();
 
         void navigateToMessenger();
+
+        void acceptPlayer(int id);
+
+        void rejectPlayer(int id);
     }
 
     public interface ITeamView extends BaseContracts.View {
@@ -30,5 +34,9 @@ public class TeamContracts {
         void showMessengerButtonPressed();
 
         void showTeamOnUIThread(Team team);
+
+        void showLoader();
+
+        void hideLoader();
     }
 }

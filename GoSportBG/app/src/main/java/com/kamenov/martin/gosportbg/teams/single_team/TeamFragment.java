@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -35,6 +36,8 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
     private View root;
     private Button mRequestButton;
     private Button mShowMessengerButton;
+    private static int acceptButtonIdDif = 1000000;
+    private static int rejectButtonDif = 2000000;
 
     public TeamFragment() {
         // Required empty public constructor
@@ -146,6 +149,28 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
         });
     }
 
+    @Override
+    public void showLoader() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                root.findViewById(R.id.main_container).setVisibility(View.GONE);
+                root.findViewById(R.id.loader_container).setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    @Override
+    public void hideLoader() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                root.findViewById(R.id.loader_container).setVisibility(View.GONE);
+                root.findViewById(R.id.main_container).setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     private void makePlayerField(User player, LinearLayout container, boolean isRequestingPlayer) {
         int margin = 50;
         RelativeLayout relativeLayout = new RelativeLayout(getActivity());
@@ -159,6 +184,23 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                 .getLayoutParams();
         nameLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         nameOfPlayer.setLayoutParams(nameLayoutParams);
+
+        if(isRequestingPlayer) {
+            LinearLayout linearLayout = new LinearLayout(getActivity());
+            linearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            ImageButton acceptButton = new ImageButton(getActivity());
+            acceptButton.setImageResource(android.R.drawable.ic_input_add);
+            acceptButton.setId(player.id + acceptButtonIdDif);
+            acceptButton.setOnClickListener(this);
+            ImageButton rejectButton = new ImageButton(getActivity());
+            rejectButton.setImageResource(android.R.drawable.ic_delete);
+            rejectButton.setId(player.id + rejectButtonDif);
+            rejectButton.setOnClickListener(this);
+            linearLayout.addView(acceptButton);
+            linearLayout.addView(rejectButton);
+            container.addView(linearLayout);
+            linearLayout.setGravity(Gravity.CENTER);
+        }
 
         CircleImageView img = new CircleImageView(getActivity());
         if(player.profileImg != null && player.profileImg.startsWith("https://graph.facebook")) {
@@ -196,6 +238,14 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                 break;
             case R.id.open_chat_btn:
                 showMessengerButtonPressed();
+                break;
+            default:
+                int id = view.getId();
+                if(id >= acceptButtonIdDif && id < rejectButtonDif) {
+                    mPresenter.acceptPlayer(id - acceptButtonIdDif);
+                } else if(id >= rejectButtonDif) {
+                    mPresenter.rejectPlayer(id - rejectButtonDif);
+                }
                 break;
         }
     }
