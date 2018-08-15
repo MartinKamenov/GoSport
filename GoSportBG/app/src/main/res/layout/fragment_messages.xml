@@ -3,11 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.kamenov.martin.gosportbg.messages.MessagesFragment">
-
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
+        android:layout_height="wrap_content"
+        android:textSize="60px"
+        android:text="Съобщения"
+        android:textAlignment="center"/>
+    <LinearLayout
+        android:id="@+id/message_wrappers_container"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </FrameLayout>

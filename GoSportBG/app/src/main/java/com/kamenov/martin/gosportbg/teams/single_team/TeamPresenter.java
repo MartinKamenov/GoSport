@@ -27,7 +27,6 @@ public class TeamPresenter implements TeamContracts.ITeamPresenter, GetHandler, 
     private final int id;
     private final ActivityNavigationCommand mMessengerNavigationCommand;
     private TeamContracts.ITeamView mView;
-    private static final int teamIdMessegesDifference = 1000000;
 
     public TeamPresenter(HttpRequester requester, Gson gson,
                          ActivityNavigationCommand navigationCommand, int id) {

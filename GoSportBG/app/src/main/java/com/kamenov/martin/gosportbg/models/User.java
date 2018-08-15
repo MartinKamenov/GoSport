@@ -8,5 +8,7 @@ public class User {
     public String email;
     public String password;
     public String profileImg;
+    public Team[] teams;
+    public Event[] events;
 }
 
