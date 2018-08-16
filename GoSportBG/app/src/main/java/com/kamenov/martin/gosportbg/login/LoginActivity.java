@@ -259,6 +259,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         mPresenter.login(username, password);
     }
 
+    @Override
     public void hideKeyboardFrom() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(loginForm.getWindowToken(), 0);

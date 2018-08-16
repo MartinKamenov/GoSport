@@ -1,6 +1,7 @@
 package com.kamenov.martin.gosportbg.messenger;
 
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -64,6 +66,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
         messageContainer = root.findViewById(R.id.messages_container);
         message = root.findViewById(R.id.message);
         message.setMovementMethod(new ScrollingMovementMethod());
+        hideKeyboardFrom();
         return root;
     }
 
@@ -88,9 +91,16 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
     }
 
     @Override
+    public void hideKeyboardFrom() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(message.getWindowToken(), 0);
+    }
+
+    @Override
     public void addMessageButtonPressed() {
         String messageText = message.getText().toString();
         message.setText("");
+        hideKeyboardFrom();
         mPresenter.addMessage(messageText);
     }
 
@@ -172,6 +182,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                         shouldBeRight = true;
                     } else {
                         textView.setBackgroundResource(R.drawable.others);
+                        textView.setTextColor(Color.parseColor("#3d3d3d"));
                     }
 
                     cardView.addView(textView);

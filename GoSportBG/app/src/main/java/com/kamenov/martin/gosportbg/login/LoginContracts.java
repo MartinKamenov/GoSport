@@ -51,6 +51,8 @@ public class LoginContracts {
 
         void showMessageOnUIThread(String message);
 
+        void hideKeyboardFrom();
+
         ArrayAdapter<String> getCityAdapter();
     }
 }

@@ -30,5 +30,7 @@ public class MessengerContracts {
         void addMessageButtonPressed();
 
         void addMessagesOnUIThread(Message[] messages);
+
+        void hideKeyboardFrom();
     }
 }

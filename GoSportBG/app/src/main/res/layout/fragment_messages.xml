@@ -3,15 +3,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.kamenov.martin.gosportbg.messages.MessagesFragment">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="60px"
-        android:text="Съобщения"
-        android:textAlignment="center"/>
     <LinearLayout
-        android:id="@+id/message_wrappers_container"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="60px"
+            android:text="Съобщения"
+            android:textAlignment="center"/>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:id="@+id/message_wrappers_container"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </ScrollView>
+    </LinearLayout>
 </FrameLayout>

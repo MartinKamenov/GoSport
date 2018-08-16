@@ -2,7 +2,10 @@ package com.kamenov.martin.gosportbg.messages;
 
 
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +15,21 @@ import android.widget.TextView;
 import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
+import com.kamenov.martin.gosportbg.constants.Constants;
+import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.messenger.MessengerContracts;
 import com.kamenov.martin.gosportbg.messenger.MessengerFragment;
 import com.kamenov.martin.gosportbg.models.MessageCollection;
 import com.kamenov.martin.gosportbg.models.MessengerWrapper;
+import com.kamenov.martin.gosportbg.models.Team;
+import com.kamenov.martin.gosportbg.teams.multiple_teams.TeamsFragment;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessagesFragment extends Fragment implements MessagesContracts.IMessagesView {
+public class MessagesFragment extends Fragment implements MessagesContracts.IMessagesView, View.OnClickListener {
 
 
     private MessagesContracts.IMessagesPresenter mPresenter;
@@ -57,7 +66,8 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for(int i = 0; i < messageCollections.length; i++) {
+                mMessageWrapperContainer.removeAllViews();
+                for (int i = 0; i < messageCollections.length; i++) {
                     addMessengerWrapper(mMessageWrapperContainer, messageCollections[i]);
                 }
             }
@@ -65,8 +75,62 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
     }
 
     private void addMessengerWrapper(LinearLayout container, MessengerWrapper messengerWrapper) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(messengerWrapper.getTitle());
-        container.addView(textView);
+
+        int margin = 10;
+        CardView cardView = new CardView(getActivity());
+        cardView.setId(messengerWrapper.getId());
+        cardView.setRadius(50);
+        cardView.setOnClickListener(this);
+        cardView.setCardElevation(10);
+
+        LinearLayout linearLayoutContainer = new LinearLayout(getActivity());
+        linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayoutContainer.setWeightSum(2);
+
+        CircleImageView img = new CircleImageView(getActivity());
+        if(messengerWrapper.getPictureUrl() != null && !messengerWrapper.getPictureUrl().contains("default.jpg")) {
+            String url = Constants.DOMAIN + messengerWrapper.getPictureUrl();
+            new DownloadImageTask(img)
+                    .execute(url);
+        } else {
+            img.setImageResource(R.drawable.default_team_avatar);
+        }
+
+        linearLayoutContainer.addView(img);
+
+        LinearLayout.LayoutParams imageLayoutParams = (LinearLayout.LayoutParams) img.getLayoutParams();
+        imageLayoutParams.height = 150;
+        imageLayoutParams.width = 150;
+        imageLayoutParams.setMargins(10, 0, 10, 0);
+        imageLayoutParams.gravity = Gravity.CENTER;
+        img.setLayoutParams(imageLayoutParams);
+
+        LinearLayout linearLayout = new LinearLayout(getActivity());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+
+        linearLayoutContainer.addView(linearLayout);
+
+        LinearLayout.LayoutParams lParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+        lParams.width = LinearLayout.LayoutParams.MATCH_PARENT;
+        lParams.gravity = Gravity.CENTER;
+        linearLayout.setLayoutParams(lParams);
+
+        cardView.addView(linearLayoutContainer);
+
+        TextView description = new TextView(getActivity());
+        description.setText(messengerWrapper.getTitle());
+        description.setGravity(Gravity.CENTER_HORIZONTAL);
+        description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        description.setTextSize(24);
+        description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD_ITALIC);
+        linearLayout.addView(description);
+        container.addView(cardView);
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardView.getLayoutParams();
+        lp.setMargins(margin, margin, margin, margin);
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
