@@ -310,7 +310,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                 break;
             default:
                 int id = view.getId();
-                ((CardView) view).setCardBackgroundColor(Color.parseColor("#aaaaaa"));
+                ((CardView) view).setCardBackgroundColor(Constants.clickedColor);
                 mPresenter.navigateToTeam(id);
         }
     }

@@ -14,6 +14,7 @@ import com.kamenov.martin.gosportbg.models.MessengerWrapper;
 import com.kamenov.martin.gosportbg.models.Team;
 import com.kamenov.martin.gosportbg.models.User;
 import com.kamenov.martin.gosportbg.models.enums.MessengerWrapperType;
+import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
 import java.io.IOException;
 import java.util.List;
@@ -26,13 +27,16 @@ import okhttp3.Response;
  */
 
 public class MessagesPresenter implements MessagesContracts.IMessagesPresenter, GetHandler {
+    private final ActivityNavigationCommand mMessengerNavigationCommand;
     private HttpRequester mRequester;
     private Gson mGson;
     private MessagesContracts.IMessagesView mView;
 
-    public MessagesPresenter(HttpRequester requester, Gson gson) {
+    public MessagesPresenter(HttpRequester requester, Gson gson,
+                             ActivityNavigationCommand messengerNavigationCommand) {
         this.mRequester = requester;
         this.mGson = gson;
+        this.mMessengerNavigationCommand = messengerNavigationCommand;
     }
     @Override
     public void subscribe(BaseContracts.View view) {
@@ -60,6 +64,12 @@ public class MessagesPresenter implements MessagesContracts.IMessagesPresenter, 
         int id = getLoggedUser().getOnlineId();
         String url = Constants.DOMAIN + "/users/" + id;
         mRequester.get(this, url);
+    }
+
+    @Override
+    public void navigateToMessenger(int id) {
+        mMessengerNavigationCommand.putExtraInteger("id", id);
+        mMessengerNavigationCommand.navigate();
     }
 
     @Override

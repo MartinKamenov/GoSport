@@ -2,6 +2,7 @@ package com.kamenov.martin.gosportbg.messages;
 
 
 import android.app.Fragment;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -35,11 +36,11 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
     private MessagesContracts.IMessagesPresenter mPresenter;
     private View root;
     private LinearLayout mMessageWrapperContainer;
+    private boolean viewHasStarted;
 
     public MessagesFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,6 +49,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         root = inflater.inflate(R.layout.fragment_messages, container, false);
         mMessageWrapperContainer = root.findViewById(R.id.message_wrappers_container);
         mPresenter.getUserMesseges();
+        viewHasStarted = true;
         return root;
     }
 
@@ -70,6 +72,17 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
                 for (int i = 0; i < messageCollections.length; i++) {
                     addMessengerWrapper(mMessageWrapperContainer, messageCollections[i]);
                 }
+            }
+        });
+    }
+
+    @Override
+    public void refreshView() {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().finish();
+                startActivity(getActivity().getIntent());
             }
         });
     }
@@ -131,6 +144,17 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
 
     @Override
     public void onClick(View view) {
+        int id = view.getId();
+        ((CardView)view).setCardBackgroundColor(Constants.clickedColor);
+        mPresenter.navigateToMessenger(id);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!viewHasStarted) {
+            refreshView();
+        }
+        viewHasStarted = false;
     }
 }

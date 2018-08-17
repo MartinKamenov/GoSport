@@ -1,5 +1,7 @@
 package com.kamenov.martin.gosportbg.constants;
 
+import android.graphics.Color;
+
 import static com.google.maps.android.ui.IconGenerator.STYLE_BLUE;
 import static com.google.maps.android.ui.IconGenerator.STYLE_GREEN;
 import static com.google.maps.android.ui.IconGenerator.STYLE_ORANGE;
@@ -26,4 +28,5 @@ public class Constants {
     public static double[][] CITIESCOORDINATES = {{42.698334, 23.319941}, {42.1499994, 24.749997},
             {43.2166658, 27.916663}, {42.499998, 27.4666648}};
     public static int TEAMSIDDIFFERENCE = 10000000;
+    public static int clickedColor = Color.parseColor("#aaaaaa");
 }

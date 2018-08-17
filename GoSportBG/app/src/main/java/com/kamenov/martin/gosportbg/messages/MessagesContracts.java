@@ -15,11 +15,15 @@ public class MessagesContracts {
         LocalUser getLoggedUser();
 
         void getUserMesseges();
+
+        void navigateToMessenger(int id);
     }
 
     public interface IMessagesView extends BaseContracts.View {
         GoSportApplication getGoSportApplication();
 
         void showMessagesOnUIThread(MessengerWrapper[] messengerWrappers);
+
+        void refreshView();
     }
 }

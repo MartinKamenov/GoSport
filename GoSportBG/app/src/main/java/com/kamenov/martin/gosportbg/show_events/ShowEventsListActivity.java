@@ -198,7 +198,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        ((CardView) view).setCardBackgroundColor(Color.parseColor("#aaaaaa"));
+        ((CardView) view).setCardBackgroundColor(Constants.clickedColor);
         markerPressed(id);
     }
 
