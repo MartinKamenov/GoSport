@@ -112,6 +112,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                 for(int i = 0; i < teams.length; i++) {
                     Team team = teams[i];
                     CardView cardView = new CardView(getActivity());
+                    cardView.setCardBackgroundColor(Constants.CARDCOLOR);
                     cardView.setId(team.id);
                     cardView.setRadius(50);
                     cardView.setOnClickListener(TeamsFragment.this);
@@ -152,6 +153,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                     cardView.addView(linearLayoutContainer);
 
                     TextView description = new TextView(getActivity());
+                    description.setTextColor(Constants.SECONDCOLOR);
                     description.setText(team.name);
                     description.setGravity(Gravity.CENTER_HORIZONTAL);
                     description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -159,6 +161,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                     description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD_ITALIC);
                     linearLayout.addView(description);
                     TextView sport = new TextView(getActivity());
+                    sport.setTextColor(Constants.SECONDCOLOR);
                     sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     sport.setText(team.sport);
                     sport.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -310,7 +313,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                 break;
             default:
                 int id = view.getId();
-                ((CardView) view).setCardBackgroundColor(Constants.clickedColor);
+                ((CardView) view).setCardBackgroundColor(Color.parseColor("#aaaaaa"));
                 mPresenter.navigateToTeam(id);
         }
     }

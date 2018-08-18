@@ -6,13 +6,13 @@
     <RelativeLayout
         android:id="@+id/messenger_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/mainColor">
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="115dp"
-            android:background="#aaffffff">
+            android:layout_marginBottom="115dp">
             <LinearLayout
                 android:id="@+id/messages_container"
                 android:orientation="vertical"
@@ -24,8 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_alignParentBottom="true"
-            android:background="#ffffff">
+            android:layout_alignParentBottom="true">
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

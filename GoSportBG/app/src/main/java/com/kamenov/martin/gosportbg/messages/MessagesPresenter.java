@@ -88,12 +88,12 @@ public class MessagesPresenter implements MessagesContracts.IMessagesPresenter, 
             for(int i = 0; i < user.teams.length; i++) {
                 Team team = user.teams[i];
                 messengerWrappers[i] = new MessengerWrapper(team.id + Constants.TEAMSIDDIFFERENCE, team.name,
-                        team.pictureUrl, MessengerWrapperType.TEAM);
+                        team.pictureUrl, team.sport, MessengerWrapperType.TEAM);
             }
             for(int i = 0; i < user.events.length; i++) {
                 Event event = user.events[i];
                 messengerWrappers[i + user.teams.length] = new MessengerWrapper(event.id, event.name,
-                        event.admin.profileImg, MessengerWrapperType.EVENT);
+                        event.admin.profileImg, event.sport, MessengerWrapperType.EVENT);
             }
 
             mView.showMessagesOnUIThread(messengerWrappers);

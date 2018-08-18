@@ -91,6 +91,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
 
         int margin = 10;
         CardView cardView = new CardView(getActivity());
+        cardView.setCardBackgroundColor(Constants.CARDCOLOR);
         cardView.setId(messengerWrapper.getId());
         cardView.setRadius(50);
         cardView.setOnClickListener(this);
@@ -131,12 +132,21 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         cardView.addView(linearLayoutContainer);
 
         TextView description = new TextView(getActivity());
+        description.setTextColor(Constants.SECONDCOLOR);
         description.setText(messengerWrapper.getTitle());
         description.setGravity(Gravity.CENTER_HORIZONTAL);
         description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         description.setTextSize(24);
         description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD_ITALIC);
         linearLayout.addView(description);
+        TextView sport = new TextView(getActivity());
+        sport.setTextColor(Constants.SECONDCOLOR);
+        sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        sport.setText(messengerWrapper.getSport());
+        sport.setGravity(Gravity.CENTER_HORIZONTAL);
+        sport.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+        linearLayout.addView(sport);
+        linearLayout.setPadding(50, 50, 50, 50);
         container.addView(cardView);
         LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) cardView.getLayoutParams();
         lp.setMargins(margin, margin, margin, margin);
@@ -145,7 +155,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        ((CardView)view).setCardBackgroundColor(Constants.clickedColor);
+        ((CardView)view).setCardBackgroundColor(Constants.CLICKEDCARDCOLOR);
         mPresenter.navigateToMessenger(id);
     }
 

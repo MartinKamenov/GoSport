@@ -103,6 +103,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                 for(int i = 0; i < events.length; i++) {
                     Event event = events[i];
                     CardView cardView = new CardView(ShowEventsListActivity.this);
+                    cardView.setCardBackgroundColor(Constants.CARDCOLOR);
                     cardView.setId(event.id);
                     cardView.setRadius(50);
                     cardView.setOnClickListener(ShowEventsListActivity.this);
@@ -147,11 +148,13 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
 
                     cardView.addView(linearLayoutContainer);
                     TextView sport = new TextView(ShowEventsListActivity.this);
+                    sport.setTextColor(Constants.SECONDCOLOR);
                     sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     sport.setText("Спорт: " + event.sport);
                     sport.setGravity(Gravity.CENTER_HORIZONTAL);
                     sport.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                     TextView date = new TextView(ShowEventsListActivity.this);
+                    date.setTextColor(Constants.SECONDCOLOR);
                     DateTime dt = event.datetime;
                     date.setText(String.format("%02d %s %d\n%02d:%02d",
                             dt.dayOfMonth,
@@ -172,6 +175,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                     linearLayout.addView(date);
                     if(event.name.length() > 0) {
                         TextView description = new TextView(ShowEventsListActivity.this);
+                        description.setTextColor(Constants.SECONDCOLOR);
                         description.setText(event.name);
                         description.setGravity(Gravity.CENTER_HORIZONTAL);
                         description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -198,7 +202,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        ((CardView) view).setCardBackgroundColor(Constants.clickedColor);
+        ((CardView) view).setCardBackgroundColor(Constants.CLICKEDCARDCOLOR);
         markerPressed(id);
     }
 

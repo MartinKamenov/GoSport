@@ -28,5 +28,8 @@ public class Constants {
     public static double[][] CITIESCOORDINATES = {{42.698334, 23.319941}, {42.1499994, 24.749997},
             {43.2166658, 27.916663}, {42.499998, 27.4666648}};
     public static int TEAMSIDDIFFERENCE = 10000000;
-    public static int clickedColor = Color.parseColor("#aaaaaa");
+    public static int MAINCOLOR = Color.parseColor("#282828");
+    public static int SECONDCOLOR = Color.parseColor("#ffffff");
+    public static int CARDCOLOR = Color.parseColor("#444444");
+    public static int CLICKEDCARDCOLOR = Color.parseColor("#aaaaaa");
 }

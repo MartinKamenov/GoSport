@@ -8,7 +8,8 @@
         android:id="@+id/show_teams_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/mainColor">
         <Button
             android:drawableLeft="@android:drawable/ic_input_add"
             android:id="@+id/new_team_btn"

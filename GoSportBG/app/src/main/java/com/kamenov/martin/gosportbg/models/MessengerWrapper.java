@@ -10,12 +10,14 @@ public class MessengerWrapper {
     private int id;
     private String title;
     private String pictureUrl;
+    private String sport;
     private MessengerWrapperType messengerWrapperType;
 
-    public MessengerWrapper(int id, String title, String pictureUrl, MessengerWrapperType messengerWrapperType) {
+    public MessengerWrapper(int id, String title, String pictureUrl, String sport, MessengerWrapperType messengerWrapperType) {
         this.id = id;
         this.title = title;
         this.pictureUrl = pictureUrl;
+        this.sport = sport;
         this.messengerWrapperType = messengerWrapperType;
     }
 
@@ -29,6 +31,10 @@ public class MessengerWrapper {
 
     public String getPictureUrl() {
         return pictureUrl;
+    }
+
+    public String getSport() {
+        return this.sport;
     }
 
     public MessengerWrapperType getMessengerWrapperType() {
