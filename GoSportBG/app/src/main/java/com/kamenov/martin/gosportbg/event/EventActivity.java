@@ -149,8 +149,6 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
             @Override
             public void run() {
                 final int margin = 50;
-                int backgroundRes = getBackGroundSource(event.sport);
-                mEventContainer.setBackgroundResource(backgroundRes);
                 String userUsername = mPresenter.getLocalUser().getUsername();
                 for(int i = 0; i < event.players.size(); i++) {
                     User user = event.players.get(i);
@@ -168,10 +166,10 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 for(int i = 0; i < event.players.size(); i++) {
                     RelativeLayout playerInfoContainer = new RelativeLayout(EventActivity.this);
                     TextView textView = new TextView(EventActivity.this);
+                    textView.setTextColor(Constants.SECONDCOLOR);
                     textView.setTextSize(pixels);
                     textView.setTextAlignment(View.TEXT_ALIGNMENT_TEXT_START);
                     textView.setText((i + 1) + ". " + event.players.get(i).username);
-                    textView.setTextColor(Color.parseColor("#222222"));
                     textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                     playerInfoContainer.addView(textView);
                     RelativeLayout.LayoutParams textViewParams = (RelativeLayout.LayoutParams)textView.getLayoutParams();

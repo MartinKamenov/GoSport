@@ -13,6 +13,7 @@
             android:layout_height="wrap_content"
             android:textSize="60px"
             android:text="Съобщения"
+            android:textColor="@color/secondColor"
             android:textAlignment="center"/>
         <ScrollView
             android:layout_width="match_parent"

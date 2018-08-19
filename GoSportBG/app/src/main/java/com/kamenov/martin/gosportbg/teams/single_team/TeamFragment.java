@@ -122,9 +122,10 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                 }
 
                 requestingPlayersContainer.removeAllViews();
-                if(loggedPlayerPartOfTeamPlayers && team.requestingPlayers != null) {
+                if(loggedPlayerPartOfTeamPlayers && team.requestingPlayers != null && team.requestingPlayers.length > 0) {
                     requestingPlayersContainer.removeAllViews();
                     TextView requestingPlayersHeader = new TextView(getActivity());
+                    requestingPlayersHeader.setTextColor(Constants.SECONDCOLOR);
                     requestingPlayersHeader.setText("Заявки за нови участници:");
                     requestingPlayersHeader.setGravity(Gravity.CENTER);
                     requestingPlayersHeader.setTextSize(18);
@@ -137,6 +138,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
 
                 playersContainer.removeAllViews();
                 TextView playersHeader = new TextView(getActivity());
+                playersHeader.setTextColor(Constants.SECONDCOLOR);
                 playersHeader.setText("Участници:");
                 playersHeader.setGravity(Gravity.CENTER);
                 playersHeader.setTextSize(18);
@@ -178,6 +180,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
         TextView nameOfPlayer = new TextView(getActivity());
         nameOfPlayer.setText(player.username);
         nameOfPlayer.setTextSize(18);
+        nameOfPlayer.setTextColor(Constants.SECONDCOLOR);
         relativeLayout.addView(nameOfPlayer);
 
         RelativeLayout.LayoutParams nameLayoutParams = (RelativeLayout.LayoutParams)nameOfPlayer

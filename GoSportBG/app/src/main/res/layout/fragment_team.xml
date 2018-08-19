@@ -24,6 +24,7 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"/>
                 <TextView
+                    android:textColor="@color/secondColor"
                     android:layout_marginTop="10dp"
                     android:id="@+id/team_name_txt"
                     android:layout_width="match_parent"
@@ -35,6 +36,7 @@
                     android:textSize="35dp"/>
                 <TextView
                     android:id="@+id/sport_txt"
+                    android:textColor="@color/secondColor"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
+        android:background="@color/mainColor"
         android:id="@+id/loader_container">
         <LinearLayout
             android:gravity="center"
@@ -90,7 +93,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Заявката се обработва"/>
+                android:text="Заявката се обработва"
+                android:textColor="@color/secondColor"/>
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

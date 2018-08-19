@@ -30,6 +30,7 @@
                 android:layout_height="wrap_content">
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/message"
+                    android:textColor="@color/secondColor"
                     android:textSize="20dp"
                     android:textAlignment="center"
                     android:padding="10dp"

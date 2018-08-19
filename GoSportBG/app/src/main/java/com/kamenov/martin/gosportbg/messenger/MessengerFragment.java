@@ -130,6 +130,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                         LinearLayout linearLayout = new LinearLayout(getActivity());
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
                         TextView usernameTextView = new TextView(getActivity());
+                        usernameTextView.setTextColor(Constants.SECONDCOLOR);
                         usernameTextView.setText(messages[i].username);
                         usernameTextView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
                         usernameTextView.setGravity(Gravity.CENTER);

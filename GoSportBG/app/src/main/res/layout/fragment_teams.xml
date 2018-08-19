@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textAlignment="center"
+                android:textColor="@color/secondColor"
                 android:text="Брой намерени събития: Изчислява се..."/>
         </RelativeLayout>
 
@@ -57,7 +58,8 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/mainColor">
         <Button
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:id="@+id/show_teams_btn"
@@ -103,6 +105,7 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_height="wrap_content"
                             android:hint="Име"
+                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                     </android.support.design.widget.TextInputLayout>
                     <Spinner
@@ -130,7 +133,8 @@
         android:id="@+id/progressbar_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:background="@color/mainColor">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -147,7 +151,8 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Създаване на отбор..."/>
+                    android:text="Създаване на отбор..."
+                    android:textColor="@color/secondColor"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

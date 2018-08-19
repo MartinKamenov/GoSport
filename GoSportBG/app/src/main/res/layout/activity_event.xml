@@ -13,13 +13,13 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="65dp"
-            android:background="#aaffffff">
+            android:layout_marginBottom="65dp">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <android.support.v7.widget.CardView
+                    app:cardBackgroundColor="@color/cardColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="11dp"
@@ -37,6 +37,7 @@
                         tools:context="com.kamenov.martin.gosportbg.event.EventActivity" />
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
+                    app:cardBackgroundColor="@color/cardColor"
                     android:layout_marginTop="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -59,7 +60,7 @@
                             android:layout_height="wrap_content"
                             android:text="Спорт:"
                             android:textSize="20dp"
-                            android:textColor="#222222"
+                            android:textColor="@color/secondColor"
                             android:gravity="left"
                             android:fontFamily="sans-serif-condensed"/>
                         <TextView
@@ -69,12 +70,13 @@
                             android:layout_height="wrap_content"
                             android:textSize="20dp"
                             android:gravity="left"
-                            android:textColor="#222222"
+                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
+                    app:cardBackgroundColor="@color/cardColor"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -95,7 +97,7 @@
                             android:layout_height="wrap_content"
                             android:text="Дата:"
                             android:textSize="20dp"
-                            android:textColor="#222222"
+                            android:textColor="@color/secondColor"
                             android:gravity="left"
                             android:fontFamily="sans-serif-condensed"/>
                         <TextView
@@ -105,11 +107,12 @@
                             android:layout_height="wrap_content"
                             android:textSize="20dp"
                             android:gravity="left"
-                            android:textColor="#222222"
+                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                 </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
+                    app:cardBackgroundColor="@color/cardColor"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -130,7 +133,7 @@
                             android:layout_height="wrap_content"
                             android:text="Час:"
                             android:textSize="20dp"
-                            android:textColor="#222222"
+                            android:textColor="@color/secondColor"
                             android:gravity="left"
                             android:fontFamily="sans-serif-condensed"/>
                         <TextView
@@ -140,11 +143,12 @@
                             android:layout_height="wrap_content"
                             android:textSize="20dp"
                             android:gravity="left"
-                            android:textColor="#222222"
+                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
+                    app:cardBackgroundColor="@color/cardColor"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -165,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:text="Описание:"
                         android:textSize="20dp"
-                        android:textColor="#222222"
+                        android:textColor="@color/secondColor"
                         android:gravity="left"
                         android:fontFamily="sans-serif-condensed"/>
                     <TextView
@@ -175,11 +179,12 @@
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
                         android:gravity="left"
-                        android:textColor="#222222"
+                        android:textColor="@color/secondColor"
                         android:fontFamily="sans-serif-condensed"/>
                 </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
+                    app:cardBackgroundColor="@color/cardColor"
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
@@ -199,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:text="Участници:"
                             android:textAlignment="center"
-                            android:textColor="#222222"
+                            android:textColor="@color/secondColor"
                             android:textSize="20dp"
                             android:fontFamily="sans-serif-condensed"/>
                         <LinearLayout
