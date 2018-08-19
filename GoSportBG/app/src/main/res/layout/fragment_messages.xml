@@ -22,7 +22,13 @@
                 android:id="@+id/message_wrappers_container"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+                <ProgressBar
+                    android:layout_gravity="center_horizontal"
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </ScrollView>
     </LinearLayout>
 </FrameLayout>

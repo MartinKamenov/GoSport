@@ -190,9 +190,14 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
 
     @Override
     public void hideProgressBar() {
-        root.findViewById(R.id.progressbar_form).setVisibility(View.GONE);
-        root.findViewById(R.id.new_team_form).setVisibility(View.GONE);
-        root.findViewById(R.id.show_teams_form).setVisibility(View.VISIBLE);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                root.findViewById(R.id.progressbar_form).setVisibility(View.GONE);
+                root.findViewById(R.id.new_team_form).setVisibility(View.GONE);
+                root.findViewById(R.id.show_teams_form).setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

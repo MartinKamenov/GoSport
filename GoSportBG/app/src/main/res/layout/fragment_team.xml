@@ -7,7 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_container"
-        android:background="@color/mainColor">
+        android:background="@color/mainColor"
+        android:visibility="gone">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -76,25 +77,24 @@
             android:theme="@style/InfoButton"/>
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/progress_bar_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/mainColor"
-        android:id="@+id/loader_container">
+        android:background="@color/mainColor">
         <LinearLayout
-            android:gravity="center"
-            android:layout_centerInParent="true"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
             <ProgressBar
+                android:layout_gravity="center_horizontal"
                 android:layout_width="75dp"
                 android:layout_height="75dp" />
             <TextView
+                android:textColor="@color/secondColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Заявката се обработва"
-                android:textColor="@color/secondColor"/>
+                android:text="Зареждане на отбор"/>
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

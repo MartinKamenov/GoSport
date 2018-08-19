@@ -93,6 +93,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                hideLoader();
                 ImageView img = root.findViewById(R.id.logo_image);
                 if(team.pictureUrl != null && !team.pictureUrl.contains("default.jpg")) {
                     String url = Constants.DOMAIN + team.pictureUrl;
@@ -157,20 +158,15 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
             @Override
             public void run() {
                 root.findViewById(R.id.main_container).setVisibility(View.GONE);
-                root.findViewById(R.id.loader_container).setVisibility(View.VISIBLE);
+                root.findViewById(R.id.progress_bar_form).setVisibility(View.VISIBLE);
             }
         });
     }
 
     @Override
     public void hideLoader() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                root.findViewById(R.id.loader_container).setVisibility(View.GONE);
-                root.findViewById(R.id.main_container).setVisibility(View.VISIBLE);
-            }
-        });
+        root.findViewById(R.id.progress_bar_form).setVisibility(View.GONE);
+        root.findViewById(R.id.main_container).setVisibility(View.VISIBLE);
     }
 
     private void makePlayerField(User player, LinearLayout container, boolean isRequestingPlayer) {

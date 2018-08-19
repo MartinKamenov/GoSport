@@ -148,6 +148,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                hideProgressBar();
                 final int margin = 50;
                 String userUsername = mPresenter.getLocalUser().getUsername();
                 for(int i = 0; i < event.players.size(); i++) {
@@ -232,6 +233,12 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     @Override
     public void showMessenger() {
         mPresenter.navigateToMessenger();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        findViewById(R.id.progress_bar_form).setVisibility(View.GONE);
+        findViewById(R.id.event_container).setVisibility(View.VISIBLE);
     }
 
     @Override

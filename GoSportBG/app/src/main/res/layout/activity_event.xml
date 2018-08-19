@@ -5,11 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.kamenov.martin.gosportbg.event.EventActivity">
     <RelativeLayout
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/event_container"
         android:background="@color/mainColor">
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -236,5 +236,26 @@
             android:theme="@style/InfoButton"
             android:textColor="#fff"
             android:visibility="gone"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/progress_bar_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainColor">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true">
+            <ProgressBar
+                android:layout_gravity="center_horizontal"
+                android:layout_width="75dp"
+                android:layout_height="75dp" />
+            <TextView
+                android:textColor="@color/secondColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Зареждане на събитие"/>
+        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

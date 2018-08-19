@@ -30,6 +30,8 @@ public class EventContracts {
 
         void showMessenger();
 
+        void hideProgressBar();
+
         void showMessageOnUITread(final String message);
     }
 }

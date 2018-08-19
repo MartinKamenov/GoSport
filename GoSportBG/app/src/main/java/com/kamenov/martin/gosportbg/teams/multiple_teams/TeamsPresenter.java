@@ -130,6 +130,9 @@ public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandle
         }
         if(jsonInString.contains("name")) {
             // TO DO: After team is created should navigate to it's page
+            mView.hideProgressBar();
+            Team team = mGson.fromJson(jsonInString, Team.class);
+            mTeamNavigationCommand.putExtraInteger("id", team.id);
             mTeamNavigationCommand.navigate();
         } else {
             // Handle error
