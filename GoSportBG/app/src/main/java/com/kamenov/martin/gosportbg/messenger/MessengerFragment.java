@@ -66,7 +66,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
         messageContainer = root.findViewById(R.id.messages_container);
         message = root.findViewById(R.id.message);
         message.setMovementMethod(new ScrollingMovementMethod());
-        hideKeyboardFrom();
+        getActivity().getWindow().setBackgroundDrawableResource(R.drawable.messenger_background);
         return root;
     }
 

@@ -6,8 +6,7 @@
     <RelativeLayout
         android:id="@+id/messenger_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/mainColor">
+        android:layout_height="match_parent">
         <ScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"

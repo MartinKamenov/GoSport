@@ -165,8 +165,13 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
 
     @Override
     public void hideLoader() {
-        root.findViewById(R.id.progress_bar_form).setVisibility(View.GONE);
-        root.findViewById(R.id.main_container).setVisibility(View.VISIBLE);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                root.findViewById(R.id.progress_bar_form).setVisibility(View.GONE);
+                root.findViewById(R.id.main_container).setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void makePlayerField(User player, LinearLayout container, boolean isRequestingPlayer) {

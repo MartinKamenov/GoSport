@@ -107,6 +107,7 @@
             android:name=".teams.single_team.TeamActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".messenger.MessengerActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait" />
     </application>
 
