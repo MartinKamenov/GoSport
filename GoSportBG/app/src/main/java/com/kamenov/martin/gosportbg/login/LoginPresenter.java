@@ -48,9 +48,9 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
         if(getLoggedUser() != null) {
             // If user doesn't have password that means he has logged with Facebook
             if(user.getPassword() != null && user.getPassword().length() > 0) {
-                login(user.getUsername(), user.getPassword());
+                login(user.getUsername(), user.getPassword(), user.getToken());
             } else {
-                facebookLogin(user.getEmail(), user.getUsername(), user.getProfileImg());
+                facebookLogin(user.getEmail(), user.getUsername(), user.getProfileImg(), user.getToken());
             }
         }
     }
@@ -61,32 +61,33 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     }
 
     @Override
-    public void login(String username, String password) {
-        String body = String.format("{\"username\":\"%s\",\"password\":\"%s\"}", username, password);
+    public void login(String username, String password, String token) {
+        String body = String.format("{\"username\":\"%s\",\"password\":\"%s\", \"token\":\"%s\"}",
+                username, password, token);
         mView.showProgressBar();
         this.mRequester.post(this, Constants.DOMAIN + "/login", body);
     }
 
     @Override
-    public void facebookLogin(String email, String username, String pictureUrl) {
-        String body = String.format("{\"username\":\"%s\",\"email\":\"%s\", \"pictureUrl\":\"%s\"}",
-                username, email, pictureUrl);
+    public void facebookLogin(String email, String username, String pictureUrl, String token) {
+        String body = String.format("{\"username\":\"%s\",\"email\":\"%s\", \"pictureUrl\":\"%s\", \"token\":\"%s\"}",
+                username, email, pictureUrl, token);
         mView.showProgressBar();
         this.mRequester.post(this, Constants.DOMAIN + "/facebooklogin", body);
     }
 
     @Override
-    public void register(String email, String username, String password, String city, String pictureString) {
+    public void register(String email, String username, String password, String city, String pictureString, String token) {
         String registerBody = "";
         if(pictureString != null) {
             registerBody = String.format("{\"email\":\"%s\",\"username\":\"%s\""+
-                            ",\"city\":\"%s\",\"password\":\"%s\", \"profileImg\":\"%s\"}",
-                    email, username, city, password, pictureString.replace("\n", "\\n"));
+                            ",\"city\":\"%s\",\"password\":\"%s\", \"profileImg\":\"%s\", \"token\":\"%s\"}",
+                    email, username, city, password, pictureString.replace("\n", "\\n"), token);
         }
         else {
             registerBody = String.format("{\"email\":\"%s\",\"username\":\"%s\"" +
-                            ",\"city\":\"%s\",\"password\":\"%s\"}",
-                    email, username, city, password);
+                            ",\"city\":\"%s\",\"password\":\"%s\", \"token\":\"%s\"}",
+                    email, username, city, password, token);
         }
 
         mView.showProgressBar();
@@ -97,7 +98,7 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
     public void loginLocal(User user) {
         GenericCacheRepository<LocalUser, Long> repo = mView.getGoSportApplication().getLocalUserRepository();
         repo.clearAll();
-        repo.add(new LocalUser(user.id, user.email, user.username, user.password, user.city, user.profileImg));
+        repo.add(new LocalUser(user.id, user.email, user.username, user.password, user.city, user.profileImg, user.token));
     }
 
     @Override
