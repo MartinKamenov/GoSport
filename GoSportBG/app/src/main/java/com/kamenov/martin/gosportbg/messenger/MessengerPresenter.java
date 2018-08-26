@@ -62,8 +62,9 @@ public class MessengerPresenter implements MessengerContracts.IMessengerPresente
             return;
         }
         mThread.setFinished(false);
-        String body = String.format("{\"username\":\"%s\",\"text\":\"%s\", \"profileImg\":\"%s\"}",
-                getLocalUser().getUsername(), message.replace("\n", "\\n"), getLocalUser().getProfileImg());
+        String body = String.format("{\"username\":\"%s\",\"text\":\"%s\", \"profileImg\":\"%s\", \"token\":\"%s\"}",
+                getLocalUser().getUsername(), message.replace("\n", "\\n"), getLocalUser().getProfileImg(),
+                getLocalUser().getToken());
         mRequester.post(this, Constants.DOMAIN + "/messages/" + id + "/addMessage", body);
     }
 
