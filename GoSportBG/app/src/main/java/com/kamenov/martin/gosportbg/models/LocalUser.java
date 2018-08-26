@@ -31,31 +31,36 @@ public class LocalUser {
     @Property(nameInDb = "profileImg")
     private String profileImg;
 
+    @Property(nameInDb = "token")
+    private String token;
+
     public LocalUser() {
     }
 
     public LocalUser(int onlineId, String email, String username, String password,
-                     String city, String profileImg) {
+                     String city, String profileImg, String token) {
         setOnlineId(onlineId);
         setEmail(email);
         setUsername(username);
         setPassword(password);
         setCity(city);
         setProfileImg(profileImg);
+        setToken(token);
     }
 
-    public LocalUser(Long id, int onlineId, String email, String username, String password, String city) {
+    public LocalUser(Long id, int onlineId, String email, String username, String password, String city, String token) {
         this.id = id;
         this.onlineId = onlineId;
         this.email = email;
         this.username = username;
         this.password = password;
         this.city = city;
+        this.token = token;
     }
 
-    @Generated(hash = 561538469)
-    public LocalUser(Long id, int onlineId, String email, String username, String password, String city,
-            String profileImg) {
+    @Generated(hash = 640850519)
+    public LocalUser(Long id, int onlineId, String email, String username, String password, String city, String profileImg,
+            String token) {
         this.id = id;
         this.onlineId = onlineId;
         this.email = email;
@@ -63,6 +68,7 @@ public class LocalUser {
         this.password = password;
         this.city = city;
         this.profileImg = profileImg;
+        this.token = token;
     }
 
     public Long getId() {
@@ -116,4 +122,12 @@ public class LocalUser {
     public String getProfileImg() { return this.profileImg; }
 
     public void setProfileImg(String profileImg) { this.profileImg = profileImg; }
+
+    public String getToken() {
+        return this.token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

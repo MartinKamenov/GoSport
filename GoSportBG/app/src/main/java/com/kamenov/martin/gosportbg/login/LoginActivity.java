@@ -8,8 +8,10 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -31,6 +33,10 @@ import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
@@ -50,6 +56,8 @@ import java.io.InputStream;
 import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.facebook.login.widget.ProfilePictureView.TAG;
 
 public class LoginActivity extends Activity implements LoginContracts.ILoginView, View.OnClickListener {
 
@@ -79,6 +87,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
     private CircleImageView profileImage;
     private Button profileImageBtn;
     private Bitmap profileImageBitmap;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +116,18 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         loginButton.setReadPermissions(Arrays.asList(
                 "public_profile", "email"));
         mPresenter.tryLoginAuthomaticly();
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        token = task.getResult().getToken();
+                    }
+                });
         // If you are using in a fragment, call loginButton.setFragment(this);
 
         // Callback registration
@@ -124,7 +145,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
                                             object.getString("last_name");
                                     String id = object.getString("id");
                                     String picture = "https://graph.facebook.com/" + id + "/picture?type=large";
-                                    mPresenter.facebookLogin(email, username, picture);
+                                    mPresenter.facebookLogin(email, username, picture, token);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -257,7 +278,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
             Toast.makeText(this, "Моля попълнете всички полета", Toast.LENGTH_SHORT).show();
             return;
         }
-        mPresenter.login(username, password);
+        mPresenter.login(username, password, token);
     }
 
     @Override
@@ -303,7 +324,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
             return;
         }
 
-        mPresenter.register(emailTxt, usernameTxtView, password1Txt, cityTxt, pictureString);
+        mPresenter.register(emailTxt, usernameTxtView, password1Txt, cityTxt, pictureString, token);
     }
 
     public String bitMapToString(Bitmap bitmap){

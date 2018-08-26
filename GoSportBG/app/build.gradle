@@ -23,7 +23,7 @@ android {
 
 
 greendao {
-    schemaVersion 4
+    schemaVersion 5
 }
 
 dependencies {
@@ -40,13 +40,15 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.10.0'
     compile 'com.facebook.android:facebook-android-sdk:4.15.0'
     compile 'org.greenrobot:greendao:3.2.2'
-    compile 'com.google.android.gms:play-services-maps:10.2.6'
+    compile 'com.google.android.gms:play-services-maps:15.0.1'
     compile 'com.google.maps.android:android-maps-utils:0.5'
-    compile 'com.google.android.gms:play-services-location:10.2.6'
-    compile 'com.google.android.gms:play-services-places:10.2.6'
+    compile 'com.google.android.gms:play-services-location:15.0.1'
+    compile 'com.google.android.gms:play-services-places:15.0.1'
     compile 'de.hdodenhof:circleimageview:2.2.0'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:1.10.19'
+    compile 'com.google.firebase:firebase-core:16.0.0'
+    compile 'com.google.firebase:firebase-messaging:17.3.0'
 }
 configurations.all {
     resolutionStrategy.eachDependency { DependencyResolveDetails details ->
@@ -58,3 +60,4 @@ configurations.all {
         }
     }
 }
+apply plugin: 'com.google.gms.google-services'

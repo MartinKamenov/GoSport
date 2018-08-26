@@ -10,5 +10,6 @@ public class User {
     public String profileImg;
     public Team[] teams;
     public Event[] events;
+    public String token;
 }
 
