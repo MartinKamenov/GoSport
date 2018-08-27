@@ -6,6 +6,7 @@ import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.LocalUser;
+import com.kamenov.martin.gosportbg.models.TeamWrapper;
 
 /**
  * Created by Martin on 17.4.2018 г..
@@ -17,6 +18,8 @@ public class NewEventContracts {
 
         void createNewEvent(String name, String sport, DateTime date,
                             double longitude, double latitude, String address, int neededPlayers);
+
+        void getUserTeams();
 
         String[] getAllSports();
     }
@@ -45,6 +48,8 @@ public class NewEventContracts {
         void showMessage(String message);
 
         boolean validateFields();
+
+        void showUserTeams(TeamWrapper[] teams);
 
         ArrayAdapter<String> getSportAdapter();
     }

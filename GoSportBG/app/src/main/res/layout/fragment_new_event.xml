@@ -90,6 +90,8 @@
                             android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                     <CheckBox
+                        android:id="@+id/checkbox_teams"
+                        android:checked="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Отворено за всички"
@@ -102,7 +104,16 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone"
                         android:orientation="vertical">
-
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/secondColor"
+                            android:textAlignment="center"
+                            android:text="Отбори:"/>
+                        <ProgressBar
+                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
                     </LinearLayout>
                     <CalendarView
                         android:id="@+id/calendarView"

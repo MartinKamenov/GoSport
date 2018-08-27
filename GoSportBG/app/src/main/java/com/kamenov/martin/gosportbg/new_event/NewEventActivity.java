@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.google.gson.Gson;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.event.EventActivity;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
@@ -21,7 +22,7 @@ public class NewEventActivity extends Activity {
         this.mNewEventFragment = new NewEventFragment();
         HttpRequester requester = new HttpRequester();
         NavigationCommand eventNavigationCommand = new ActivityNavigationCommand(this, EventActivity.class);
-        NewEventPresenter newEventPresenter = new NewEventPresenter(requester, eventNavigationCommand);
+        NewEventPresenter newEventPresenter = new NewEventPresenter(requester, new Gson(), eventNavigationCommand);
         mNewEventFragment.setPresenter(newEventPresenter);
         newEventPresenter.subscribe(mNewEventFragment);
 

@@ -3,6 +3,7 @@ package com.kamenov.martin.gosportbg.new_event;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -23,6 +26,7 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.maps.MapsActivity;
 import com.kamenov.martin.gosportbg.models.DateTime;
+import com.kamenov.martin.gosportbg.models.TeamWrapper;
 
 import java.util.Arrays;
 import java.util.Calendar;
@@ -33,7 +37,7 @@ import java.util.TimeZone;
  * A simple {@link Fragment} subclass.
  */
 public class NewEventFragment extends Fragment implements NewEventContracts.INewEventView, View.OnClickListener,
-        CalendarView.OnDateChangeListener, TimePicker.OnTimeChangedListener {
+        CalendarView.OnDateChangeListener, TimePicker.OnTimeChangedListener, CompoundButton.OnCheckedChangeListener {
 
 
     private View root;
@@ -59,6 +63,8 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     private View viewForLimitations;
     private Spinner mSportSpinner;
     private String place;
+    public TeamWrapper[] mTeams;
+    private LinearLayout teamsContainer;
 
     public NewEventFragment() {
         // Required empty public constructor
@@ -84,7 +90,9 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         chosenTime.setText(hourOfDay + ":" + minute + " часа");
         chosenPlace = root.findViewById(R.id.chosen_place);
         checkBoxLimitations.setOnClickListener(this);
-
+        teamsContainer = root.findViewById(R.id.teams_container);
+        CheckBox checkBoxTeams = root.findViewById(R.id.checkbox_teams);
+        checkBoxTeams.setOnCheckedChangeListener(this);
         setListeners();
         return root;
     }
@@ -214,7 +222,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
     @Override
     public void switchLimitingEditTextVisibility() {
-        if(viewForLimitations.getVisibility()==View.GONE) {
+        if(viewForLimitations.getVisibility() == View.GONE) {
             viewForLimitations.setVisibility(View.VISIBLE);
         } else {
             viewForLimitations.setVisibility(View.GONE);
@@ -223,7 +231,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
     @Override
     public void switchCalendarVisibility() {
-        if(calendarView.getVisibility()==View.GONE) {
+        if(calendarView.getVisibility() == View.GONE) {
             calendarView.setVisibility(View.VISIBLE);
         } else {
             calendarView.setVisibility(View.GONE);
@@ -232,7 +240,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
     @Override
     public void switchTimeVisibility() {
-        if(timePicker.getVisibility()==View.GONE) {
+        if(timePicker.getVisibility() == View.GONE) {
             timePicker.setVisibility(View.VISIBLE);
         } else {
             timePicker.setVisibility(View.GONE);
@@ -294,6 +302,26 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         return false;
     }
 
+    @Override
+    public void showUserTeams(final TeamWrapper[] teams) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                NewEventFragment.this.mTeams = teams;
+                teamsContainer.removeAllViews();
+                // Show teams
+                for(int i = 0; i < teams.length; i++) {
+                    TeamWrapper team = teams[i];
+                    CheckBox checkboxView = new CheckBox(getActivity());
+                    checkboxView.setText(team.name);
+                    checkboxView.setTextColor(Constants.SECONDCOLOR);
+                    checkboxView.setBackgroundTintList(ColorStateList.valueOf(Constants.SECONDCOLOR));
+                    teamsContainer.addView(checkboxView);
+                }
+            }
+        });
+    }
+
     private void chooseTime() {
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -301,5 +329,17 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
         hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        if(b) {
+            teamsContainer.setVisibility(View.GONE);
+        } else {
+            teamsContainer.setVisibility(View.VISIBLE);
+            if(mTeams == null) {
+                mPresenter.getUserTeams();
+            }
+        }
     }
 }

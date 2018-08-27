@@ -1,11 +1,14 @@
 package com.kamenov.martin.gosportbg.new_event;
 
+import com.google.gson.Gson;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
+import com.kamenov.martin.gosportbg.internet.contracts.GetHandler;
 import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.LocalUser;
+import com.kamenov.martin.gosportbg.models.TeamWrapper;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 
@@ -19,13 +22,15 @@ import okhttp3.Response;
  * Created by Martin on 17.4.2018 г..
  */
 
-public class NewEventPresenter implements NewEventContracts.INewEventPresenter, PostHandler {
+public class NewEventPresenter implements NewEventContracts.INewEventPresenter, PostHandler, GetHandler {
     private final HttpRequester mRequester;
+    private final Gson mGson;
     private NewEventContracts.INewEventView mView;
     private NavigationCommand mEventNavigationCommand;
 
-    public NewEventPresenter(HttpRequester requester, NavigationCommand eventNavigationCommand) {
+    public NewEventPresenter(HttpRequester requester, Gson gson, NavigationCommand eventNavigationCommand) {
         this.mRequester = requester;
+        this.mGson = gson;
         this.mEventNavigationCommand = eventNavigationCommand;
     }
 
@@ -52,6 +57,13 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
                 date.minute, longitude, latitude, address, neededPlayers, myId);
         mView.showLoadingBar();
         mRequester.post(this, Constants.DOMAIN + "/events/createEvent", body);
+    }
+
+    @Override
+    public void getUserTeams() {
+        int id = getUser().getOnlineId();
+        String url = Constants.DOMAIN + "/users/" + id + "/teams";
+        mRequester.get(this, url);
     }
 
     @Override
@@ -90,6 +102,19 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
             this.mView.showMessageOnMainTread(body);
             mView.hideLoginBarOnUIThread();
         }
+    }
+
+    @Override
+    public void handleGet(Call call, Response response) {
+        String jsonString = "";
+        try {
+            jsonString = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        TeamWrapper[] teams = mGson.fromJson(jsonString, TeamWrapper[].class);
+        mView.showUserTeams(teams);
     }
 
     @Override
