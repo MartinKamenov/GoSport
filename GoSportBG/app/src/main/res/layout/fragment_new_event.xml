@@ -42,6 +42,7 @@
                         android:layout_height="wrap_content"
                         android:textColor="@color/secondColor"
                         android:hint="Описание на събитието..."
+                        android:textColorHint="#777777"
                         android:fontFamily="sans-serif-condensed"
                         />
                     <TextView
@@ -58,8 +59,8 @@
                         android:spinnerMode="dropdown"/>
                     <CheckBox
                         android:id="@+id/checkbox_limit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:text="Ограничен брой необходими играчи"
                         android:textColor="@color/secondColor"
                         android:buttonTint="@color/secondColor"
@@ -87,6 +88,21 @@
                             android:textColor="@color/secondColor"
                             android:textAlignment="center"
                             android:fontFamily="sans-serif-condensed"/>
+                    </LinearLayout>
+                    <CheckBox
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Отворено за всички"
+                        android:textColor="@color/secondColor"
+                        android:buttonTint="@color/secondColor"
+                        android:fontFamily="sans-serif-condensed"/>
+                    <LinearLayout
+                        android:id="@+id/teams_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
                     </LinearLayout>
                     <CalendarView
                         android:id="@+id/calendarView"

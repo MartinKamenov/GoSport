@@ -168,7 +168,9 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                     CardView cardView = new CardView(getActivity());
                     cardView.setPreventCornerOverlap(true);
                     cardView.setRadius(45);
-                    cardView.setElevation(10);
+                    // TO DO:
+                    // Fix for older versions
+                    // cardView.setElevation(10);
 
                     TextView textView = new TextView(getActivity());
                     textView.setPadding(20, 20, 20 , 20);
