@@ -44,6 +44,8 @@ public class NewEventContracts {
 
         void showMessage(String message);
 
+        boolean validateFields();
+
         ArrayAdapter<String> getSportAdapter();
     }
 }

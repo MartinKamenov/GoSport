@@ -25,7 +25,9 @@ import com.kamenov.martin.gosportbg.maps.MapsActivity;
 import com.kamenov.martin.gosportbg.models.DateTime;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -124,7 +126,9 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
                 switchLimitingEditTextVisibility();
                 break;
             case R.id.create_event:
-                createEventButtonPressed();
+                if(validateFields()) {
+                    createEventButtonPressed();
+                }
                 break;
 
         }
@@ -281,12 +285,21 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public boolean validateFields() {
+        if(latitude != null && longitude != null) {
+            return true;
+        }
+        showMessage("Моля изберете място");
+        return false;
+    }
+
     private void chooseTime() {
-        Date date = new Date();
-        year = 2018;
-        month = date.getMonth();
-        dayOfMonth = date.getDay();
-        hourOfDay = date.getHours();
-        minute = date.getMinutes();
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH);
+        dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
     }
 }
