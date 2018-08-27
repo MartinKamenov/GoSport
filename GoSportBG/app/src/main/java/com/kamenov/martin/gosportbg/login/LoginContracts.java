@@ -19,11 +19,11 @@ public class LoginContracts {
 
         void navigateToMenu();
 
-        void login(String username, String password);
+        void login(String username, String password, String token);
 
-        void facebookLogin(String email, String username, String picture);
+        void facebookLogin(String email, String username, String picture, String token);
 
-        void register(String email, String username, String password, String city, String pictureString);
+        void register(String email, String username, String password, String city, String pictureString, String token);
 
         void loginLocal(User user);
 
