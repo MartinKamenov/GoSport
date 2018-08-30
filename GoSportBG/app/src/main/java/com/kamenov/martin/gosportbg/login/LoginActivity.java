@@ -31,6 +31,8 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -129,9 +131,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
                     }
                 });
         // If you are using in a fragment, call loginButton.setFragment(this);
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        FacebookCallback<LoginResult> facebookCallback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -146,6 +146,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
                                     String id = object.getString("id");
                                     String picture = "https://graph.facebook.com/" + id + "/picture?type=large";
                                     mPresenter.facebookLogin(email, username, picture, token);
+                                    LoginManager.getInstance().logOut();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -166,7 +167,10 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
             public void onError(FacebookException exception) {
                 Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
-        });
+        };
+        // Callback registration
+        loginButton.registerCallback(callbackManager, facebookCallback);
+        loginButton.setLoginBehavior(LoginBehavior.NATIVE_ONLY);
     }
 
     @Override
