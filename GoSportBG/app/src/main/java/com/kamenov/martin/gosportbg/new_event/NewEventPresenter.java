@@ -47,14 +47,14 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
 
     @Override
     public void createNewEvent(String name, String sport, DateTime date, double longitude, double latitude,
-                               String address, int neededPlayers) {
+                               String address, int neededPlayers, String teamIds) {
         LocalUser user = getUser();
         int myId = user.getOnlineId();
         String body = String.format("{\"name\":\"%s\",\"sport\":\"%s\",\"year\":\"%s\",\"month\":\"%s\"," +
                 "\"day\":\"%s\",\"hours\":\"%s\",\"minutes\":\"%s\",\"longitude\":\"%s\"," +
-                "\"latitude\":\"%s\",\"address\":\"%s\",\"neededPlayers\":\"%d\",\"adminId\":\"%d\"" +
-                "}", name, sport, date.year, date.month, date.dayOfMonth, date.hour,
-                date.minute, longitude, latitude, address, neededPlayers, myId);
+                "\"latitude\":\"%s\",\"address\":\"%s\",\"neededPlayers\":\"%d\",\"adminId\":\"%d\"," +
+                "\"teamIds\":%s}", name, sport, date.year, date.month, date.dayOfMonth, date.hour,
+                date.minute, longitude, latitude, address, neededPlayers, myId, teamIds);
         mView.showLoadingBar();
         mRequester.post(this, Constants.DOMAIN + "/events/createEvent", body);
     }

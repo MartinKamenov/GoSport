@@ -17,7 +17,7 @@ public class NewEventContracts {
         LocalUser getUser();
 
         void createNewEvent(String name, String sport, DateTime date,
-                            double longitude, double latitude, String address, int neededPlayers);
+                            double longitude, double latitude, String address, int neededPlayers, String teamIds);
 
         void getUserTeams();
 

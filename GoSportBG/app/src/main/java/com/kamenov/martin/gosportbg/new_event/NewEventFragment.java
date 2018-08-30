@@ -65,6 +65,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     private String place;
     public TeamWrapper[] mTeams;
     private LinearLayout teamsContainer;
+    private CheckBox checkBoxTeams;
 
     public NewEventFragment() {
         // Required empty public constructor
@@ -87,11 +88,11 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         chosenDate = root.findViewById(R.id.chosen_date);
         chosenDate.setText(dayOfMonth + " " + Constants.MONTHS[month] + " " + year);
         chosenTime = root.findViewById(R.id.chosen_time);
-        chosenTime.setText(hourOfDay + ":" + minute + " часа");
+        chosenTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute) + " часа");
         chosenPlace = root.findViewById(R.id.chosen_place);
         checkBoxLimitations.setOnClickListener(this);
         teamsContainer = root.findViewById(R.id.teams_container);
-        CheckBox checkBoxTeams = root.findViewById(R.id.checkbox_teams);
+        checkBoxTeams = root.findViewById(R.id.checkbox_teams);
         checkBoxTeams.setOnCheckedChangeListener(this);
         setListeners();
         return root;
@@ -163,7 +164,6 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         showLocationBtn.setOnClickListener(this);
         createEventBtn = root.findViewById(R.id.create_event);
         createEventBtn.setOnClickListener(this);
-
         calendarView.setOnDateChangeListener(this);
         timePicker.setOnTimeChangedListener(this);
     }
@@ -187,7 +187,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         this.hourOfDay = hourOfDay;
         this.minute = minute;
         chosenTime = root.findViewById(R.id.chosen_time);
-        String str = hourOfDay + ":" + String.format("%02d", minute) + " часа";
+        String str = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute) + " часа";
         chosenTime.setText(str);
     }
 
@@ -217,7 +217,24 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
             TextView playersLimitTxt = root.findViewById(R.id.players_limit_txt);
             neededPlayers = Integer.parseInt(playersLimitTxt.getText().toString());
         }
-        mPresenter.createNewEvent(name, sport, date, longitude, latitude, place, neededPlayers);
+        StringBuilder teamIds = new StringBuilder();
+        // Fill teamIds
+        int count = teamsContainer.getChildCount();
+        if(!checkBoxTeams.isChecked()) {
+            teamIds.append("[");
+            for(int i = 0; i < count; i++) {
+                CheckBox team = (CheckBox) teamsContainer.getChildAt(i);
+                teamIds.append(team.getId());
+                if(i != count - 1) {
+                    teamIds.append(", ");
+                }
+            }
+            teamIds.append("]");
+        } else {
+            teamIds.append("null");
+        }
+
+        mPresenter.createNewEvent(name, sport, date, longitude, latitude, place, neededPlayers, teamIds.toString());
     }
 
     @Override
@@ -316,6 +333,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
                     checkboxView.setText(team.name);
                     checkboxView.setTextColor(Constants.SECONDCOLOR);
                     checkboxView.setBackgroundTintList(ColorStateList.valueOf(Constants.SECONDCOLOR));
+                    checkboxView.setId(team.id);
                     teamsContainer.addView(checkboxView);
                 }
             }
