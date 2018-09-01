@@ -150,10 +150,10 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
             public void run() {
                 hideProgressBar();
                 final int margin = 50;
-                String userUsername = mPresenter.getLocalUser().getUsername();
+                int userId = mPresenter.getLocalUser().getOnlineId();
                 for(int i = 0; i < event.players.size(); i++) {
                     User user = event.players.get(i);
-                    if(user.username.equals(userUsername)) {
+                    if(user.id == userId) {
                         showButtonForMessenger();
                     }
                 }

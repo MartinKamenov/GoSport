@@ -38,6 +38,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
     private Button mShowMessengerButton;
     private static int acceptButtonIdDif = 1000000;
     private static int rejectButtonDif = 2000000;
+    private Button mRemoveRequestButton;
 
     public TeamFragment() {
         // Required empty public constructor
@@ -53,6 +54,8 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
         mRequestButton.setOnClickListener(this);
         mShowMessengerButton = root.findViewById(R.id.open_chat_btn);
         mShowMessengerButton.setOnClickListener(this);
+        mRemoveRequestButton = root.findViewById(R.id.remove_request_button);
+        mRemoveRequestButton.setOnClickListener(this);
 
         return root;
     }
@@ -109,17 +112,30 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                 LinearLayout playersContainer = root.findViewById(R.id.players_container);
 
                 boolean loggedPlayerPartOfTeamPlayers = false;
+                boolean loggedUserPartOfRequestingPlayers = false;
 
                 int localUserId = mPresenter.getLocalUser().getOnlineId();
                 for(int i = 0; i < team.players.length; i += 1) {
                     if(team.players[i].id == localUserId) {
                         loggedPlayerPartOfTeamPlayers = true;
+                        break;
+                    }
+                }
+                if(!loggedPlayerPartOfTeamPlayers) {
+                    for (int i = 0; i < team.requestingPlayers.length; i++) {
+                        if (team.requestingPlayers[i].id == localUserId) {
+                            loggedUserPartOfRequestingPlayers = true;
+                            break;
+                        }
                     }
                 }
 
                 if(loggedPlayerPartOfTeamPlayers) {
                     root.findViewById(R.id.request_join_team_btn).setVisibility(View.GONE);
                     root.findViewById(R.id.open_chat_btn).setVisibility(View.VISIBLE);
+                } else if(loggedUserPartOfRequestingPlayers) {
+                    root.findViewById(R.id.request_join_team_btn).setVisibility(View.GONE);
+                    root.findViewById(R.id.remove_request_button).setVisibility(View.VISIBLE);
                 }
 
                 requestingPlayersContainer.removeAllViews();
@@ -242,6 +258,9 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                 break;
             case R.id.open_chat_btn:
                 showMessengerButtonPressed();
+                break;
+            case R.id.remove_request_button:
+                mPresenter.rejectPlayer(mPresenter.getLocalUser().getOnlineId());
                 break;
             default:
                 int id = view.getId();

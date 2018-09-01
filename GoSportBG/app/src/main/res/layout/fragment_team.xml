@@ -75,6 +75,16 @@
             android:textColor="#ffffff"
             android:textStyle="bold"
             android:theme="@style/InfoButton"/>
+        <Button
+            android:id="@+id/remove_request_button"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:text="Оттегляне на заявката за присъединяване"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:theme="@style/DangerButton"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/progress_bar_form"
