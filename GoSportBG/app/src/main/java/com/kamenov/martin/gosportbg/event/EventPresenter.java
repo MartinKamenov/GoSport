@@ -109,6 +109,8 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
             Event event = mGson.fromJson(jsonInString, Event.class);
             mView.showEventOnUITread(event);
             return;
+        } else {
+            mView.showMessageOnUITread(jsonInString);
         }
     }
 }
