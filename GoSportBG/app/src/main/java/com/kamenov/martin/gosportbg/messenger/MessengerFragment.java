@@ -11,6 +11,7 @@ import android.support.v7.widget.CardView;
 import android.text.method.ScrollingMovementMethod;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MessengerFragment extends Fragment implements MessengerContracts.IMessengerView, View.OnClickListener {
+public class MessengerFragment extends Fragment implements MessengerContracts.IMessengerView, View.OnClickListener, View.OnKeyListener {
 
 
     private View root;
@@ -49,6 +50,8 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
     private Message lastMessage;
     private EditText message;
     private Button submitButton;
+    private int messageLinesCount;
+    private LinearLayout messageTextContainer;
 
     public MessengerFragment() {
         // Required empty public constructor
@@ -60,11 +63,14 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         this.root = inflater.inflate(R.layout.fragment_messenger, container, false);
+        messageLinesCount = 1;
         submitButton = root.findViewById(R.id.submit);
+        messageTextContainer = root.findViewById(R.id.message_txt_container);
         submitButton.setOnClickListener(this);
         scrollView = root.findViewById(R.id.scrollView);
         messageContainer = root.findViewById(R.id.messages_container);
         message = root.findViewById(R.id.message);
+        message.setOnKeyListener(this);
         message.setMovementMethod(new ScrollingMovementMethod());
         getActivity().getWindow().setBackgroundDrawableResource(R.drawable.messenger_background);
         return root;
@@ -94,6 +100,14 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
     public void hideKeyboardFrom() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(message.getWindowToken(), 0);
+    }
+
+    @Override
+    public void changeMessageContainerSize() {
+        int messageContainerHeight = messageTextContainer.getHeight();
+        RelativeLayout.LayoutParams scrollParams = (RelativeLayout.LayoutParams)scrollView.getLayoutParams();
+        scrollParams.bottomMargin = messageContainerHeight;
+        scrollView.setLayoutParams(scrollParams);
     }
 
     @Override
@@ -247,5 +261,14 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
     public void onPause() {
         super.onPause();
         mPresenter.onPause();
+    }
+
+    @Override
+    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+        if(message.getLineCount() != messageLinesCount) {
+            messageLinesCount = message.getLineCount();
+            changeMessageContainerSize();
+        }
+        return false;
     }
 }

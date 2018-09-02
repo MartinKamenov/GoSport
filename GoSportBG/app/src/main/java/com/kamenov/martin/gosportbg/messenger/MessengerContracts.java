@@ -32,5 +32,7 @@ public class MessengerContracts {
         void addMessagesOnUIThread(Message[] messages);
 
         void hideKeyboardFrom();
+
+        void changeMessageContainerSize();
     }
 }

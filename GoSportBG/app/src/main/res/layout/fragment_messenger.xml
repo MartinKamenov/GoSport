@@ -30,8 +30,9 @@
             </LinearLayout>
         </ScrollView>
         <LinearLayout
+            android:id="@+id/message_txt_container"
             android:layout_width="match_parent"
-            android:layout_height="115dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_alignParentBottom="true">
             <android.support.design.widget.TextInputLayout
