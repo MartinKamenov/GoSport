@@ -4,10 +4,53 @@
     android:layout_height="match_parent"
     tools:context="com.kamenov.martin.gosportbg.settings.SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:background="@color/mainColor">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="60dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondColor"
+                    android:text="Настройки"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:text="Тип на карта:"
+                    android:textColor="@color/secondColor"/>
+                <Spinner
+                    android:id="@+id/maps_type"
+                    android:background="@color/cardColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown">
+                </Spinner>
+            </LinearLayout>
+        </ScrollView>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:text="Запази промените"
+            android:textColor="#ffffff"
+            android:theme="@style/SuccessButton"/>
+    </RelativeLayout>
+
 
 </FrameLayout>

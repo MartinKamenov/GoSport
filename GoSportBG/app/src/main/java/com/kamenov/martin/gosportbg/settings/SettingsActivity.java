@@ -11,10 +11,14 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        SettingsFragment settingsFragment = new SettingsFragment();
+        SettingsPresenter settingsPresenter = new SettingsPresenter();
+        settingsFragment.setPresenter(settingsPresenter);
+        settingsPresenter.subscribe(settingsFragment);
 
         getFragmentManager()
                 .beginTransaction()
-                .replace(R.id.settings_container, new SettingsFragment())
+                .replace(R.id.settings_container, settingsFragment)
                 .commit();
     }
 }

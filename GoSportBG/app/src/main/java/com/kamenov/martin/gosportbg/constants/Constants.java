@@ -32,4 +32,5 @@ public class Constants {
     public static int SECONDCOLOR = Color.parseColor("#ffffff");
     public static int CARDCOLOR = Color.parseColor("#444444");
     public static int CLICKEDCARDCOLOR = Color.parseColor("#aaaaaa");
+    public static String[] MAP_TYPES = new String[]{"Хибрид", "Нормален"};
 }
