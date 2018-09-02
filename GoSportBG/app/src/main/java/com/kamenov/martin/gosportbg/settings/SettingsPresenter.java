@@ -43,8 +43,15 @@ public class SettingsPresenter implements SettingsContracts.ISettingsPresenter {
             return settingsConfigurations.get(0);
         }
 
-        SettingsConfiguration defaultSettingsConfiguration = new SettingsConfiguration();
+        SettingsConfiguration defaultSettingsConfiguration = new SettingsConfiguration("Хибрид");
         settingsConfigurations.add(defaultSettingsConfiguration);
         return settingsConfigurations.get(0);
+    }
+
+    @Override
+    public void setSettingsConfiguration(SettingsConfiguration settingsConfiguration) {
+        GenericCacheRepository<SettingsConfiguration, Long> repo = mView.getGoSportApplication().getSettingsConfigurationRepository();
+        repo.clearAll();
+        repo.add(settingsConfiguration);
     }
 }

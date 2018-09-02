@@ -11,13 +11,21 @@ public class SettingsConfiguration {
     @Id(autoincrement = true)
     private Long id;
 
+    @Property(nameInDb = "mapType")
+    private String mapType;
+
     public SettingsConfiguration() {
 
     }
 
-    @Generated(hash = 875440094)
-    public SettingsConfiguration(Long id) {
+    public SettingsConfiguration(String mapType) {
+        this.mapType = mapType;
+    }
+
+    @Generated(hash = 96385911)
+    public SettingsConfiguration(Long id, String mapType) {
         this.id = id;
+        this.mapType = mapType;
     }
 
     public Long getId() {
@@ -26,5 +34,13 @@ public class SettingsConfiguration {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getMapType() {
+        return mapType;
+    }
+
+    public void setMapType(String mapType) {
+        this.mapType = mapType;
     }
 }

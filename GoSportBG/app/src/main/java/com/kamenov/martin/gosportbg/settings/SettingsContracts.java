@@ -14,11 +14,19 @@ import com.kamenov.martin.gosportbg.models.SettingsConfiguration;
 public class SettingsContracts {
     public interface ISettingsPresenter extends BaseContracts.Presenter {
         String[] getMapTypes();
+
         SettingsConfiguration getSettingsConfiguration();
+
+        void setSettingsConfiguration(SettingsConfiguration settingsConfiguration);
     }
 
     public interface ISettingsView extends BaseContracts.View {
-        ArrayAdapter<String> getMapTypesAdapter();
         GoSportApplication getGoSportApplication();
+
+        ArrayAdapter<String> getMapTypesAdapter();
+
+        void stopView();
+
+        void showMessage(String message);
     }
 }

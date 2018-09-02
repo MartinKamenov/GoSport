@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.Status;
@@ -27,10 +28,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
+import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.constants.Constants;
+import com.kamenov.martin.gosportbg.models.SettingsConfiguration;
 import com.kamenov.martin.gosportbg.new_event.NewEventActivity;
 import com.kamenov.martin.gosportbg.new_event.NewEventFragment;
+import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 import com.kamenov.martin.gosportbg.show_events.ShowEventsActivity;
 
 import java.io.IOException;
@@ -83,6 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        String mapType = getMapTypeSettings();
         mMap = googleMap;
 
         LatLng startingLatLng = new LatLng(42.698334, 23.319941);
@@ -94,7 +99,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         mMap.setOnMapClickListener(this);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingLatLng, 13.0f));
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        switch (mapType) {
+            case "Хибрид":
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+            case "Нормален":
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                break;
+        }
+    }
+
+    private String getMapTypeSettings() {
+        return getSettingsConfiguration().getMapType();
+    }
+
+    private SettingsConfiguration getSettingsConfiguration() {
+        GenericCacheRepository<SettingsConfiguration, Long> repo = ((GoSportApplication)getApplication())
+                .getSettingsConfigurationRepository();
+        List<SettingsConfiguration> settingsConfigurations = repo.getAll();
+        if(settingsConfigurations.size() == 1) {
+            return settingsConfigurations.get(0);
+        }
+
+        SettingsConfiguration defaultSettingsConfiguration = new SettingsConfiguration();
+        settingsConfigurations.add(defaultSettingsConfiguration);
+        return defaultSettingsConfiguration;
     }
 
     @Override
