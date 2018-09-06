@@ -52,6 +52,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        View container = findViewById(R.id.container);
+        container.setBackgroundColor(Constants.MAINCOLOR);
         mPlace = "Избрано място";
         btn = findViewById(R.id.select_location_id);
         btn.setOnClickListener(this);

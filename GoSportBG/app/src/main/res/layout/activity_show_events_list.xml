@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.kamenov.martin.gosportbg.show_events.ShowEventsListActivity">
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/mainColor">
+        android:orientation="vertical">
         <EditText
             android:id="@+id/search_text"
             android:layout_height="wrap_content"
@@ -16,7 +16,6 @@
             android:textAlignment="center"
             android:maxLines="3"
             android:fontFamily="sans-serif-condensed"
-            android:textColor="@color/secondColor"
             android:textColorHint="@color/cardColor"
             android:hint="Търсене..."/>
         <RelativeLayout
@@ -49,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textAlignment="center"
-                android:textColor="@color/secondColor"
                 android:text="Брой намерени събития: Изчислява се..."/>
         </RelativeLayout>
 

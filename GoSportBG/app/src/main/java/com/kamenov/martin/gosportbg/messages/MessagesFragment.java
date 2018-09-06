@@ -47,6 +47,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_messages, container, false);
+        root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         mMessageWrapperContainer = root.findViewById(R.id.message_wrappers_container);
         mPresenter.getUserMesseges();
         viewHasStarted = true;

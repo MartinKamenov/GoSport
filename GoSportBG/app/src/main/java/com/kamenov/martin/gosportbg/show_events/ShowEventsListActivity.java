@@ -51,10 +51,13 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_events_list);
 
+        findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         mEventsContainer = findViewById(R.id.events_container);
         mProgressBar = findViewById(R.id.event_list_progressbar);
         mSearchText = findViewById(R.id.search_text);
+        mSearchText.setTextColor(Constants.SECONDCOLOR);
         mResultCountTxt = findViewById(R.id.result_count);
+        mResultCountTxt.setTextColor(Constants.SECONDCOLOR);
         mSearchText.addTextChangedListener(this);
 
         ShowEventsContracts.IShowEventsPresenter presenter = new ShowEventsPresenter(new HttpRequester(),
@@ -148,13 +151,13 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
 
                     cardView.addView(linearLayoutContainer);
                     TextView sport = new TextView(ShowEventsListActivity.this);
-                    sport.setTextColor(Constants.SECONDCOLOR);
+                    sport.setTextColor(Constants.CARDTEXTCOLOR);
                     sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     sport.setText("Спорт: " + event.sport);
                     sport.setGravity(Gravity.CENTER_HORIZONTAL);
                     sport.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                     TextView date = new TextView(ShowEventsListActivity.this);
-                    date.setTextColor(Constants.SECONDCOLOR);
+                    date.setTextColor(Constants.CARDTEXTCOLOR);
                     DateTime dt = event.datetime;
                     date.setText(String.format("%02d %s %d\n%02d:%02d",
                             dt.dayOfMonth,
@@ -166,22 +169,22 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                     date.setGravity(Gravity.CENTER_HORIZONTAL);
                     date.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                     if(color != -1) {
-                        cardView.setCardBackgroundColor(color);
-                        sport.setTextColor(Color.parseColor("#ffffff"));
-                        date.setTextColor(Color.parseColor("#ffffff"));
+                        cardView.setCardBackgroundColor(Constants.CARDCOLOR);
+                        sport.setTextColor(Constants.CARDTEXTCOLOR);
+                        date.setTextColor(Constants.CARDTEXTCOLOR);
                     }
                     linearLayout.addView(sport);
 
                     linearLayout.addView(date);
                     if(event.name.length() > 0) {
                         TextView description = new TextView(ShowEventsListActivity.this);
-                        description.setTextColor(Constants.SECONDCOLOR);
+                        description.setTextColor(Constants.CARDTEXTCOLOR);
                         description.setText(event.name);
                         description.setGravity(Gravity.CENTER_HORIZONTAL);
                         description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                         if(color != -1) {
-                            description.setTextColor(Color.parseColor("#ffffff"));
+                            description.setTextColor(Constants.CARDTEXTCOLOR);
                         }
                         linearLayout.addView(description);
                     }

@@ -1,5 +1,7 @@
 package com.kamenov.martin.gosportbg.settings;
 
+import android.graphics.Color;
+
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.messenger.MessengerContracts;
@@ -53,5 +55,7 @@ public class SettingsPresenter implements SettingsContracts.ISettingsPresenter {
         GenericCacheRepository<SettingsConfiguration, Long> repo = mView.getGoSportApplication().getSettingsConfigurationRepository();
         repo.clearAll();
         repo.add(settingsConfiguration);
+        Constants.MAINCOLOR = Color.parseColor("#ffffff");
+        Constants.SECONDCOLOR = Color.parseColor("#000000");
     }
 }

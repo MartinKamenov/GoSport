@@ -31,6 +31,9 @@ public class Constants {
     public static int MAINCOLOR = Color.parseColor("#282828");
     public static int SECONDCOLOR = Color.parseColor("#ffffff");
     public static int CARDCOLOR = Color.parseColor("#444444");
+    public static int CARDTEXTCOLOR = Color.parseColor("#ffffff");
     public static int CLICKEDCARDCOLOR = Color.parseColor("#aaaaaa");
     public static String[] MAP_TYPES = new String[]{"Хибрид", "Нормален"};
+    public static int[][] THEMES = new int[][] {{Color.parseColor("#282828"), Color.parseColor("#ffffff")},
+            {Color.parseColor("#ffffff"), Color.parseColor("#282828")}};
 }

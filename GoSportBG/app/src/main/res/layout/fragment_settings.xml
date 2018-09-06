@@ -5,9 +5,9 @@
     tools:context="com.kamenov.martin.gosportbg.settings.SettingsFragment">
 
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/mainColor">
+        android:layout_height="wrap_content">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -18,29 +18,42 @@
                 android:layout_marginBottom="60dp"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/header"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textColor="@color/secondColor"
                     android:text="Настройки"
                     android:fontFamily="sans-serif-condensed"
                     android:textStyle="bold"
                     android:textSize="20dp"/>
                 <TextView
+                    android:id="@+id/map_header"
                     android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:textSize="15dp"
-                    android:text="Тип на карта:"
-                    android:textColor="@color/secondColor"/>
+                    android:text="Тип на карта:"/>
                 <Spinner
                     android:id="@+id/maps_type"
                     android:background="@color/cardColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown">
-                </Spinner>
+                    android:spinnerMode="dropdown"/>
+                <TextView
+                    android:id="@+id/theme_header"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:text="Тема:"/>
+                <Spinner
+                    android:id="@+id/theme_colors"
+                    android:background="@color/cardColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown"/>
             </LinearLayout>
         </ScrollView>
         <Button

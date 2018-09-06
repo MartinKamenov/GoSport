@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.kamenov.martin.gosportbg.menu.MenuFragment">
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/mainColor">
+        android:layout_height="match_parent">
         <VideoView
             android:id="@+id/menu_video"
             android:layout_width="match_parent"

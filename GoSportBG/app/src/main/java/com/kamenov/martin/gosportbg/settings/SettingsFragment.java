@@ -8,11 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
+import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.models.SettingsConfiguration;
 
 /**
@@ -36,6 +38,10 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_settings, container, false);
         SettingsConfiguration settingsConfiguration = mPresenter.getSettingsConfiguration();
+        root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
+        ((TextView)root.findViewById(R.id.header)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.theme_header)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.map_header)).setTextColor(Constants.SECONDCOLOR);
         mMapsSpinner = root.findViewById(R.id.maps_type);
         mMapsSpinner.setAdapter(getMapTypesAdapter());
         root.findViewById(R.id.save_settings_btn).setOnClickListener(this);

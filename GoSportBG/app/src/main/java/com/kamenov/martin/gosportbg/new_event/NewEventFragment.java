@@ -76,6 +76,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_new_event, container, false);
+        root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         calendarView = root.findViewById(R.id.calendarView);
         calendarView.setVisibility(View.GONE);
         timePicker = root.findViewById(R.id.time_picker);

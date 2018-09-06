@@ -19,6 +19,7 @@ import android.widget.VideoView;
 import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
+import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.login.LoginActivity;
 import com.kamenov.martin.gosportbg.new_event.NewEventActivity;
 
@@ -43,6 +44,7 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.root = inflater.inflate(R.layout.fragment_menu, container, false);
+        root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         presenter.subscribe(this);
         mVideo = root.findViewById(R.id.menu_video);
         Uri uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.clip);
