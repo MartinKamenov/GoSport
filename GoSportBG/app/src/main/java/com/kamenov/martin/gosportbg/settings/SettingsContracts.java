@@ -15,6 +15,8 @@ public class SettingsContracts {
     public interface ISettingsPresenter extends BaseContracts.Presenter {
         String[] getMapTypes();
 
+        String[] getThemes();
+
         SettingsConfiguration getSettingsConfiguration();
 
         void setSettingsConfiguration(SettingsConfiguration settingsConfiguration);
@@ -24,6 +26,8 @@ public class SettingsContracts {
         GoSportApplication getGoSportApplication();
 
         ArrayAdapter<String> getMapTypesAdapter();
+
+        ArrayAdapter<String> getColorThemesAdapter();
 
         void stopView();
 

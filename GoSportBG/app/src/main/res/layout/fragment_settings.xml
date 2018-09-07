@@ -36,7 +36,6 @@
                     android:text="Тип на карта:"/>
                 <Spinner
                     android:id="@+id/maps_type"
-                    android:background="@color/cardColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"/>
@@ -50,7 +49,6 @@
                     android:text="Тема:"/>
                 <Spinner
                     android:id="@+id/theme_colors"
-                    android:background="@color/cardColor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"/>

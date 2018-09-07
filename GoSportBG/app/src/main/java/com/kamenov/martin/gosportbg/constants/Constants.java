@@ -36,4 +36,5 @@ public class Constants {
     public static String[] MAP_TYPES = new String[]{"Хибрид", "Нормален"};
     public static int[][] THEMES = new int[][] {{Color.parseColor("#282828"), Color.parseColor("#ffffff")},
             {Color.parseColor("#ffffff"), Color.parseColor("#282828")}};
+    public static String[] THEME_NAMES = new String[] {"Черна", "Бяла"};
 }

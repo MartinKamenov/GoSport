@@ -38,6 +38,11 @@ public class SettingsPresenter implements SettingsContracts.ISettingsPresenter {
     }
 
     @Override
+    public String[] getThemes() {
+        return Constants.THEME_NAMES;
+    }
+
+    @Override
     public SettingsConfiguration getSettingsConfiguration() {
         GenericCacheRepository<SettingsConfiguration, Long> repo = mView.getGoSportApplication().getSettingsConfigurationRepository();
         List<SettingsConfiguration> settingsConfigurations = repo.getAll();
@@ -55,7 +60,5 @@ public class SettingsPresenter implements SettingsContracts.ISettingsPresenter {
         GenericCacheRepository<SettingsConfiguration, Long> repo = mView.getGoSportApplication().getSettingsConfigurationRepository();
         repo.clearAll();
         repo.add(settingsConfiguration);
-        Constants.MAINCOLOR = Color.parseColor("#ffffff");
-        Constants.SECONDCOLOR = Color.parseColor("#000000");
     }
 }
