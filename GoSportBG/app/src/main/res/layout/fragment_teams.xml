@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/container"
     tools:context=".teams.multiple_teams.TeamsFragment">
 
     <LinearLayout
         android:id="@+id/show_teams_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/mainColor">
+        android:orientation="vertical">
         <Button
             android:drawableLeft="@android:drawable/ic_input_add"
             android:id="@+id/new_team_btn"
@@ -48,7 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:textAlignment="center"
-                android:textColor="@color/secondColor"
                 android:text="Брой намерени събития: Изчислява се..."/>
         </RelativeLayout>
 
@@ -58,8 +57,7 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/mainColor">
+        android:orientation="vertical">
         <Button
             android:drawableLeft="@android:drawable/ic_menu_search"
             android:id="@+id/show_teams_btn"
@@ -105,14 +103,12 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_height="wrap_content"
                             android:hint="Име"
-                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                     </android.support.design.widget.TextInputLayout>
                     <Spinner
                         android:id="@+id/sport_type_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/cardColor"
                         android:spinnerMode="dropdown"/>
                 </LinearLayout>
             </ScrollView>
@@ -133,8 +129,7 @@
         android:id="@+id/progressbar_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/mainColor">
+        android:visibility="gone">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -148,11 +143,11 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp" />
                 <TextView
+                    android:id="@+id/loader_txt"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Създаване на отбор..."
-                    android:textColor="@color/secondColor"/>
+                    android:text="Създаване на отбор..."/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

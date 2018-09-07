@@ -70,12 +70,23 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
+        ((TextView)findViewById(R.id.sport_header)).setTextColor(Constants.CARDTEXTCOLOR);
+        ((TextView)findViewById(R.id.date_header)).setTextColor(Constants.CARDTEXTCOLOR);
+        ((TextView)findViewById(R.id.time_header)).setTextColor(Constants.CARDTEXTCOLOR);
+        ((TextView)findViewById(R.id.description_header)).setTextColor(Constants.CARDTEXTCOLOR);
+        ((TextView)findViewById(R.id.participants_header)).setTextColor(Constants.CARDTEXTCOLOR);
+
         mNameTextView = findViewById(R.id.name_txt);
+        mNameTextView.setTextColor(Constants.CARDTEXTCOLOR);
         mDateTextView = findViewById(R.id.date_txt);
+        mDateTextView.setTextColor(Constants.CARDTEXTCOLOR);
         mTimeTextView = findViewById(R.id.time_txt);
+        mTimeTextView.setTextColor(Constants.CARDTEXTCOLOR);
         mSportTextView = findViewById(R.id.sport_txt);
+        mSportTextView.setTextColor(Constants.CARDTEXTCOLOR);
         mPlayersContainer = findViewById(R.id.players_container);
         mEventContainer = findViewById(R.id.event_container);
+        mEventContainer.setBackgroundColor(Constants.MAINCOLOR);
         showMessengerButton = findViewById(R.id.showMessenger);
         showMessengerButton.setOnClickListener(this);
 

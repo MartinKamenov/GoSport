@@ -64,6 +64,10 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_teams, container, false);
+        root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
+        ((TextView)root.findViewById(R.id.result_count)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.loader_txt)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.name_txt)).setTextColor(Constants.SECONDCOLOR);
         mTeamsContainer = root.findViewById(R.id.teams_container);
         Button newTeamButton = root.findViewById(R.id.new_team_btn);
         newTeamButton.setOnClickListener(this);
@@ -153,7 +157,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                     cardView.addView(linearLayoutContainer);
 
                     TextView description = new TextView(getActivity());
-                    description.setTextColor(Constants.SECONDCOLOR);
+                    description.setTextColor(Constants.CARDTEXTCOLOR);
                     description.setText(team.name);
                     description.setGravity(Gravity.CENTER_HORIZONTAL);
                     description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -161,7 +165,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                     description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD_ITALIC);
                     linearLayout.addView(description);
                     TextView sport = new TextView(getActivity());
-                    sport.setTextColor(Constants.SECONDCOLOR);
+                    sport.setTextColor(Constants.CARDTEXTCOLOR);
                     sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     sport.setText(team.sport);
                     sport.setGravity(Gravity.CENTER_HORIZONTAL);

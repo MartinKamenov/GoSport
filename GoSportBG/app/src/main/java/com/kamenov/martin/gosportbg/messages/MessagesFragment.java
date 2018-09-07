@@ -48,6 +48,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_messages, container, false);
         root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
+        ((TextView)root.findViewById(R.id.messages_header)).setTextColor(Constants.SECONDCOLOR);
         mMessageWrapperContainer = root.findViewById(R.id.message_wrappers_container);
         mPresenter.getUserMesseges();
         viewHasStarted = true;
@@ -133,7 +134,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         cardView.addView(linearLayoutContainer);
 
         TextView description = new TextView(getActivity());
-        description.setTextColor(Constants.SECONDCOLOR);
+        description.setTextColor(Constants.CARDTEXTCOLOR);
         description.setText(messengerWrapper.getTitle());
         description.setGravity(Gravity.CENTER_HORIZONTAL);
         description.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -141,7 +142,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         description.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD_ITALIC);
         linearLayout.addView(description);
         TextView sport = new TextView(getActivity());
-        sport.setTextColor(Constants.SECONDCOLOR);
+        sport.setTextColor(Constants.CARDTEXTCOLOR);
         sport.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         sport.setText(messengerWrapper.getSport());
         sport.setGravity(Gravity.CENTER_HORIZONTAL);
