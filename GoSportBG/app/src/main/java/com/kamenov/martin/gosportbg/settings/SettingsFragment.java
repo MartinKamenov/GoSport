@@ -103,7 +103,7 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
         Constants.MAINCOLOR = Constants.THEMES[selectedThemeIndex][0];
         Constants.SECONDCOLOR = Constants.THEMES[selectedThemeIndex][1];
 
-        SettingsConfiguration settingsConfiguration = new SettingsConfiguration(mapType);
+        SettingsConfiguration settingsConfiguration = new SettingsConfiguration(mapType, selectedThemeIndex);
         mPresenter.setSettingsConfiguration(settingsConfiguration);
         showMessage("Успешно запазени настройки");
         stopView();

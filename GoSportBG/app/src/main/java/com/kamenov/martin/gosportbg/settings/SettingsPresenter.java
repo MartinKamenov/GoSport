@@ -50,7 +50,7 @@ public class SettingsPresenter implements SettingsContracts.ISettingsPresenter {
             return settingsConfigurations.get(0);
         }
 
-        SettingsConfiguration defaultSettingsConfiguration = new SettingsConfiguration("Хибрид");
+        SettingsConfiguration defaultSettingsConfiguration = new SettingsConfiguration("Хибрид", 0);
         settingsConfigurations.add(defaultSettingsConfiguration);
         return settingsConfigurations.get(0);
     }

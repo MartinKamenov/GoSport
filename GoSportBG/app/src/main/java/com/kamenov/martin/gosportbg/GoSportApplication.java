@@ -11,6 +11,8 @@ import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 
 import org.greenrobot.greendao.database.Database;
 
+import java.util.List;
+
 /**
  * Created by Martin on 17.4.2018 г..
  */
@@ -30,6 +32,9 @@ public class GoSportApplication extends Application {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "gosport-db");
         Database db = helper.getWritableDb();
         mDaoSession = new DaoMaster(db).newSession();
+        int[] theme = Constants.THEMES[getSettingsConfiguration().getThemeIndex()];
+        Constants.MAINCOLOR = theme[0];
+        Constants.SECONDCOLOR = theme[1];
         Constants.DOMAIN = "https://gosport.herokuapp.com";
     }
 
@@ -42,10 +47,22 @@ public class GoSportApplication extends Application {
     }
 
     public GenericCacheRepository<LocalUser, Long> getLocalUserRepository() {
-        if (mSettingsConfigurationRepository == null) {
+        if (mLocalUserRepository == null) {
             mLocalUserRepository = new GenericCacheRepository<>(mDaoSession.getLocalUserDao());
         }
 
         return mLocalUserRepository;
+    }
+
+    private SettingsConfiguration getSettingsConfiguration() {
+        GenericCacheRepository<SettingsConfiguration, Long> repo = getSettingsConfigurationRepository();
+        List<SettingsConfiguration> settingsConfigurations = repo.getAll();
+        if(settingsConfigurations.size() == 1) {
+            return settingsConfigurations.get(0);
+        }
+
+        SettingsConfiguration defaultSettingsConfiguration = new SettingsConfiguration("Хибрид", 0);
+        settingsConfigurations.add(defaultSettingsConfiguration);
+        return settingsConfigurations.get(0);
     }
 }
