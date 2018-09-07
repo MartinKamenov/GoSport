@@ -29,6 +29,8 @@ public class LoginPresenter implements LoginContracts.ILoginPresenter, PostHandl
         this.mRequester = requester;
         this.mGson = gson;
         this.mMenuNavigationCommand = menuNavigationCommand;
+        // Added for testing purposes
+        // menuNavigationCommand.navigate();
     }
 
 

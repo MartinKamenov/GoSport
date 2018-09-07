@@ -38,7 +38,7 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_settings, container, false);
-        // SettingsConfiguration settingsConfiguration = mPresenter.getSettingsConfiguration();
+        SettingsConfiguration settingsConfiguration = mPresenter.getSettingsConfiguration();
         root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         ((TextView)root.findViewById(R.id.header)).setTextColor(Constants.SECONDCOLOR);
         ((TextView)root.findViewById(R.id.theme_header)).setTextColor(Constants.SECONDCOLOR);
@@ -46,9 +46,20 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
         mMapsSpinner = root.findViewById(R.id.maps_type);
         mMapsSpinner.setBackgroundColor(Constants.MAINCOLOR);
         mMapsSpinner.setAdapter(getMapTypesAdapter());
+
+        int i = 0;
+        String mapType = settingsConfiguration.getMapType();
+        for(; i < Constants.MAP_TYPES.length; i++) {
+            if(Constants.MAP_TYPES[i].equals(mapType)) {
+                break;
+            }
+        }
+        mMapsSpinner.setSelection(i);
         mColorsSpiner = root.findViewById(R.id.theme_colors);
         mColorsSpiner.setBackgroundColor(Constants.MAINCOLOR);
         mColorsSpiner.setAdapter(getColorThemesAdapter());
+
+        mColorsSpiner.setSelection(settingsConfiguration.getThemeIndex());
         root.findViewById(R.id.save_settings_btn).setOnClickListener(this);
         return root;
     }
