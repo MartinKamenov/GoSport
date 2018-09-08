@@ -24,10 +24,10 @@
                     android:weightSum="1">
 
                     <TextView
+                        android:id="@+id/main_header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Създаване на събитие"
-                        android:textColor="@color/secondColor"
                         android:textSize="30dp"
                         android:textAlignment="center"
                         android:textStyle="bold|italic"
@@ -40,30 +40,26 @@
                         android:scrollbars="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/secondColor"
                         android:hint="Описание на събитието..."
                         android:textColorHint="#777777"
                         android:fontFamily="sans-serif-condensed"
                         />
                     <TextView
+                        android:id="@+id/sport_header"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Спорт:"
-                        android:textColor="@color/secondColor"
                         android:fontFamily="sans-serif-condensed"/>
                     <Spinner
                         android:id="@+id/sport_type_spinner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/cardColor"
                         android:spinnerMode="dropdown"/>
                     <CheckBox
                         android:id="@+id/checkbox_limit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Ограничен брой необходими играчи"
-                        android:textColor="@color/secondColor"
-                        android:buttonTint="@color/secondColor"
                         android:layout_gravity="center_horizontal"
                         android:fontFamily="sans-serif-condensed"/>
                     <LinearLayout
@@ -74,10 +70,10 @@
                         android:orientation="horizontal"
                         android:layout_gravity="center_horizontal">
                         <TextView
+                            android:id="@+id/number_players_header"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Брой необходими играчи:"
-                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                         <EditText
                             android:id="@+id/players_limit_txt"
@@ -85,7 +81,6 @@
                             android:layout_height="wrap_content"
                             android:inputType="number"
                             android:maxLength="3"
-                            android:textColor="@color/secondColor"
                             android:textAlignment="center"
                             android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
@@ -95,8 +90,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Отворено за всички"
-                        android:textColor="@color/secondColor"
-                        android:buttonTint="@color/secondColor"
                         android:fontFamily="sans-serif-condensed"/>
                     <LinearLayout
                         android:id="@+id/teams_container"
@@ -105,9 +98,9 @@
                         android:visibility="gone"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/teams_header"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/secondColor"
                             android:textAlignment="center"
                             android:text="Отбори:"/>
                         <ProgressBar
@@ -131,7 +124,7 @@
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:text="Избор на дата"
-                            android:textColor="#fff"
+                            android:textColor="#ffffff"
                             android:fontFamily="sans-serif-condensed"
                             android:theme="@style/InfoButton"/>
                         <TextView
@@ -139,7 +132,6 @@
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:text="Не е избрана"
-                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                     <TimePicker
@@ -159,7 +151,7 @@
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:text="Избор на час"
-                            android:textColor="#fff"
+                            android:textColor="#ffffff"
                             android:fontFamily="sans-serif-condensed"
                             android:theme="@style/InfoButton"/>
                         <TextView
@@ -167,7 +159,6 @@
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:text="Не е избран"
-                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                     <LinearLayout
@@ -180,7 +171,7 @@
                             android:text="Изберете място"
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
-                            android:textColor="#fff"
+                            android:textColor="#ffffff"
                             android:fontFamily="sans-serif-condensed"
                             android:theme="@style/InfoButton"/>
                         <TextView
@@ -188,7 +179,6 @@
                             android:layout_width="300px"
                             android:layout_height="wrap_content"
                             android:text="Не е избрано"
-                            android:textColor="@color/secondColor"
                             android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
                 </LinearLayout>

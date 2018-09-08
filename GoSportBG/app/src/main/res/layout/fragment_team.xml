@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/main_container"
-        android:background="@color/mainColor"
         android:visibility="gone">
         <ScrollView
             android:layout_width="match_parent"
@@ -89,8 +88,7 @@
     <RelativeLayout
         android:id="@+id/progress_bar_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/mainColor">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -101,7 +99,7 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp" />
             <TextView
-                android:textColor="@color/secondColor"
+                android:id="@+id/loader_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Зареждане на отбор"/>

@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -77,6 +78,19 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
                              Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.fragment_new_event, container, false);
         root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
+        ((TextView)root.findViewById(R.id.main_header)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.event_name_txt)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.sport_header)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.number_players_header)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.teams_header)).setTextColor(Constants.SECONDCOLOR);
+
+        ((CheckBox)root.findViewById(R.id.checkbox_limit)).setTextColor(Constants.SECONDCOLOR);
+        ((CheckBox)root.findViewById(R.id.checkbox_limit)).setButtonTintList(ColorStateList.valueOf(Constants.SECONDCOLOR));
+
+        ((CheckBox)root.findViewById(R.id.checkbox_teams)).setTextColor(Constants.SECONDCOLOR);
+        ((CheckBox)root.findViewById(R.id.checkbox_teams)).setButtonTintList(ColorStateList.valueOf(Constants.SECONDCOLOR));
+
+        ((EditText)root.findViewById(R.id.players_limit_txt)).setTextColor(Constants.SECONDCOLOR);
         calendarView = root.findViewById(R.id.calendarView);
         calendarView.setVisibility(View.GONE);
         timePicker = root.findViewById(R.id.time_picker);
@@ -87,10 +101,13 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         mSportSpinner = root.findViewById(R.id.sport_type_spinner);
         mSportSpinner.setAdapter(getSportAdapter());
         chosenDate = root.findViewById(R.id.chosen_date);
+        chosenDate.setTextColor(Constants.SECONDCOLOR);
         chosenDate.setText(dayOfMonth + " " + Constants.MONTHS[month] + " " + year);
         chosenTime = root.findViewById(R.id.chosen_time);
+        chosenTime.setTextColor(Constants.SECONDCOLOR);
         chosenTime.setText(String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute) + " часа");
         chosenPlace = root.findViewById(R.id.chosen_place);
+        chosenPlace.setTextColor(Constants.SECONDCOLOR);
         checkBoxLimitations.setOnClickListener(this);
         teamsContainer = root.findViewById(R.id.teams_container);
         checkBoxTeams = root.findViewById(R.id.checkbox_teams);
@@ -331,9 +348,10 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
                 for(int i = 0; i < teams.length; i++) {
                     TeamWrapper team = teams[i];
                     CheckBox checkboxView = new CheckBox(getActivity());
+
                     checkboxView.setText(team.name);
                     checkboxView.setTextColor(Constants.SECONDCOLOR);
-                    checkboxView.setBackgroundTintList(ColorStateList.valueOf(Constants.SECONDCOLOR));
+                    checkboxView.setButtonTintList(ColorStateList.valueOf(Constants.SECONDCOLOR));
                     checkboxView.setId(team.id);
                     teamsContainer.addView(checkboxView);
                 }

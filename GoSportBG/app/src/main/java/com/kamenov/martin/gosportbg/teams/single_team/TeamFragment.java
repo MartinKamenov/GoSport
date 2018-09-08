@@ -50,6 +50,9 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_team, container, false);
+        root.findViewById(R.id.progress_bar_form).setBackgroundColor(Constants.MAINCOLOR);
+        ((TextView)root.findViewById(R.id.loader_text)).setTextColor(Constants.SECONDCOLOR);
+        root.findViewById(R.id.main_container).setBackgroundColor(Constants.MAINCOLOR);
         mRequestButton = root.findViewById(R.id.request_join_team_btn);
         mRequestButton.setOnClickListener(this);
         mShowMessengerButton = root.findViewById(R.id.open_chat_btn);
