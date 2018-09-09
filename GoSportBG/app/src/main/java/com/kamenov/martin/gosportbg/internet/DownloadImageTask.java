@@ -33,9 +33,8 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         this.usedLoaderConstruntor = false;
     }
 
-    public DownloadImageTask(ProgressBar progressBar, ViewGroup parent, Activity activity) {
+    public DownloadImageTask(ProgressBar progressBar, Activity activity) {
         this.mProgressBar = progressBar;
-        this.mParent = parent;
         this.mActivity = activity;
         this.usedLoaderConstruntor = true;
     }
@@ -57,6 +56,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         if(!usedLoaderConstruntor) {
             bmImage.setImageBitmap(result);
         } else {
+            mParent = (ViewGroup) mProgressBar.getParent();
             ViewGroup.LayoutParams params = mProgressBar.getLayoutParams();
             int index = mParent.indexOfChild(mProgressBar);
             mParent.removeView(mProgressBar);

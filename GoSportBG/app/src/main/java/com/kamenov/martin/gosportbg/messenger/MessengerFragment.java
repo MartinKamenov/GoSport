@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -149,30 +150,24 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                         usernameTextView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
                         usernameTextView.setGravity(Gravity.CENTER);
                         usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        CircleImageView img = new CircleImageView(getActivity());
+                        ProgressBar img = new ProgressBar(getActivity());
                         if(messages[i].profileImg != null && messages[i].profileImg.startsWith("https://graph.facebook")) {
-                            new DownloadImageTask(img)
+                            new DownloadImageTask(img, getActivity())
                                     .execute(messages[i].profileImg);
                         }
-                        else if(messages[i].profileImg != null && !messages[i].profileImg.contains("default.jpg")) {
+                        else {
                             String url = Constants.DOMAIN + messages[i].profileImg;
-                            new DownloadImageTask(img)
+                            new DownloadImageTask(img, getActivity())
                                     .execute(url);
-                        } else {
-                            img.setImageResource(R.drawable.anonymous);
                         }
                         linearLayout.addView(img);
                         img.getLayoutParams().height = 150;
-                        img.setBorderWidth(4);
                         linearLayout.addView(usernameTextView);
                         relativeLayout.addView(linearLayout);
                         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) linearLayout.getLayoutParams();
                         lp.setMargins(margin, margin, margin, margin);
                         if(currentUserUsername.equals(messages[i].username)) {
                             lp.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                            img.setBorderColor(fetchAccentColor());
-                        } else {
-                            img.setBorderColor(Color.parseColor("#cccccc"));
                         }
                         linearLayout.setLayoutParams(lp);
                         messageContainer.addView(relativeLayout);

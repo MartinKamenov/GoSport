@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -126,13 +127,13 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                     linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
                     linearLayoutContainer.setWeightSum(2);
 
-                    CircleImageView img = new CircleImageView(getActivity());
+                    ProgressBar img = new ProgressBar(getActivity());
                     if(team.pictureUrl != null && !team.pictureUrl.contains("default.jpg")) {
                         String url = Constants.DOMAIN + team.pictureUrl;
-                        new DownloadImageTask(img)
+                        new DownloadImageTask(img, getActivity())
                                 .execute(url);
                     } else {
-                        img.setImageResource(R.drawable.default_team_avatar);
+                        // img.setImageResource(R.drawable.default_team_avatar);
                     }
 
                     linearLayoutContainer.addView(img);

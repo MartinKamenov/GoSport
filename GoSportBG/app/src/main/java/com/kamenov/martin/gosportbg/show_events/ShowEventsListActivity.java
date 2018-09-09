@@ -119,12 +119,12 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
 
                     ProgressBar img = new ProgressBar(ShowEventsListActivity.this);
                     if(event.admin.profileImg != null && event.admin.profileImg.startsWith("https://graph.facebook")) {
-                        new DownloadImageTask(img, linearLayoutContainer, ShowEventsListActivity.this)
+                        new DownloadImageTask(img, ShowEventsListActivity.this)
                                 .execute(event.admin.profileImg);
                     }
                     else {
                         String url = Constants.DOMAIN + event.admin.profileImg;
-                        new DownloadImageTask(img, linearLayoutContainer, ShowEventsListActivity.this)
+                        new DownloadImageTask(img, ShowEventsListActivity.this)
                                 .execute(url);
                     }
 

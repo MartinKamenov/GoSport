@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -193,17 +194,15 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                     textViewParams.leftMargin = margin;
                     textViewParams.rightMargin = margin * 3;
                     textView.setLayoutParams(textViewParams);
-                    CircleImageView img = new CircleImageView(EventActivity.this);
+                    ProgressBar img = new ProgressBar(EventActivity.this);
                     if(event.players.get(i).profileImg != null && event.players.get(i).profileImg.startsWith("https://graph.facebook")) {
-                        new DownloadImageTask(img)
+                        new DownloadImageTask(img, EventActivity.this)
                                 .execute(event.players.get(i).profileImg);
                     }
-                    else if(event.players.get(i).profileImg != null && !event.players.get(i).profileImg.contains("default.jpg")) {
+                    else {
                         String url = Constants.DOMAIN + event.players.get(i).profileImg;
-                        new DownloadImageTask(img)
+                        new DownloadImageTask(img, EventActivity.this)
                                 .execute(url);
-                    } else {
-                        img.setImageResource(R.drawable.anonymous);
                     }
                     playerInfoContainer.addView(img);
                     RelativeLayout.LayoutParams imgViewParams = (RelativeLayout.LayoutParams)img.getLayoutParams();

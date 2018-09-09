@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.kamenov.martin.gosportbg.GoSportApplication;
@@ -103,14 +104,14 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
         linearLayoutContainer.setWeightSum(2);
 
-        CircleImageView img = new CircleImageView(getActivity());
-        if(messengerWrapper.getPictureUrl() != null && !messengerWrapper.getPictureUrl().contains("default.jpg")) {
+        ProgressBar img = new ProgressBar(getActivity());
+        if(messengerWrapper.getPictureUrl() != null) {
             String url = Constants.DOMAIN + messengerWrapper.getPictureUrl();
-            new DownloadImageTask(img)
+            new DownloadImageTask(img, getActivity())
                     .execute(url);
-        } else {
+        }/* else {
             img.setImageResource(R.drawable.default_team_avatar);
-        }
+        }*/
 
         linearLayoutContainer.addView(img);
 

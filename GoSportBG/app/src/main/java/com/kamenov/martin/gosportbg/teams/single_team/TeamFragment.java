@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,13 +101,13 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
             @Override
             public void run() {
                 hideLoader();
-                ImageView img = root.findViewById(R.id.logo_image);
+                ProgressBar img = root.findViewById(R.id.logo_image);
                 if(team.pictureUrl != null && !team.pictureUrl.contains("default.jpg")) {
                     String url = Constants.DOMAIN + team.pictureUrl;
-                    new DownloadImageTask(img)
+                    new DownloadImageTask(img, getActivity())
                             .execute(url);
                 } else {
-                    img.setImageResource(R.drawable.default_team_avatar);
+                    //img.setImageResource(R.drawable.default_team_avatar);
                 }
 
                 ((TextView)root.findViewById(R.id.team_name_txt)).setText(team.name);
@@ -225,17 +226,15 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
             linearLayout.setGravity(Gravity.CENTER);
         }
 
-        CircleImageView img = new CircleImageView(getActivity());
+        ProgressBar img = new ProgressBar(getActivity());
         if(player.profileImg != null && player.profileImg.startsWith("https://graph.facebook")) {
-            new DownloadImageTask(img)
+            new DownloadImageTask(img, getActivity())
                     .execute(player.profileImg);
         }
-        else if(player.profileImg != null && !player.profileImg.contains("default.jpg")) {
+        else {
             String url = Constants.DOMAIN + player.profileImg;
-            new DownloadImageTask(img)
+            new DownloadImageTask(img, getActivity())
                     .execute(url);
-        } else {
-            img.setImageResource(R.drawable.anonymous);
         }
         relativeLayout.addView(img);
         RelativeLayout.LayoutParams imgLayoutParams = (RelativeLayout.LayoutParams)img
