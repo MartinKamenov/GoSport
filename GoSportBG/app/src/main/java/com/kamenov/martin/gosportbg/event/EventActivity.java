@@ -87,6 +87,10 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         mPlayersContainer = findViewById(R.id.players_container);
         mEventContainer = findViewById(R.id.event_container);
         mEventContainer.setBackgroundColor(Constants.MAINCOLOR);
+
+        findViewById(R.id.progress_bar_form).setBackgroundColor(Constants.MAINCOLOR);
+        ((TextView)findViewById(R.id.progress_bar_text)).setTextColor(Constants.SECONDCOLOR);
+
         showMessengerButton = findViewById(R.id.showMessenger);
         showMessengerButton.setOnClickListener(this);
 

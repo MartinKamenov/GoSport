@@ -117,17 +117,15 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                     linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
                     linearLayoutContainer.setWeightSum(2);
 
-                    CircleImageView img = new CircleImageView(ShowEventsListActivity.this);
+                    ProgressBar img = new ProgressBar(ShowEventsListActivity.this);
                     if(event.admin.profileImg != null && event.admin.profileImg.startsWith("https://graph.facebook")) {
-                        new DownloadImageTask(img)
+                        new DownloadImageTask(img, linearLayoutContainer, ShowEventsListActivity.this)
                                 .execute(event.admin.profileImg);
                     }
-                    else if(event.admin.profileImg != null && !event.admin.profileImg.contains("default.jpg")) {
+                    else {
                         String url = Constants.DOMAIN + event.admin.profileImg;
-                        new DownloadImageTask(img)
+                        new DownloadImageTask(img, linearLayoutContainer, ShowEventsListActivity.this)
                                 .execute(url);
-                    } else {
-                        img.setImageResource(R.drawable.anonymous);
                     }
 
                     linearLayoutContainer.addView(img);

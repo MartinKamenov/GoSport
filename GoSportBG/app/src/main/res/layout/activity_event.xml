@@ -1,11 +1,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/event_container"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.kamenov.martin.gosportbg.event.EventActivity">
     <RelativeLayout
+        android:id="@+id/event_container"
         android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
@@ -250,7 +250,7 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp" />
             <TextView
-                android:textColor="@color/secondColor"
+                android:id="@+id/progress_bar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Зареждане на събитие"/>
