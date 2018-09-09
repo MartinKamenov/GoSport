@@ -99,7 +99,9 @@ public class MessengerPresenter implements MessengerContracts.IMessengerPresente
             return;
         }
 
-        mView.showMessageOnUITread(jsonInString);
+        if(mView != null) {
+            mView.showMessageOnUITread(jsonInString);
+        }
     }
 
     @Override
@@ -112,7 +114,9 @@ public class MessengerPresenter implements MessengerContracts.IMessengerPresente
         }
         if(call.request().url().toString().contains("message")) {
             MessageCollection messageCollection = mGson.fromJson(jsonInString, MessageCollection.class);
-            mView.addMessagesOnUIThread(messageCollection.collection);
+            if(mView != null) {
+                mView.addMessagesOnUIThread(messageCollection.collection);
+            }
             return;
         }
     }
