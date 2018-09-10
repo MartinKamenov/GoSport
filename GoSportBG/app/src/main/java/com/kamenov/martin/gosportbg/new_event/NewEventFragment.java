@@ -242,10 +242,13 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
             teamIds.append("[");
             for(int i = 0; i < count; i++) {
                 CheckBox team = (CheckBox) teamsContainer.getChildAt(i);
-                teamIds.append(team.getId());
-                if(i != count - 1) {
-                    teamIds.append(", ");
+                if(team.isChecked()) {
+                    if (teamIds.length() > 1) {
+                        teamIds.append(", ");
+                    }
+                    teamIds.append(team.getId());
                 }
+
             }
             teamIds.append("]");
         } else {
