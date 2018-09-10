@@ -147,10 +147,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onClick(View view) {
         Intent result = new Intent();
+        String noPlaceSelectedMessage = "Няма избрано място.\nЗа да изберете такова натиснете на желаното от вас място на картата или " +
+                "изберете такова от търсачката.";
         if(myMarker == null) {
             Toast.makeText(this,
-                    "Няма избрано място\nЗа да изберете такова натиснете на желаното от вас място на картата или"
-                    + "изберете такова от търсачката.",
+                    noPlaceSelectedMessage,
                     Toast.LENGTH_LONG).show();
             return;
         }

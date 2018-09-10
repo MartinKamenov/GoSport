@@ -9,8 +9,10 @@ import com.kamenov.martin.gosportbg.internet.contracts.PostHandler;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.MessageCollection;
+import com.kamenov.martin.gosportbg.models.SettingsConfiguration;
 import com.kamenov.martin.gosportbg.models.User;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
+import com.kamenov.martin.gosportbg.repositories.GenericCacheRepository;
 
 import java.io.IOException;
 import java.util.List;
@@ -75,6 +77,17 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
     public void navigateToMessenger() {
         mMessengerNavigationCommand.putExtraInteger("id", id);
         mMessengerNavigationCommand.navigate();
+    }
+
+    @Override
+    public String getMapTypeSettings() {
+        GenericCacheRepository<SettingsConfiguration, Long> repo = mView
+                .getGoSportApplication().getSettingsConfigurationRepository();
+        if(repo.getAll().size() != 1) {
+            return "No type";
+        }
+
+        return repo.getAll().get(0).getMapType();
     }
 
     @Override

@@ -132,6 +132,15 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        String mapType = mPresenter.getMapTypeSettings();
+        switch (mapType) {
+            case "Хибрид":
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                break;
+            case "Нормален":
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                break;
+        }
     }
 
     @Override

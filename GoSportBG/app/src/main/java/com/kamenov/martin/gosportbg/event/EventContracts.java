@@ -19,6 +19,8 @@ public class EventContracts {
         void addUserToEvent();
 
         void navigateToMessenger();
+
+        String getMapTypeSettings();
     }
 
     public interface IEventView extends BaseContracts.View {
