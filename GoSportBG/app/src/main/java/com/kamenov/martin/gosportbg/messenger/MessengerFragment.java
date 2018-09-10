@@ -64,6 +64,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         this.root = inflater.inflate(R.layout.fragment_messenger, container, false);
+        root.findViewById(R.id.messenger_container).setBackgroundColor(Constants.MAINCOLOR);
         messageLinesCount = 1;
         submitButton = root.findViewById(R.id.submit);
         messageTextContainer = root.findViewById(R.id.message_txt_container);
@@ -71,9 +72,10 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
         scrollView = root.findViewById(R.id.scrollView);
         messageContainer = root.findViewById(R.id.messages_container);
         message = root.findViewById(R.id.message);
+        message.setTextColor(Constants.SECONDCOLOR);
         message.setOnKeyListener(this);
         message.setMovementMethod(new ScrollingMovementMethod());
-        getActivity().getWindow().setBackgroundDrawableResource(R.drawable.messenger_background);
+        //getActivity().getWindow().setBackgroundDrawableResource(R.drawable.messenger_background);
         return root;
     }
 
@@ -190,7 +192,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
 
                     if(currentUserUsername.equals(messages[i].username)) {
                         textView.setBackgroundResource(R.drawable.back);
-                        textView.setTextColor(Color.WHITE);
+                        textView.setTextColor(Constants.SECONDCOLOR);
                         shouldBeRight = true;
                     } else {
                         textView.setBackgroundResource(R.drawable.others);
