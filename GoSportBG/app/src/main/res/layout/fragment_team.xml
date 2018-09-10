@@ -23,7 +23,6 @@
                     android:layout_height="100dp"
                     android:layout_gravity="center"/>
                 <TextView
-                    android:textColor="@color/secondColor"
                     android:layout_marginTop="10dp"
                     android:id="@+id/team_name_txt"
                     android:layout_width="match_parent"

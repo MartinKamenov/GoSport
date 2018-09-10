@@ -2,13 +2,17 @@ package com.kamenov.martin.gosportbg.menu;
 
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.SurfaceTexture;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Surface;
+import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -32,7 +36,8 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
 
 
     private View root;
-    private VideoView mVideo;
+    private TextureView mVideo;
+    private MediaPlayer _introMediaPlayer;
     private MenuContracts.IMenuPresenter presenter;
 
     public MenuFragment() {
@@ -47,29 +52,67 @@ public class MenuFragment extends Fragment implements MenuContracts.IMenuView, V
         root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         presenter.subscribe(this);
         mVideo = root.findViewById(R.id.menu_video);
-        Uri uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.clip);
-        mVideo.setVideoURI(uri);
-        mVideo.start();
-        mVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+        // Uri uri = Uri.parse("android.resource://" + getActivity().getPackageName() + "/" + R.raw.clip);
+        mVideo.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
+
             @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.setVolume(0f, 0f);
-                mediaPlayer.setLooping(true);
+            public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int i, int i1) {
+                try {
+                    _introMediaPlayer = MediaPlayer.create(getActivity(), R.raw.clip);
+                    _introMediaPlayer.setSurface(new Surface(surfaceTexture));
+                    _introMediaPlayer.setLooping(true);
+                    _introMediaPlayer.setVideoScalingMode(MediaPlayer.VIDEO_SCALING_MODE_SCALE_TO_FIT_WITH_CROPPING);
+                    _introMediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mediaPlayer) {
+                            mediaPlayer.setVolume(0f, 0f);
+                            mediaPlayer.setLooping(true);
+                            mediaPlayer.start();
+                        }
+                    });
+
+                } catch (Exception e) {
+                    System.err.println("Error playing intro video: " + e.getMessage());
+                }
+            }
+
+            @Override
+            public void onSurfaceTextureSizeChanged(SurfaceTexture surfaceTexture, int i, int i1) {
+
+            }
+
+            @Override
+            public boolean onSurfaceTextureDestroyed(SurfaceTexture surfaceTexture) {
+                return false;
+            }
+
+            @Override
+            public void onSurfaceTextureUpdated(SurfaceTexture surfaceTexture) {
+
             }
         });
         setListeners();
         return root;
     }
 
-    @Override
+    private void destoryIntroVideo() {
+        if (_introMediaPlayer != null) {
+            _introMediaPlayer.stop();
+            _introMediaPlayer.release();
+            _introMediaPlayer = null;
+        }
+    }
+
+    /*@Override
     public void onResume() {
         super.onResume();
-        mVideo.start();
-    }
+        //mVideo.start();
+    }*/
 
     @Override
     public void onDestroy() {
         presenter.unsubscribe();
+        destoryIntroVideo();
         super.onDestroy();
     }
 

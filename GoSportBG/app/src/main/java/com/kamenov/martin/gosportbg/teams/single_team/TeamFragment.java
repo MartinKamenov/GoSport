@@ -110,8 +110,12 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                     //img.setImageResource(R.drawable.default_team_avatar);
                 }
 
-                ((TextView)root.findViewById(R.id.team_name_txt)).setText(team.name);
-                ((TextView)root.findViewById(R.id.sport_txt)).setText(team.sport);
+                TextView teamNameTxt = root.findViewById(R.id.team_name_txt);
+                teamNameTxt.setText(team.name);
+                teamNameTxt.setTextColor(Constants.SECONDCOLOR);
+                TextView sportTxt = root.findViewById(R.id.sport_txt);
+                sportTxt.setText(team.sport);
+                sportTxt.setTextColor(Constants.SECONDCOLOR);
                 LinearLayout requestingPlayersContainer = root.findViewById(R.id.requesting_players_container);
                 LinearLayout playersContainer = root.findViewById(R.id.players_container);
 
