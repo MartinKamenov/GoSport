@@ -147,6 +147,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onClick(View view) {
         Intent result = new Intent();
+        if(myMarker == null) {
+            Toast.makeText(this,
+                    "Няма избрано място\nЗа да изберете такова натиснете на желаното от вас място на картата или"
+                    + "изберете такова от търсачката.",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
         LatLng position = myMarker.getPosition();
         result.putExtra("longitude", position.longitude);
         result.putExtra("latitude", position.latitude);
