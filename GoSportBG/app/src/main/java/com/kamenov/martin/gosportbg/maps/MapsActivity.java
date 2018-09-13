@@ -123,7 +123,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return settingsConfigurations.get(0);
         }
 
-        SettingsConfiguration defaultSettingsConfiguration = new SettingsConfiguration();
+        SettingsConfiguration defaultSettingsConfiguration = new SettingsConfiguration("Хибрид", 0);
         settingsConfigurations.add(defaultSettingsConfiguration);
         return defaultSettingsConfiguration;
     }

@@ -108,7 +108,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         if(messengerWrapper.getPictureUrl() != null) {
             String url = Constants.DOMAIN + messengerWrapper.getPictureUrl();
             if(messengerWrapper.getPictureUrl().startsWith("https://graph.facebook")) {
-                url = messengerWrapper.getPictureUrl(); 
+                url = messengerWrapper.getPictureUrl();
             }
             new DownloadImageTask(img, getActivity())
                     .execute(url);
