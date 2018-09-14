@@ -26,7 +26,7 @@ public class PictureSavior {
         return pictureSavior;
     }
 
-    private boolean hasBitmap(String url) {
+    public boolean hasBitmap(String url) {
         if(bitmaps.get(url) == null) {
             return false;
         }
@@ -34,7 +34,14 @@ public class PictureSavior {
         return true;
     }
 
-    private void setBitmap(String url, Bitmap bitmap) {
+    public void setBitmap(String url, Bitmap bitmap) {
+        if(url == null || bitmap == null || url.length() == 0) {
+            return;
+        }
         this.bitmaps.put(url, bitmap);
+    }
+
+    public Bitmap getBitmap(String url) {
+        return bitmaps.get(url);
     }
 }

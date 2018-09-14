@@ -24,6 +24,7 @@ import com.kamenov.martin.gosportbg.messenger.MessengerFragment;
 import com.kamenov.martin.gosportbg.models.MessageCollection;
 import com.kamenov.martin.gosportbg.models.MessengerWrapper;
 import com.kamenov.martin.gosportbg.models.Team;
+import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
 import com.kamenov.martin.gosportbg.teams.multiple_teams.TeamsFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -38,6 +39,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
     private View root;
     private LinearLayout mMessageWrapperContainer;
     private boolean viewHasStarted;
+    private PictureSavior pictureSavior;
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -51,6 +53,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         ((TextView)root.findViewById(R.id.messages_header)).setTextColor(Constants.SECONDCOLOR);
         mMessageWrapperContainer = root.findViewById(R.id.message_wrappers_container);
+        pictureSavior = PictureSavior.getInstance();
         mPresenter.getUserMesseges();
         viewHasStarted = true;
         return root;
@@ -104,17 +107,26 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
         linearLayoutContainer.setWeightSum(2);
 
-        ProgressBar img = new ProgressBar(getActivity());
+        View img;
+        String url;
+
         if(messengerWrapper.getPictureUrl() != null) {
-            String url = Constants.DOMAIN + messengerWrapper.getPictureUrl();
+            url = Constants.DOMAIN + messengerWrapper.getPictureUrl();
             if(messengerWrapper.getPictureUrl().startsWith("https://graph.facebook")) {
                 url = messengerWrapper.getPictureUrl();
             }
-            new DownloadImageTask(img, getActivity())
+        } else {
+            url = "https://gosport.herokuapp.com/static/images/profile/default.jpg";
+        }
+
+        if(!pictureSavior.hasBitmap(url)) {
+            img = new ProgressBar(getActivity());
+            new DownloadImageTask((ProgressBar)img, getActivity())
                     .execute(url);
-        }/* else {
-            img.setImageResource(R.drawable.default_team_avatar);
-        }*/
+        } else {
+            img = new CircleImageView(getActivity());
+            ((CircleImageView)img).setImageBitmap(pictureSavior.getBitmap(url));
+        }
 
         linearLayoutContainer.addView(img);
 

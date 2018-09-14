@@ -33,6 +33,7 @@ import com.kamenov.martin.gosportbg.event.EventActivity;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.messages.MessagesActivity;
 import com.kamenov.martin.gosportbg.models.Message;
+import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -53,6 +54,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
     private Button submitButton;
     private int messageLinesCount;
     private LinearLayout messageTextContainer;
+    private PictureSavior pictureSavior;
 
     public MessengerFragment() {
         // Required empty public constructor
@@ -64,6 +66,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         this.root = inflater.inflate(R.layout.fragment_messenger, container, false);
+        pictureSavior = PictureSavior.getInstance();
         root.findViewById(R.id.messenger_container).setBackgroundColor(Constants.MAINCOLOR);
         messageLinesCount = 1;
         submitButton = root.findViewById(R.id.submit);
@@ -75,7 +78,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
         message.setTextColor(Constants.SECONDCOLOR);
         message.setOnKeyListener(this);
         message.setMovementMethod(new ScrollingMovementMethod());
-        //getActivity().getWindow().setBackgroundDrawableResource(R.drawable.messenger_background);
+        // getActivity().getWindow().setBackgroundDrawableResource(R.drawable.messenger_background);
         return root;
     }
 
@@ -152,15 +155,23 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                         usernameTextView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
                         usernameTextView.setGravity(Gravity.CENTER);
                         usernameTextView.setLayoutParams(new LinearLayout.LayoutParams(Constants.SCREEN_WIDTH / 2, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        ProgressBar img = new ProgressBar(getActivity());
+                        View img;
+                        String url;
+
                         if(messages[i].profileImg != null && messages[i].profileImg.startsWith("https://graph.facebook")) {
-                            new DownloadImageTask(img, getActivity())
-                                    .execute(messages[i].profileImg);
+                            url = messages[i].profileImg;
                         }
                         else {
-                            String url = Constants.DOMAIN + messages[i].profileImg;
-                            new DownloadImageTask(img, getActivity())
+                            url = Constants.DOMAIN + messages[i].profileImg;
+
+                        }
+                        if(!pictureSavior.hasBitmap(url)) {
+                            img = new ProgressBar(getActivity());
+                            new DownloadImageTask((ProgressBar) img, getActivity())
                                     .execute(url);
+                        } else {
+                            img = new CircleImageView(getActivity());
+                            ((CircleImageView)img).setImageBitmap(pictureSavior.getBitmap(url));
                         }
                         linearLayout.addView(img);
                         img.getLayoutParams().height = 150;

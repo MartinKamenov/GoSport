@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.kamenov.martin.gosportbg.R;
+import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
 
 import java.io.InputStream;
 
@@ -27,20 +28,25 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     private ViewGroup mParent;
     private Activity mActivity;
     private boolean usedLoaderConstruntor;
+    private PictureSavior pictureSavior;
+    private String url;
 
     public DownloadImageTask(ImageView bmImage) {
         this.bmImage = bmImage;
         this.usedLoaderConstruntor = false;
+        this.pictureSavior = PictureSavior.getInstance();
     }
 
     public DownloadImageTask(ProgressBar progressBar, Activity activity) {
         this.mProgressBar = progressBar;
         this.mActivity = activity;
         this.usedLoaderConstruntor = true;
+        this.pictureSavior = PictureSavior.getInstance();
     }
 
     protected Bitmap doInBackground(String... urls) {
         String urldisplay = urls[0];
+        url = urls[0];
         Bitmap mIcon11 = null;
         try {
             InputStream in = new java.net.URL(urldisplay).openStream();
@@ -53,6 +59,9 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
+        if(!pictureSavior.hasBitmap(url)) {
+            pictureSavior.setBitmap(url, result);
+        }
         if(!usedLoaderConstruntor) {
             bmImage.setImageBitmap(result);
         } else {
