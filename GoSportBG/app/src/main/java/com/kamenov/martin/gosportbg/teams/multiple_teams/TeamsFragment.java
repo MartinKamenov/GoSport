@@ -32,6 +32,7 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.models.Team;
+import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -54,6 +55,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
     private EditText mNameTxt;
     private Spinner mSportSpinner;
     private Bitmap profileImageBitmap;
+    private PictureSavior pictureSavior;
 
     public TeamsFragment() {
         // Required empty public constructor
@@ -65,6 +67,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_teams, container, false);
+        pictureSavior = PictureSavior.getInstance();
         root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         ((TextView)root.findViewById(R.id.result_count)).setTextColor(Constants.SECONDCOLOR);
         ((TextView)root.findViewById(R.id.loader_txt)).setTextColor(Constants.SECONDCOLOR);
@@ -127,13 +130,22 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                     linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
                     linearLayoutContainer.setWeightSum(2);
 
-                    ProgressBar img = new ProgressBar(getActivity());
+                    String url;
+                    View img;
                     if(team.pictureUrl != null && !team.pictureUrl.contains("default.jpg")) {
-                        String url = Constants.DOMAIN + team.pictureUrl;
-                        new DownloadImageTask(img, getActivity())
+                        url = Constants.DOMAIN + team.pictureUrl;
+
+                    } else {
+                        url = Constants.DOMAIN + "/static/images/logos/default.jpg";
+                    }
+
+                    if(!pictureSavior.hasBitmap(url)) {
+                        img = new ProgressBar(getActivity());
+                        new DownloadImageTask((ProgressBar) img, getActivity())
                                 .execute(url);
                     } else {
-                        // img.setImageResource(R.drawable.default_team_avatar);
+                        img = new CircleImageView(getActivity());
+                        ((CircleImageView)img).setImageBitmap(pictureSavior.getBitmap(url));
                     }
 
                     linearLayoutContainer.addView(img);
