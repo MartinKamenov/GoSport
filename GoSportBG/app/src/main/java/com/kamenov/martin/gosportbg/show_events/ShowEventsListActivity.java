@@ -27,6 +27,7 @@ import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
+import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
 import java.util.ArrayList;
@@ -45,11 +46,14 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
     private TextView mResultCountTxt;
     private Event[] events;
     private boolean eventsFromWeb;
+    private PictureSavior pictureSavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_events_list);
+
+        pictureSavior = PictureSavior.getInstance();
 
         findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         mEventsContainer = findViewById(R.id.events_container);
@@ -117,15 +121,23 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                     linearLayoutContainer.setOrientation(LinearLayout.HORIZONTAL);
                     linearLayoutContainer.setWeightSum(2);
 
-                    ProgressBar img = new ProgressBar(ShowEventsListActivity.this);
+                    View img;
+                    String url;
+
                     if(event.admin.profileImg != null && event.admin.profileImg.startsWith("https://graph.facebook")) {
-                        new DownloadImageTask(img, ShowEventsListActivity.this)
-                                .execute(event.admin.profileImg);
+                        url = event.admin.profileImg;
                     }
                     else {
-                        String url = Constants.DOMAIN + event.admin.profileImg;
-                        new DownloadImageTask(img, ShowEventsListActivity.this)
+                        url = Constants.DOMAIN + event.admin.profileImg;
+                    }
+
+                    if(!pictureSavior.hasBitmap(url)) {
+                        img = new ProgressBar(ShowEventsListActivity.this);
+                        new DownloadImageTask((ProgressBar) img, ShowEventsListActivity.this)
                                 .execute(url);
+                    } else {
+                        img = new CircleImageView(ShowEventsListActivity.this);
+                        ((CircleImageView)img).setImageBitmap(pictureSavior.getBitmap(url));
                     }
 
                     linearLayoutContainer.addView(img);
