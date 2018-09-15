@@ -251,16 +251,25 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
             linearLayout.setGravity(Gravity.CENTER);
         }
 
-        ProgressBar img = new ProgressBar(getActivity());
+        View img;
+        String url;
+
         if(player.profileImg != null && player.profileImg.startsWith("https://graph.facebook")) {
-            new DownloadImageTask(img, getActivity())
-                    .execute(player.profileImg);
+            url = player.profileImg;
         }
         else {
-            String url = Constants.DOMAIN + player.profileImg;
-            new DownloadImageTask(img, getActivity())
-                    .execute(url);
+            url = Constants.DOMAIN + player.profileImg;
         }
+
+        if(imageCachingService.hasBitmap(url)) {
+            img = new CircleImageView(getActivity());
+            ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
+        } else {
+            img = new ProgressBar(getActivity());
+            new DownloadImageTask((ProgressBar) img, getActivity())
+                    .execute(player.profileImg);
+        }
+
         relativeLayout.addView(img);
         RelativeLayout.LayoutParams imgLayoutParams = (RelativeLayout.LayoutParams)img
                 .getLayoutParams();
