@@ -29,11 +29,9 @@ import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
-import com.kamenov.martin.gosportbg.event.EventActivity;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
-import com.kamenov.martin.gosportbg.messages.MessagesActivity;
 import com.kamenov.martin.gosportbg.models.Message;
-import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
+import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,7 +52,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
     private Button submitButton;
     private int messageLinesCount;
     private LinearLayout messageTextContainer;
-    private PictureSavior pictureSavior;
+    private ImageCachingService imageCachingService;
 
     public MessengerFragment() {
         // Required empty public constructor
@@ -66,7 +64,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         this.root = inflater.inflate(R.layout.fragment_messenger, container, false);
-        pictureSavior = PictureSavior.getInstance();
+        imageCachingService = ImageCachingService.getInstance();
         root.findViewById(R.id.messenger_container).setBackgroundColor(Constants.MAINCOLOR);
         messageLinesCount = 1;
         submitButton = root.findViewById(R.id.submit);
@@ -165,13 +163,13 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                             url = Constants.DOMAIN + messages[i].profileImg;
 
                         }
-                        if(!pictureSavior.hasBitmap(url)) {
+                        if(!imageCachingService.hasBitmap(url)) {
                             img = new ProgressBar(getActivity());
                             new DownloadImageTask((ProgressBar) img, getActivity())
                                     .execute(url);
                         } else {
                             img = new CircleImageView(getActivity());
-                            ((CircleImageView)img).setImageBitmap(pictureSavior.getBitmap(url));
+                            ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
                         }
                         linearLayout.addView(img);
                         img.getLayoutParams().height = 150;
@@ -203,7 +201,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
 
                     if(currentUserUsername.equals(messages[i].username)) {
                         textView.setBackgroundResource(R.drawable.back);
-                        textView.setTextColor(Constants.SECONDCOLOR);
+                        textView.setTextColor(Color.WHITE);
                         shouldBeRight = true;
                     } else {
                         textView.setBackgroundResource(R.drawable.others);

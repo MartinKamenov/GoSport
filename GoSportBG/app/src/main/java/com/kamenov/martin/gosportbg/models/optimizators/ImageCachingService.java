@@ -4,26 +4,25 @@ import android.graphics.Bitmap;
 
 import java.util.Dictionary;
 import java.util.Hashtable;
-import java.util.List;
 
 /**
  * Created by Martin on 13.9.2018 г..
  */
 
-public class PictureSavior {
-    private static PictureSavior pictureSavior;
+public class ImageCachingService {
+    private static ImageCachingService imageCachingService;
     private Dictionary<String, Bitmap> bitmaps;
 
-    private PictureSavior() {
+    private ImageCachingService() {
         bitmaps = new Hashtable();
     }
 
-    public static PictureSavior getInstance() {
-        if(pictureSavior == null) {
-            pictureSavior = new PictureSavior();
+    public static ImageCachingService getInstance() {
+        if(imageCachingService == null) {
+            imageCachingService = new ImageCachingService();
         }
 
-        return pictureSavior;
+        return imageCachingService;
     }
 
     public boolean hasBitmap(String url) {

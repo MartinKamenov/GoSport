@@ -2,6 +2,7 @@ package com.kamenov.martin.gosportbg.teams.single_team;
 
 
 import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.Team;
 import com.kamenov.martin.gosportbg.models.User;
+import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,6 +42,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
     private static int acceptButtonIdDif = 1000000;
     private static int rejectButtonDif = 2000000;
     private Button mRemoveRequestButton;
+    private ImageCachingService imageCachingService;
 
     public TeamFragment() {
         // Required empty public constructor
@@ -51,6 +54,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_team, container, false);
+        imageCachingService = ImageCachingService.getInstance();
         root.findViewById(R.id.progress_bar_form).setBackgroundColor(Constants.MAINCOLOR);
         ((TextView)root.findViewById(R.id.loader_text)).setTextColor(Constants.SECONDCOLOR);
         root.findViewById(R.id.main_container).setBackgroundColor(Constants.MAINCOLOR);
@@ -95,6 +99,17 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
         mPresenter.navigateToMessenger();
     }
 
+    private void setImageSynchronically(ProgressBar progressBar, Bitmap bitmap) {
+        ViewGroup parent = (ViewGroup) progressBar.getParent();
+        ViewGroup.LayoutParams params = progressBar.getLayoutParams();
+        int index = parent.indexOfChild(progressBar);
+        parent.removeView(progressBar);
+        CircleImageView img = new CircleImageView(getActivity());
+        parent.addView(img, index);
+        img.setLayoutParams(params);
+        img.setImageBitmap(bitmap);
+    }
+
     @Override
     public void showTeamOnUIThread(final Team team) {
         getActivity().runOnUiThread(new Runnable() {
@@ -102,12 +117,18 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
             public void run() {
                 hideLoader();
                 ProgressBar img = root.findViewById(R.id.logo_image);
+                String mainImageUrl;
                 if(team.pictureUrl != null && !team.pictureUrl.contains("default.jpg")) {
-                    String url = Constants.DOMAIN + team.pictureUrl;
-                    new DownloadImageTask(img, getActivity())
-                            .execute(url);
+                    mainImageUrl = Constants.DOMAIN + team.pictureUrl;
                 } else {
-                    //img.setImageResource(R.drawable.default_team_avatar);
+                    mainImageUrl = Constants.DOMAIN + "/static/images/logos/default.jpg";
+                }
+
+                if(!imageCachingService.hasBitmap(mainImageUrl)) {
+                    new DownloadImageTask(img, getActivity())
+                            .execute(mainImageUrl);
+                } else {
+                    setImageSynchronically(img, imageCachingService.getBitmap(mainImageUrl));
                 }
 
                 TextView teamNameTxt = root.findViewById(R.id.team_name_txt);

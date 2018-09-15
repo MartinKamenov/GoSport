@@ -2,7 +2,6 @@ package com.kamenov.martin.gosportbg.messages;
 
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -19,13 +18,8 @@ import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
-import com.kamenov.martin.gosportbg.messenger.MessengerContracts;
-import com.kamenov.martin.gosportbg.messenger.MessengerFragment;
-import com.kamenov.martin.gosportbg.models.MessageCollection;
 import com.kamenov.martin.gosportbg.models.MessengerWrapper;
-import com.kamenov.martin.gosportbg.models.Team;
-import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
-import com.kamenov.martin.gosportbg.teams.multiple_teams.TeamsFragment;
+import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -39,7 +33,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
     private View root;
     private LinearLayout mMessageWrapperContainer;
     private boolean viewHasStarted;
-    private PictureSavior pictureSavior;
+    private ImageCachingService imageCachingService;
 
     public MessagesFragment() {
         // Required empty public constructor
@@ -53,7 +47,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
         root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         ((TextView)root.findViewById(R.id.messages_header)).setTextColor(Constants.SECONDCOLOR);
         mMessageWrapperContainer = root.findViewById(R.id.message_wrappers_container);
-        pictureSavior = PictureSavior.getInstance();
+        imageCachingService = ImageCachingService.getInstance();
         mPresenter.getUserMesseges();
         viewHasStarted = true;
         return root;
@@ -119,13 +113,13 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
             url = "https://gosport.herokuapp.com/static/images/profile/default.jpg";
         }
 
-        if(!pictureSavior.hasBitmap(url)) {
+        if(!imageCachingService.hasBitmap(url)) {
             img = new ProgressBar(getActivity());
             new DownloadImageTask((ProgressBar)img, getActivity())
                     .execute(url);
         } else {
             img = new CircleImageView(getActivity());
-            ((CircleImageView)img).setImageBitmap(pictureSavior.getBitmap(url));
+            ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
         }
 
         linearLayoutContainer.addView(img);

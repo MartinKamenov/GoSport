@@ -1,7 +1,6 @@
 package com.kamenov.martin.gosportbg.internet;
 
 import android.app.Activity;
-import android.content.Loader;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -9,10 +8,9 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 
 import com.kamenov.martin.gosportbg.R;
-import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
+import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import java.io.InputStream;
 
@@ -28,20 +26,20 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     private ViewGroup mParent;
     private Activity mActivity;
     private boolean usedLoaderConstruntor;
-    private PictureSavior pictureSavior;
+    private ImageCachingService imageCachingService;
     private String url;
 
     public DownloadImageTask(ImageView bmImage) {
         this.bmImage = bmImage;
         this.usedLoaderConstruntor = false;
-        this.pictureSavior = PictureSavior.getInstance();
+        this.imageCachingService = ImageCachingService.getInstance();
     }
 
     public DownloadImageTask(ProgressBar progressBar, Activity activity) {
         this.mProgressBar = progressBar;
         this.mActivity = activity;
         this.usedLoaderConstruntor = true;
-        this.pictureSavior = PictureSavior.getInstance();
+        this.imageCachingService = ImageCachingService.getInstance();
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -59,12 +57,16 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        if(!pictureSavior.hasBitmap(url)) {
-            pictureSavior.setBitmap(url, result);
+        if(!imageCachingService.hasBitmap(url)) {
+            imageCachingService.setBitmap(url, result);
         }
+
         if(!usedLoaderConstruntor) {
             bmImage.setImageBitmap(result);
         } else {
+            if(result == null) {
+                result = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.noimagefound);
+            }
             mParent = (ViewGroup) mProgressBar.getParent();
             ViewGroup.LayoutParams params = mProgressBar.getLayoutParams();
             int index = mParent.indexOfChild(mProgressBar);

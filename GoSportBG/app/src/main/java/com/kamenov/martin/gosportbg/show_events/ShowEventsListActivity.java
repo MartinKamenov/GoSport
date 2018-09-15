@@ -3,18 +3,15 @@ package com.kamenov.martin.gosportbg.show_events;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -27,15 +24,12 @@ import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
-import com.kamenov.martin.gosportbg.models.optimizators.PictureSavior;
+import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.kamenov.martin.gosportbg.constants.Constants.SPORTS;
 
 public class ShowEventsListActivity extends Activity implements ShowEventsContracts.IShowEventsView, View.OnClickListener, TextWatcher {
 
@@ -46,14 +40,14 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
     private TextView mResultCountTxt;
     private Event[] events;
     private boolean eventsFromWeb;
-    private PictureSavior pictureSavior;
+    private ImageCachingService imageCachingService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_events_list);
 
-        pictureSavior = PictureSavior.getInstance();
+        imageCachingService = ImageCachingService.getInstance();
 
         findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
         mEventsContainer = findViewById(R.id.events_container);
@@ -131,13 +125,13 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                         url = Constants.DOMAIN + event.admin.profileImg;
                     }
 
-                    if(!pictureSavior.hasBitmap(url)) {
+                    if(!imageCachingService.hasBitmap(url)) {
                         img = new ProgressBar(ShowEventsListActivity.this);
                         new DownloadImageTask((ProgressBar) img, ShowEventsListActivity.this)
                                 .execute(url);
                     } else {
                         img = new CircleImageView(ShowEventsListActivity.this);
-                        ((CircleImageView)img).setImageBitmap(pictureSavior.getBitmap(url));
+                        ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
                     }
 
                     linearLayoutContainer.addView(img);
