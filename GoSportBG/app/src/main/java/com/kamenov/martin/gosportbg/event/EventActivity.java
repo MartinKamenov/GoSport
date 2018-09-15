@@ -45,6 +45,7 @@ import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.Message;
 import com.kamenov.martin.gosportbg.models.User;
+import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
 import java.io.IOException;
@@ -65,11 +66,14 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private RelativeLayout mEventContainer;
     private Button showMessengerButton;
     private TextView mSportTextView;
+    private ImageCachingService imageCachingService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
+
+        imageCachingService = ImageCachingService.getInstance();
 
         ((TextView)findViewById(R.id.sport_header)).setTextColor(Constants.CARDTEXTCOLOR);
         ((TextView)findViewById(R.id.date_header)).setTextColor(Constants.CARDTEXTCOLOR);
@@ -203,16 +207,26 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                     textViewParams.leftMargin = margin;
                     textViewParams.rightMargin = margin * 3;
                     textView.setLayoutParams(textViewParams);
-                    ProgressBar img = new ProgressBar(EventActivity.this);
+
+                    String url;
+                    View img;
+
                     if(event.players.get(i).profileImg != null && event.players.get(i).profileImg.startsWith("https://graph.facebook")) {
-                        new DownloadImageTask(img, EventActivity.this)
-                                .execute(event.players.get(i).profileImg);
+                        url = event.players.get(i).profileImg;
                     }
                     else {
-                        String url = Constants.DOMAIN + event.players.get(i).profileImg;
-                        new DownloadImageTask(img, EventActivity.this)
+                        url = Constants.DOMAIN + event.players.get(i).profileImg;
+                    }
+
+                    if(imageCachingService.hasBitmap(url)) {
+                        img = new CircleImageView(EventActivity.this);
+                        ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
+                    } else {
+                        img = new ProgressBar(EventActivity.this);
+                        new DownloadImageTask((ProgressBar)img, EventActivity.this)
                                 .execute(url);
                     }
+
                     playerInfoContainer.addView(img);
                     RelativeLayout.LayoutParams imgViewParams = (RelativeLayout.LayoutParams)img.getLayoutParams();
                     imgViewParams.height = margin / 2 * 3;
