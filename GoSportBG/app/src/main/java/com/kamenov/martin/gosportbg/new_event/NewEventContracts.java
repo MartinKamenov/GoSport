@@ -21,6 +21,9 @@ public class NewEventContracts {
 
         void getUserTeams();
 
+        void showMap();
+        void showCustomLocations();
+
         String[] getAllSports();
     }
 
