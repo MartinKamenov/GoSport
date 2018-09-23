@@ -14,7 +14,7 @@ public class LocationDialogClass extends Dialog implements
         android.view.View.OnClickListener {
     private final NewEventContracts.INewEventPresenter mPresenter;
 
-    public LocationDialogClass(@NonNull Activity activity, NewEventContracts.INewEventPresenter presenter) {
+    public LocationDialogClass(Activity activity, NewEventContracts.INewEventPresenter presenter) {
         super(activity);
         this.mPresenter = presenter;
     }

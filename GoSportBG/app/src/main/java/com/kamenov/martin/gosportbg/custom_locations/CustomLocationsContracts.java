@@ -16,5 +16,7 @@ public class CustomLocationsContracts extends BaseContracts {
         void showCustomLocationsOnUIThread(CustomLocation[] customLocations);
 
         void selectCustomLocation();
+
+        void showMessageOnUIThread(String message);
     }
 }
