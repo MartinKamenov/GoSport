@@ -67,16 +67,6 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
     }
 
     @Override
-    public void showMap() {
-
-    }
-
-    @Override
-    public void showCustomLocations() {
-
-    }
-
-    @Override
     public String[] getAllSports() {
         return Constants.SPORTS;
     }

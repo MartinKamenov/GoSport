@@ -137,17 +137,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
                 switchTimeVisibility();
                 break;
             case R.id.location_btn:
-                Intent intent = new Intent(getActivity(), MapsActivity.class);
-                String userCity = mPresenter.getUser().getCity();
-                int index = Arrays.asList(Constants.CITIES).indexOf(userCity);
-                if(index >= 0) {
-                    double cityLatitude = Arrays.asList(Constants.CITIESCOORDINATES).get(index)[0];
-                    double cityLongitude = Arrays.asList(Constants.CITIESCOORDINATES).get(index)[1];
-                    intent.putExtra("cityLatitude", cityLatitude);
-                    intent.putExtra("cityLongitude", cityLongitude);
-                }
-
-                startActivityForResult(intent, locationRequestCode);
+                showLocationDialog();
                 break;
             case R.id.checkbox_limit:
                 switchLimitingEditTextVisibility();
@@ -338,6 +328,32 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         }
         showMessage("Моля изберете място");
         return false;
+    }
+
+    @Override
+    public void showLocationDialog() {
+        LocationDialogClass locationDialog = new LocationDialogClass(this);
+        locationDialog.show();
+    }
+
+    @Override
+    public void showMap() {
+        Intent intent = new Intent(getActivity(), MapsActivity.class);
+        String userCity = mPresenter.getUser().getCity();
+        int index = Arrays.asList(Constants.CITIES).indexOf(userCity);
+        if(index >= 0) {
+            double cityLatitude = Arrays.asList(Constants.CITIESCOORDINATES).get(index)[0];
+            double cityLongitude = Arrays.asList(Constants.CITIESCOORDINATES).get(index)[1];
+            intent.putExtra("cityLatitude", cityLatitude);
+            intent.putExtra("cityLongitude", cityLongitude);
+        }
+
+        startActivityForResult(intent, locationRequestCode);
+    }
+
+    @Override
+    public void showCustomLocations() {
+
     }
 
     @Override

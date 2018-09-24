@@ -21,9 +21,6 @@ public class NewEventContracts {
 
         void getUserTeams();
 
-        void showMap();
-        void showCustomLocations();
-
         String[] getAllSports();
     }
 
@@ -51,6 +48,12 @@ public class NewEventContracts {
         void showMessage(String message);
 
         boolean validateFields();
+
+        void showLocationDialog();
+
+        void showMap();
+
+        void showCustomLocations();
 
         void showUserTeams(TeamWrapper[] teams);
 
