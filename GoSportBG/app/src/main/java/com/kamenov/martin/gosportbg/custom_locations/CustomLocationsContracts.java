@@ -18,5 +18,7 @@ public class CustomLocationsContracts extends BaseContracts {
         void selectCustomLocation();
 
         void showMessageOnUIThread(String message);
+
+        void hideProgressBar();
     }
 }

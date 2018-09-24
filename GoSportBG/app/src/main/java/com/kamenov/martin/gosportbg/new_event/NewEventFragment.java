@@ -25,6 +25,7 @@ import com.kamenov.martin.gosportbg.GoSportApplication;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
+import com.kamenov.martin.gosportbg.custom_locations.CustomLocationsActivity;
 import com.kamenov.martin.gosportbg.maps.MapsActivity;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.TeamWrapper;
@@ -353,7 +354,8 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
     @Override
     public void showCustomLocations() {
-
+        Intent intent = new Intent(getActivity(), CustomLocationsActivity.class);
+        startActivityForResult(intent, locationRequestCode);
     }
 
     @Override

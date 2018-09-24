@@ -4,10 +4,53 @@
     android:layout_height="match_parent"
     tools:context="com.kamenov.martin.gosportbg.custom_locations.CustomLocationsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/search_text"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:textAlignment="center"
+            android:maxLines="3"
+            android:fontFamily="sans-serif-condensed"
+            android:textColorHint="@color/cardColor"
+            android:hint="Търсене..."/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ScrollView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <ProgressBar
+                        android:id="@+id/locations_progressbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                    <LinearLayout
+                        android:id="@+id/locations_container"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"/>
+                </LinearLayout>
+            </ScrollView>
+            <TextView
+                android:id="@+id/result_count"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textAlignment="center"
+                android:text="Брой намерени места: Изчислява се..."/>
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
