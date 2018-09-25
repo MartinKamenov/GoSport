@@ -2,11 +2,13 @@ package com.kamenov.martin.gosportbg.custom_locations;
 
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.kamenov.martin.gosportbg.R;
@@ -52,24 +54,47 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
                 hideProgressBar();
                 for(int i = 0; i < customLocations.length; i++) {
                     CustomLocation location = customLocations[i];
-                    View img;
-                    if(location.pictureUrl != null && !imageCachingService.hasBitmap(location.pictureUrl)) {
-                        img = new ProgressBar(getActivity());
-                        new DownloadImageTask((ProgressBar)img, getActivity())
-                                .execute(location.pictureUrl);
-                    } else if(location.pictureUrl == null) {
-                        img = new ProgressBar(getActivity());
-                        new DownloadImageTask((ProgressBar)img, getActivity())
-                                .execute(Constants.DOMAIN + "/static/images/locations/default.jpg");
-                    } else {
-                        img = new CircleImageView(getActivity());
-                        ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(location.pictureUrl));
-                    }
-
-                    // mLocationsContainer.addView(img);
+                    addCustomLocationToContainer(location, i);
                 }
             }
         });
+    }
+
+    private void addCustomLocationToContainer(CustomLocation location, int index) {
+        CardView cardView = new CardView(getActivity());
+        LinearLayout cardContainer = new LinearLayout(getActivity());
+        TextView name = new TextView(getActivity());
+        TextView address = new TextView(getActivity());
+        View img;
+
+        cardContainer.setOrientation(LinearLayout.VERTICAL);
+
+        cardView.setCardBackgroundColor(Constants.CARDCOLOR);
+        name.setTextColor(Constants.CARDTEXTCOLOR);
+        address.setTextColor(Constants.CARDTEXTCOLOR);
+
+        name.setText(location.name);
+        address.setText(location.address);
+
+        if(location.pictureUrl != null && !imageCachingService.hasBitmap(location.pictureUrl)) {
+            img = new ProgressBar(getActivity());
+            new DownloadImageTask((ProgressBar)img, getActivity())
+                    .execute(location.pictureUrl);
+        } else if(location.pictureUrl == null) {
+            img = new ProgressBar(getActivity());
+            new DownloadImageTask((ProgressBar)img, getActivity())
+                    .execute(Constants.DOMAIN + "/static/images/locations/default.jpg");
+        } else {
+            img = new CircleImageView(getActivity());
+            ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(location.pictureUrl));
+        }
+
+        cardContainer.addView(img);
+        cardContainer.addView(name);
+        cardContainer.addView(address);
+
+        cardView.addView(cardContainer);
+        mLocationsContainer.addView(cardView);
     }
 
     @Override
