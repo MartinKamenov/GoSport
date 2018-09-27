@@ -1,5 +1,6 @@
 package com.kamenov.martin.gosportbg.custom_locations;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -52,19 +53,36 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
             @Override
             public void run() {
                 hideProgressBar();
+                LinearLayout outsideContainer = new LinearLayout(getActivity());
                 for(int i = 0; i < customLocations.length; i++) {
+                    if(i % 2 == 0) {
+                        outsideContainer = new LinearLayout(getActivity());
+                        mLocationsContainer.addView(outsideContainer);
+                        outsideContainer.setOrientation(LinearLayout.HORIZONTAL);
+                    }
+
+
                     CustomLocation location = customLocations[i];
-                    addCustomLocationToContainer(location, i);
+                    addCustomLocationToContainer(outsideContainer, location);
                 }
             }
         });
     }
 
-    private void addCustomLocationToContainer(CustomLocation location, int index) {
+    private void addCustomLocationToContainer(LinearLayout outsideContainer,CustomLocation location) {
         CardView cardView = new CardView(getActivity());
         LinearLayout cardContainer = new LinearLayout(getActivity());
         TextView name = new TextView(getActivity());
         TextView address = new TextView(getActivity());
+        name.setTextColor(Constants.CARDCOLOR);
+        address.setTextColor(Constants.CARDCOLOR);
+
+        name.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        address.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+
+        name.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+        address.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+
         View img;
 
         cardContainer.setOrientation(LinearLayout.VERTICAL);
@@ -90,11 +108,20 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
         }
 
         cardContainer.addView(img);
+        LinearLayout.LayoutParams imgParams = (LinearLayout.LayoutParams)img.getLayoutParams();
+        imgParams.width = Constants.SCREEN_WIDTH / 4;
+        imgParams.height = Constants.SCREEN_WIDTH / 4;
+        img.setLayoutParams(imgParams);
+
         cardContainer.addView(name);
         cardContainer.addView(address);
 
         cardView.addView(cardContainer);
-        mLocationsContainer.addView(cardView);
+        outsideContainer.addView(cardView);
+
+        LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams)cardView.getLayoutParams();
+        cardParams.width = Constants.SCREEN_WIDTH / 2;
+        cardView.setLayoutParams(cardParams);
     }
 
     @Override
