@@ -26,6 +26,7 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
     private View root;
     private LinearLayout mLocationsContainer;
     private ImageCachingService imageCachingService;
+    private TextView mFoundResultsTxt;
 
     public CustomLocationsFragment() {
         // Required empty public constructor
@@ -39,6 +40,7 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
         root = inflater.inflate(R.layout.fragment_custom_locations, container, false);
         imageCachingService = ImageCachingService.getInstance();
         mLocationsContainer = root.findViewById(R.id.locations_container);
+        mFoundResultsTxt = root.findViewById(R.id.result_count);
         return root;
     }
 
@@ -53,6 +55,8 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
             @Override
             public void run() {
                 hideProgressBar();
+                mFoundResultsTxt.setText("Брой намерени места: " + customLocations.length);
+                
                 LinearLayout outsideContainer = new LinearLayout(getActivity());
                 for(int i = 0; i < customLocations.length; i++) {
                     if(i % 2 == 0) {
@@ -70,17 +74,21 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
     }
 
     private void addCustomLocationToContainer(LinearLayout outsideContainer,CustomLocation location) {
+        int margin = 15;
         CardView cardView = new CardView(getActivity());
         LinearLayout cardContainer = new LinearLayout(getActivity());
         TextView name = new TextView(getActivity());
         TextView address = new TextView(getActivity());
+
+        name.setTextSize(20);
+        address.setTextSize(15);
         name.setTextColor(Constants.CARDCOLOR);
         address.setTextColor(Constants.CARDCOLOR);
 
         name.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         address.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-        name.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+        name.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
         address.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         View img;
@@ -114,14 +122,30 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
         img.setLayoutParams(imgParams);
 
         cardContainer.addView(name);
+
+        LinearLayout.LayoutParams nameParams = (LinearLayout.LayoutParams) name.getLayoutParams();
+        nameParams.topMargin = 10;
+        name.setLayoutParams(nameParams);
+
         cardContainer.addView(address);
 
+        LinearLayout.LayoutParams addressParams = (LinearLayout.LayoutParams) address.getLayoutParams();
+        addressParams.topMargin = 10;
+        address.setLayoutParams(addressParams);
+
         cardView.addView(cardContainer);
+
+        cardView.setPadding(margin, 0, margin, 0);
+
+        /*LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams) cardView.getLayoutParams();
+        cardParams.ma
+        cardView.setLayoutParams(cardParams);*/
         outsideContainer.addView(cardView);
 
         LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams)cardView.getLayoutParams();
         cardParams.width = Constants.SCREEN_WIDTH / 2;
         cardView.setLayoutParams(cardParams);
+        cardView.setRadius(20);
     }
 
     @Override

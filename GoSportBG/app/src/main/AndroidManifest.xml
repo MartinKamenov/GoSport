@@ -130,7 +130,9 @@
             android:name=".messenger.MessengerActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".custom_locations.CustomLocationsActivity"></activity>
+        <activity
+            android:name=".custom_locations.CustomLocationsActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
