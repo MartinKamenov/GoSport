@@ -1,5 +1,6 @@
 # GoSport
-### Application for arranging sport events using Android. Users can find the events using Google maps, join and create teams. The app has it's own messenger in order to be completely seperated from Facebook.
+### Application for arranging sport events using Android.
+#### Users can find the events using Google maps, join and create teams. The app has it's own messenger in order to be completely seperated from Facebook.
 
 
 ## Google play
@@ -18,5 +19,5 @@ Comming soon
 
 ## Technologies
 - Android(Java)
-- NodeJS(Backend) https://github.com/IvoDinev/GoSportDatabase
+- NodeJS(Backend) https://github.com/MartinKamenov/GoSportDatabase
 - MongoDB(DataBase)
