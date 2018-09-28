@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +63,9 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
                     if(i % 2 == 0) {
                         outsideContainer = new LinearLayout(getActivity());
                         mLocationsContainer.addView(outsideContainer);
+                        LinearLayout.LayoutParams outsideContainerParams = (LinearLayout.LayoutParams)outsideContainer.getLayoutParams();
+                        outsideContainerParams.topMargin = 10;
+                        outsideContainer.setLayoutParams(outsideContainerParams);
                         outsideContainer.setOrientation(LinearLayout.HORIZONTAL);
                     }
 
@@ -74,7 +78,7 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
     }
 
     private void addCustomLocationToContainer(LinearLayout outsideContainer,CustomLocation location) {
-        int margin = 15;
+        int sideMargin = 15;
         CardView cardView = new CardView(getActivity());
         LinearLayout cardContainer = new LinearLayout(getActivity());
         TextView name = new TextView(getActivity());
@@ -90,6 +94,8 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
 
         name.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
         address.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
+
+        RelativeLayout imageViewContainer = new RelativeLayout(getActivity());
 
         View img;
 
@@ -115,37 +121,36 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
             ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(location.pictureUrl));
         }
 
-        cardContainer.addView(img);
-        LinearLayout.LayoutParams imgParams = (LinearLayout.LayoutParams)img.getLayoutParams();
+        imageViewContainer.addView(img);
+
+        cardContainer.addView(imageViewContainer);
+
+        RelativeLayout.LayoutParams imgParams = (RelativeLayout.LayoutParams)img.getLayoutParams();
         imgParams.width = Constants.SCREEN_WIDTH / 4;
         imgParams.height = Constants.SCREEN_WIDTH / 4;
+        imgParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         img.setLayoutParams(imgParams);
 
         cardContainer.addView(name);
 
         LinearLayout.LayoutParams nameParams = (LinearLayout.LayoutParams) name.getLayoutParams();
-        nameParams.topMargin = 10;
+        nameParams.setMargins(sideMargin, 10, sideMargin, 10);
         name.setLayoutParams(nameParams);
 
         cardContainer.addView(address);
 
         LinearLayout.LayoutParams addressParams = (LinearLayout.LayoutParams) address.getLayoutParams();
-        addressParams.topMargin = 10;
+        addressParams.setMargins(sideMargin, 10, sideMargin, 10);
         address.setLayoutParams(addressParams);
 
         cardView.addView(cardContainer);
 
-        cardView.setPadding(margin, 0, margin, 0);
-
-        /*LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams) cardView.getLayoutParams();
-        cardParams.ma
-        cardView.setLayoutParams(cardParams);*/
         outsideContainer.addView(cardView);
 
         LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams)cardView.getLayoutParams();
         cardParams.width = Constants.SCREEN_WIDTH / 2;
         cardView.setLayoutParams(cardParams);
-        cardView.setRadius(20);
+        cardView.setRadius(30);
     }
 
     @Override
