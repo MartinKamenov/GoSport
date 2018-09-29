@@ -15,7 +15,7 @@ public class CustomLocationsContracts extends BaseContracts {
     public interface ICustomLocationsView extends BaseContracts.View {
         void showCustomLocationsOnUIThread(CustomLocation[] customLocations);
 
-        void selectCustomLocation();
+        void selectCustomLocation(CustomLocation location);
 
         void showMessageOnUIThread(String message);
 

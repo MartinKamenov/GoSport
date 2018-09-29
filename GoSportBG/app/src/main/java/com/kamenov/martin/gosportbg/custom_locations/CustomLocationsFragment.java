@@ -1,5 +1,7 @@
 package com.kamenov.martin.gosportbg.custom_locations;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -13,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
@@ -22,12 +25,15 @@ import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CustomLocationsFragment extends Fragment implements CustomLocationsContracts.ICustomLocationsView {
+public class CustomLocationsFragment extends Fragment implements CustomLocationsContracts.ICustomLocationsView, View.OnClickListener {
     private CustomLocationsContracts.ICustomLocationsPresenter mPresenter;
     private View root;
     private LinearLayout mLocationsContainer;
     private ImageCachingService imageCachingService;
     private TextView mFoundResultsTxt;
+    private int marginBetweenCardsVertical;
+    private int marginBetweenCardsHorizontal;
+    private CustomLocation[] mLastFoundLocations;
 
     public CustomLocationsFragment() {
         // Required empty public constructor
@@ -39,6 +45,8 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_custom_locations, container, false);
+        marginBetweenCardsVertical = 15;
+        marginBetweenCardsHorizontal = 15;
         imageCachingService = ImageCachingService.getInstance();
         mLocationsContainer = root.findViewById(R.id.locations_container);
         mFoundResultsTxt = root.findViewById(R.id.result_count);
@@ -56,6 +64,7 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
             @Override
             public void run() {
                 hideProgressBar();
+                mLastFoundLocations = customLocations;
                 mFoundResultsTxt.setText("Брой намерени места: " + customLocations.length);
                 
                 LinearLayout outsideContainer = new LinearLayout(getActivity());
@@ -80,6 +89,9 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
     private void addCustomLocationToContainer(LinearLayout outsideContainer,CustomLocation location) {
         int sideMargin = 15;
         CardView cardView = new CardView(getActivity());
+        cardView.setId(location.id);
+        cardView.setOnClickListener(this);
+        cardView.setCardElevation(20);
         LinearLayout cardContainer = new LinearLayout(getActivity());
         TextView name = new TextView(getActivity());
         TextView address = new TextView(getActivity());
@@ -92,7 +104,7 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
         name.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         address.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-        name.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
+        name.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD_ITALIC);
         address.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
 
         RelativeLayout imageViewContainer = new RelativeLayout(getActivity());
@@ -129,6 +141,7 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
         imgParams.width = Constants.SCREEN_WIDTH / 4;
         imgParams.height = Constants.SCREEN_WIDTH / 4;
         imgParams.addRule(RelativeLayout.CENTER_IN_PARENT);
+        imgParams.setMargins(0, 20, 0, 20);
         img.setLayoutParams(imgParams);
 
         cardContainer.addView(name);
@@ -148,14 +161,20 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
         outsideContainer.addView(cardView);
 
         LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams)cardView.getLayoutParams();
-        cardParams.width = Constants.SCREEN_WIDTH / 2;
+        cardParams.width = (Constants.SCREEN_WIDTH / 2) - marginBetweenCardsHorizontal;
+        cardParams.setMargins(marginBetweenCardsHorizontal / 2, 0, marginBetweenCardsHorizontal / 2, 0);
         cardView.setLayoutParams(cardParams);
         cardView.setRadius(30);
     }
 
     @Override
-    public void selectCustomLocation() {
-
+    public void selectCustomLocation(CustomLocation location) {
+        Intent result = new Intent();
+        result.putExtra("longitude", location.longitude);
+        result.putExtra("latitude", location.latitude);
+        result.putExtra("place", location.address);
+        getActivity().setResult(Activity.RESULT_OK, result);
+        getActivity().finish();
     }
 
     @Override
@@ -172,5 +191,16 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
     public void hideProgressBar() {
         root.findViewById(R.id.locations_progressbar).setVisibility(View.GONE);
         mLocationsContainer.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onClick(View view) {
+        for(int i = 0; i < this.mLastFoundLocations.length; i++) {
+            if(view.getId() == this.mLastFoundLocations[i].id) {
+                ((CardView)view).setCardBackgroundColor(Constants.CLICKEDCARDCOLOR);
+                selectCustomLocation(this.mLastFoundLocations[i]);
+                break;
+            }
+        }
     }
 }
