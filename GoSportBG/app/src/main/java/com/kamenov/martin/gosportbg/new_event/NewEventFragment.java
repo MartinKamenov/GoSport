@@ -4,6 +4,7 @@ package com.kamenov.martin.gosportbg.new_event;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -119,9 +120,15 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
 
     public ArrayAdapter<String> getSportAdapter() {
+        int spinnerLayout;
+        if(Color.WHITE == Constants.MAINCOLOR) {
+            spinnerLayout = R.layout.spinner_item_white;
+        } else {
+            spinnerLayout = R.layout.spinner_item_black;
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getActivity(),
-                R.layout.spinner_item_white,
+                spinnerLayout,
                 mPresenter.getAllSports()
         );
 

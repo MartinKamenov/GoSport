@@ -1,6 +1,7 @@
 package com.kamenov.martin.gosportbg.settings;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -71,9 +72,15 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
 
     @Override
     public ArrayAdapter<String> getMapTypesAdapter() {
+        int spinnerLayout;
+        if(Color.WHITE == Constants.MAINCOLOR) {
+            spinnerLayout = R.layout.spinner_item_white;
+        } else {
+            spinnerLayout = R.layout.spinner_item_black;
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
+                spinnerLayout,
                 mPresenter.getMapTypes()
         );
 
@@ -82,9 +89,15 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
 
     @Override
     public ArrayAdapter<String> getColorThemesAdapter() {
+        int spinnerLayout;
+        if(Color.WHITE == Constants.MAINCOLOR) {
+            spinnerLayout = R.layout.spinner_item_white;
+        } else {
+            spinnerLayout = R.layout.spinner_item_black;
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
+                spinnerLayout,
                 mPresenter.getThemes()
         );
 

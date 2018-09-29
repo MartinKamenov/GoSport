@@ -8,6 +8,6 @@
     android:fontFamily="sans-serif-condensed"
     android:gravity="left"
     android:padding="5dp"
-    android:textColor="@color/mainColor"
-    android:background="@color/secondColor"
+    android:textColor="@color/secondColor"
+    android:background="@color/mainColor"
     />
