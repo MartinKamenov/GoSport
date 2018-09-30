@@ -6,9 +6,12 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.CardView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -21,11 +24,15 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.models.CustomLocation;
+import com.kamenov.martin.gosportbg.models.Location;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CustomLocationsFragment extends Fragment implements CustomLocationsContracts.ICustomLocationsView, View.OnClickListener {
+public class CustomLocationsFragment extends Fragment implements CustomLocationsContracts.ICustomLocationsView, View.OnClickListener, TextWatcher {
     private CustomLocationsContracts.ICustomLocationsPresenter mPresenter;
     private View root;
     private LinearLayout mLocationsContainer;
@@ -34,6 +41,9 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
     private int marginBetweenCardsVertical;
     private int marginBetweenCardsHorizontal;
     private CustomLocation[] mLastFoundLocations;
+    private ArrayList<CustomLocation> mLastSearchedLocations;
+    private EditText mSearchText;
+    private boolean locationsFromWeb;
 
     public CustomLocationsFragment() {
         // Required empty public constructor
@@ -45,8 +55,11 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_custom_locations, container, false);
-        marginBetweenCardsVertical = 15;
+        locationsFromWeb = true;
+        marginBetweenCardsVertical = 10;
         marginBetweenCardsHorizontal = 15;
+        mSearchText = root.findViewById(R.id.search_text);
+        mSearchText.addTextChangedListener(this);
         imageCachingService = ImageCachingService.getInstance();
         mLocationsContainer = root.findViewById(R.id.locations_container);
         mFoundResultsTxt = root.findViewById(R.id.result_count);
@@ -63,8 +76,11 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(locationsFromWeb) {
+                    mLastFoundLocations = customLocations;
+                }
                 hideProgressBar();
-                mLastFoundLocations = customLocations;
+                mLocationsContainer.removeAllViews();
                 mFoundResultsTxt.setText("Брой намерени места: " + customLocations.length);
                 
                 LinearLayout outsideContainer = new LinearLayout(getActivity());
@@ -73,11 +89,10 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
                         outsideContainer = new LinearLayout(getActivity());
                         mLocationsContainer.addView(outsideContainer);
                         LinearLayout.LayoutParams outsideContainerParams = (LinearLayout.LayoutParams)outsideContainer.getLayoutParams();
-                        outsideContainerParams.topMargin = 10;
+                        outsideContainerParams.topMargin = marginBetweenCardsVertical;
                         outsideContainer.setLayoutParams(outsideContainerParams);
                         outsideContainer.setOrientation(LinearLayout.HORIZONTAL);
                     }
-
 
                     CustomLocation location = customLocations[i];
                     addCustomLocationToContainer(outsideContainer, location);
@@ -202,5 +217,35 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
                 break;
             }
         }
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        locationsFromWeb = false;
+        if(charSequence.length() == 0) {
+            showCustomLocationsOnUIThread(mLastFoundLocations);
+            return;
+        }
+
+        mLastSearchedLocations = new ArrayList<>();
+        for(int j = 0; j < mLastFoundLocations.length; j++) {
+            if(mLastFoundLocations[j].name.toLowerCase().contains(charSequence.toString().toLowerCase()) ||
+                    mLastFoundLocations[j].address.toLowerCase().contains(charSequence.toString().toLowerCase())) {
+                mLastSearchedLocations.add(mLastFoundLocations[j]);
+            }
+        }
+
+        CustomLocation[] locationsArr = new CustomLocation[mLastSearchedLocations.size()];
+        showCustomLocationsOnUIThread(mLastSearchedLocations.toArray(locationsArr));
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 }
