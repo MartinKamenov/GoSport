@@ -153,8 +153,8 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
         cardContainer.addView(imageViewContainer);
 
         RelativeLayout.LayoutParams imgParams = (RelativeLayout.LayoutParams)img.getLayoutParams();
-        imgParams.width = Constants.SCREEN_WIDTH / 4;
-        imgParams.height = Constants.SCREEN_WIDTH / 4;
+        imgParams.width = (Constants.SCREEN_WIDTH / 8) * 3;
+        imgParams.height = (Constants.SCREEN_WIDTH / 8) * 3;
         imgParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         imgParams.setMargins(0, 20, 0, 20);
         img.setLayoutParams(imgParams);

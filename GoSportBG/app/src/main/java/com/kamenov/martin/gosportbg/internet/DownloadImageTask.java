@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.kamenov.martin.gosportbg.R;
+import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import java.io.InputStream;
@@ -72,6 +73,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
             int index = mParent.indexOfChild(mProgressBar);
             mParent.removeView(mProgressBar);
             CircleImageView img = new CircleImageView(mActivity);
+            ImageBorderService.addBorders(img);
             mParent.addView(img, index);
             img.setLayoutParams(params);
             img.setImageBitmap(result);
