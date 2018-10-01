@@ -257,7 +257,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
         String timeString = dateTime.dayOfMonth + " " +
                 Constants.MONTHS[dateTime.month] + " " +
                 dateTime.year + "\n" +
-                dateTime.hour + ":" + dateTime.minute;
+                String.format("%02d:%02d",dateTime.hour, dateTime.minute);
         timeText.setText(timeString);
         messageContainer.addView(timeText);
 
@@ -272,18 +272,8 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                 || Math.abs(firstDate.minute - secondDate.minute) > 30) {
             return true;
         }
+
         return false;
-    }
-
-    private int fetchAccentColor() {
-        TypedValue typedValue = new TypedValue();
-
-        TypedArray a = getActivity().obtainStyledAttributes(typedValue.data, new int[] { R.attr.colorAccent });
-        int color = a.getColor(0, 0);
-
-        a.recycle();
-
-        return color;
     }
 
     @Override
@@ -307,6 +297,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
             messageLinesCount = message.getLineCount();
             changeMessageContainerSize();
         }
+
         return false;
     }
 }
