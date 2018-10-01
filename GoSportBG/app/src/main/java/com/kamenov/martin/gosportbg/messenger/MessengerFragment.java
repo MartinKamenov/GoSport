@@ -30,6 +30,7 @@ import com.kamenov.martin.gosportbg.R;
 import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
+import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Message;
 import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
@@ -145,6 +146,9 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                     RelativeLayout relativeLayout = new RelativeLayout(getActivity());
                     boolean shouldBeRight = false;
                     if(!lastUser.equals(messages[i].username)) {
+                        if(i == 0 || (i > 0 && shouldShowTime(messages[i - 1].dateTime, messages[i].dateTime))) {
+                            showTimeText(messages[i].dateTime);
+                        }
                         lastUser = messages[i].username;
                         LinearLayout linearLayout = new LinearLayout(getActivity());
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
@@ -243,6 +247,32 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
                 mPresenter.finishQuery();
             }
         });
+    }
+
+    private void showTimeText(DateTime dateTime) {
+        TextView timeText = new TextView(getActivity());
+        timeText.setTextColor(Constants.SECONDCOLOR);
+        timeText.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        timeText.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD);
+        String timeString = dateTime.dayOfMonth + " " +
+                Constants.MONTHS[dateTime.month] + " " +
+                dateTime.year + "\n" +
+                dateTime.hour + ":" + dateTime.minute;
+        timeText.setText(timeString);
+        messageContainer.addView(timeText);
+
+        LinearLayout.LayoutParams timeTxtParams = (LinearLayout.LayoutParams) timeText.getLayoutParams();
+        timeTxtParams.setMargins(0, 40, 0, 10);
+        timeText.setLayoutParams(timeTxtParams);
+    }
+
+    private boolean shouldShowTime(DateTime firstDate, DateTime secondDate) {
+        if(firstDate.year != secondDate.year || firstDate.month != secondDate.month
+                || firstDate.dayOfMonth != secondDate.dayOfMonth || firstDate.hour != secondDate.hour
+                || Math.abs(firstDate.minute - secondDate.minute) > 30) {
+            return true;
+        }
+        return false;
     }
 
     private int fetchAccentColor() {

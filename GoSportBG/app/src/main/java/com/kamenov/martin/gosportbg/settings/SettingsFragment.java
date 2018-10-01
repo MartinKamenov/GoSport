@@ -27,7 +27,7 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
     private SettingsContracts.ISettingsPresenter mPresenter;
     private View root;
     private Spinner mMapsSpinner;
-    private Spinner mColorsSpiner;
+    private Spinner mColorsSpinner;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -56,11 +56,11 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
             }
         }
         mMapsSpinner.setSelection(i);
-        mColorsSpiner = root.findViewById(R.id.theme_colors);
-        mColorsSpiner.setBackgroundColor(Constants.MAINCOLOR);
-        mColorsSpiner.setAdapter(getColorThemesAdapter());
+        mColorsSpinner = root.findViewById(R.id.theme_colors);
+        mColorsSpinner.setBackgroundColor(Constants.MAINCOLOR);
+        mColorsSpinner.setAdapter(getColorThemesAdapter());
 
-        mColorsSpiner.setSelection(settingsConfiguration.getThemeIndex());
+        mColorsSpinner.setSelection(settingsConfiguration.getThemeIndex());
         root.findViewById(R.id.save_settings_btn).setOnClickListener(this);
         return root;
     }
@@ -78,7 +78,7 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
         } else {
             spinnerLayout = R.layout.spinner_item_black;
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 getActivity(),
                 spinnerLayout,
                 mPresenter.getMapTypes()
@@ -123,7 +123,7 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
     @Override
     public void onClick(View view) {
         String mapType = mMapsSpinner.getSelectedItem().toString();
-        int selectedThemeIndex = mColorsSpiner.getSelectedItemPosition();
+        int selectedThemeIndex = mColorsSpinner.getSelectedItemPosition();
         Constants.MAINCOLOR = Constants.THEMES[selectedThemeIndex][0];
         Constants.SECONDCOLOR = Constants.THEMES[selectedThemeIndex][1];
 

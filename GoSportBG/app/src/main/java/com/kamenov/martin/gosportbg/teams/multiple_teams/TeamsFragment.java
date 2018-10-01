@@ -90,9 +90,15 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
 
     @Override
     public ArrayAdapter<String> getSportsAdapter() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        int spinnerLayout;
+        if(Color.WHITE == Constants.MAINCOLOR) {
+            spinnerLayout = R.layout.spinner_item_white;
+        } else {
+            spinnerLayout = R.layout.spinner_item_black;
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 getActivity(),
-                android.R.layout.simple_spinner_dropdown_item,
+                spinnerLayout,
                 mPresenter.getAllSports()
         );
 
