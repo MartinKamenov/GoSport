@@ -56,6 +56,9 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_custom_locations, container, false);
+        root.findViewById(R.id.container).setBackgroundColor(Constants.MAINCOLOR);
+        ((EditText)root.findViewById(R.id.search_text)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.result_count)).setTextColor(Constants.SECONDCOLOR);
         locationsFromWeb = true;
         marginBetweenCardsVertical = 10;
         marginBetweenCardsHorizontal = 15;
