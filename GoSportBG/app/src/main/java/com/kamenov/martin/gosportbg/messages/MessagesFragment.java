@@ -19,6 +19,7 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.models.MessengerWrapper;
+import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -119,6 +120,7 @@ public class MessagesFragment extends Fragment implements MessagesContracts.IMes
                     .execute(url);
         } else {
             img = new CircleImageView(getActivity());
+            ImageBorderService.addBorders(((CircleImageView)img));
             ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
         }
 

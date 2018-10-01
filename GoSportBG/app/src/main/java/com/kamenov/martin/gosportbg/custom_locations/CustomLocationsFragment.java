@@ -25,6 +25,7 @@ import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.models.CustomLocation;
 import com.kamenov.martin.gosportbg.models.Location;
+import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import java.util.ArrayList;
@@ -145,6 +146,7 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
                     .execute(Constants.DOMAIN + "/static/images/locations/default.jpg");
         } else {
             img = new CircleImageView(getActivity());
+            ImageBorderService.addBorders(((CircleImageView)img));
             ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(location.pictureUrl));
         }
 

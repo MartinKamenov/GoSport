@@ -24,6 +24,7 @@ import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
+import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
@@ -131,6 +132,7 @@ public class ShowEventsListActivity extends Activity implements ShowEventsContra
                                 .execute(url);
                     } else {
                         img = new CircleImageView(ShowEventsListActivity.this);
+                        ImageBorderService.addBorders((CircleImageView)img);
                         ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
                     }
 

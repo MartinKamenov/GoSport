@@ -46,6 +46,7 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.HttpRequester;
 import com.kamenov.martin.gosportbg.menu.MenuActivity;
+import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 import com.kamenov.martin.gosportbg.navigation.NavigationCommand;
 
@@ -271,6 +272,7 @@ public class LoginActivity extends Activity implements LoginContracts.ILoginView
         showLoginFormButton = findViewById(R.id.show_login);
         progressBarTxt = findViewById(R.id.progress_txt);
         profileImage = findViewById(R.id.profile_image);
+        ImageBorderService.addBorders(profileImage);
         profileImageBtn = findViewById(R.id.profile_image_button);
     }
 

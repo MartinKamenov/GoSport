@@ -25,6 +25,7 @@ import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.models.LocalUser;
 import com.kamenov.martin.gosportbg.models.Team;
 import com.kamenov.martin.gosportbg.models.User;
+import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -105,6 +106,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
         int index = parent.indexOfChild(progressBar);
         parent.removeView(progressBar);
         CircleImageView img = new CircleImageView(getActivity());
+        ImageBorderService.addBorders(img);
         parent.addView(img, index);
         img.setLayoutParams(params);
         img.setImageBitmap(bitmap);
@@ -263,6 +265,7 @@ public class TeamFragment extends Fragment implements TeamContracts.ITeamView, V
 
         if(imageCachingService.hasBitmap(url)) {
             img = new CircleImageView(getActivity());
+            ImageBorderService.addBorders((CircleImageView)img);
             ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
         } else {
             img = new ProgressBar(getActivity());

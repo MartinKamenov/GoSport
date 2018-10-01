@@ -32,6 +32,7 @@ import com.kamenov.martin.gosportbg.base.contracts.BaseContracts;
 import com.kamenov.martin.gosportbg.constants.Constants;
 import com.kamenov.martin.gosportbg.internet.DownloadImageTask;
 import com.kamenov.martin.gosportbg.models.Team;
+import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 
 import java.io.ByteArrayOutputStream;
@@ -145,6 +146,7 @@ public class TeamsFragment extends Fragment implements TeamsContracts.ITeamsView
                                 .execute(url);
                     } else {
                         img = new CircleImageView(getActivity());
+                        ImageBorderService.addBorders((CircleImageView) img);
                         ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
                     }
 

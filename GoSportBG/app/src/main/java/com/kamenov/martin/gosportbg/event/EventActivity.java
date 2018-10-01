@@ -45,6 +45,7 @@ import com.kamenov.martin.gosportbg.models.DateTime;
 import com.kamenov.martin.gosportbg.models.Event;
 import com.kamenov.martin.gosportbg.models.Message;
 import com.kamenov.martin.gosportbg.models.User;
+import com.kamenov.martin.gosportbg.models.engine.ImageBorderService;
 import com.kamenov.martin.gosportbg.models.optimizators.ImageCachingService;
 import com.kamenov.martin.gosportbg.navigation.ActivityNavigationCommand;
 
@@ -220,6 +221,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
 
                     if(imageCachingService.hasBitmap(url)) {
                         img = new CircleImageView(EventActivity.this);
+                        ImageBorderService.addBorders(((CircleImageView)img));
                         ((CircleImageView)img).setImageBitmap(imageCachingService.getBitmap(url));
                     } else {
                         img = new ProgressBar(EventActivity.this);
