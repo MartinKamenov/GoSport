@@ -45,7 +45,6 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
         ((TextView)root.findViewById(R.id.theme_header)).setTextColor(Constants.SECONDCOLOR);
         ((TextView)root.findViewById(R.id.map_header)).setTextColor(Constants.SECONDCOLOR);
         mMapsSpinner = root.findViewById(R.id.maps_type);
-        mMapsSpinner.setBackgroundColor(Constants.MAINCOLOR);
         mMapsSpinner.setAdapter(getMapTypesAdapter());
 
         int i = 0;
@@ -57,7 +56,6 @@ public class SettingsFragment extends Fragment implements SettingsContracts.ISet
         }
         mMapsSpinner.setSelection(i);
         mColorsSpinner = root.findViewById(R.id.theme_colors);
-        mColorsSpinner.setBackgroundColor(Constants.MAINCOLOR);
         mColorsSpinner.setAdapter(getColorThemesAdapter());
 
         mColorsSpinner.setSelection(settingsConfiguration.getThemeIndex());
