@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:fontFamily="sans-serif-condensed"
     android:gravity="left"
-    android:padding="5dp"
+    android:padding="13dp"
     android:textColor="@color/secondColor"
     android:background="@color/mainColor"
     />
