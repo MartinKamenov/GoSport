@@ -85,6 +85,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         ((TextView)root.findViewById(R.id.sport_header)).setTextColor(Constants.SECONDCOLOR);
         ((TextView)root.findViewById(R.id.number_players_header)).setTextColor(Constants.SECONDCOLOR);
         ((TextView)root.findViewById(R.id.teams_header)).setTextColor(Constants.SECONDCOLOR);
+        ((TextView)root.findViewById(R.id.progress_txt)).setTextColor(Constants.SECONDCOLOR);
 
         ((CheckBox)root.findViewById(R.id.checkbox_limit)).setTextColor(Constants.SECONDCOLOR);
         ((CheckBox)root.findViewById(R.id.checkbox_limit)).setButtonTintList(ColorStateList.valueOf(Constants.SECONDCOLOR));
