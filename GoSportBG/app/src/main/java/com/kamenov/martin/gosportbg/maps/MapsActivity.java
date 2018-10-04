@@ -130,18 +130,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapClick(LatLng latLng) {
-        Geocoder geocoder;
-        geocoder = new Geocoder(this, Locale.getDefault());
-
-        List<Address> addresses = null;
+        boolean failedToFind = false;
         try {
-            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            Geocoder geocoder;
+            geocoder = new Geocoder(this, Locale.getDefault());
 
-        String address = addresses.get(0).getAddressLine(0);
-        selectPlace(latLng, address);
+            List<Address> addresses = null;
+            try {
+                addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            String address = addresses.get(0).getAddressLine(0);
+            selectPlace(latLng, address);
+        } catch (IndexOutOfBoundsException ex) {
+            showMessageOnMainThread("Невалидно място...");
+        }
+    }
+
+    private void showMessageOnMainThread(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MapsActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
