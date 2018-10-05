@@ -174,6 +174,12 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     }
 
     @Override
+    public void removeUserFromEventButtonPressed() {
+        int userId = this.mPresenter.getLocalUser().getOnlineId();
+        this.mPresenter.removeUserFromEvent(userId);
+    }
+
+    @Override
     public void showEventOnUITread(final Event event) {
         runOnUiThread(new Runnable() {
             @Override
@@ -254,16 +260,6 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         });
     }
 
-    private int getBackGroundSource(String sport) {
-        /*switch (sport) {
-            case "Тенис на маса":
-                return R.drawable.tennis_table;
-            default:
-                return R.drawable.running;
-        }*/
-        return R.drawable.running;
-    }
-
     public void showButtonForMessenger() {
         this.mAddUserToEventBtn.setVisibility(View.GONE);
         this.showMessengerButton.setVisibility(View.VISIBLE);
@@ -288,6 +284,9 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 break;
             case R.id.showMessenger:
                 showMessenger();
+                break;
+            case R.id.signOffEvent:
+                removeUserFromEventButtonPressed();
                 break;
         }
     }

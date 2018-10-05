@@ -21,6 +21,8 @@ public class EventContracts {
         void navigateToMessenger();
 
         String getMapTypeSettings();
+
+        void removeUserFromEvent(int userId);
     }
 
     public interface IEventView extends BaseContracts.View {
@@ -35,5 +37,7 @@ public class EventContracts {
         void hideProgressBar();
 
         void showMessageOnUITread(final String message);
+
+        void removeUserFromEventButtonPressed();
     }
 }

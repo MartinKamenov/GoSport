@@ -235,6 +235,16 @@
             android:theme="@style/InfoButton"
             android:textColor="#fff"
             android:visibility="gone"/>
+        <Button
+            android:id="@+id/signOffEvent"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:text="Оттегляне от събитие"
+            android:fontFamily="sans-serif-condensed"
+            android:theme="@style/InfoButton"
+            android:textColor="#fff"
+            android:visibility="gone"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/progress_bar_form"

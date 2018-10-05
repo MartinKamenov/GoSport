@@ -91,6 +91,13 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
     }
 
     @Override
+    public void removeUserFromEvent(int userId) {
+        String url = Constants.DOMAIN + "/events/" + id + "/removeUserFromEvent";
+        String body = String.format("{\"userId\": \"%d\"}", userId);
+        mRequester.post(this, url, body);
+    }
+
+    @Override
     public void handleGet(Call call, Response response) {
         String jsonInString = "";
         try {
@@ -107,6 +114,7 @@ public class EventPresenter implements EventContracts.IEventPresenter, GetHandle
 
     @Override
     public void handleError(Call call, Exception ex) {
+        mView.showMessageOnUITread(ex.getMessage().toString());
     }
 
     @Override
