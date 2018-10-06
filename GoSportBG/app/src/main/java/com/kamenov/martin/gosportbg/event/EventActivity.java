@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.view.ContextThemeWrapper;
 import android.support.v7.widget.CardView;
 import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -174,9 +176,8 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     }
 
     @Override
-    public void removeUserFromEventButtonPressed() {
-        int userId = this.mPresenter.getLocalUser().getOnlineId();
-        this.mPresenter.removeUserFromEvent(userId);
+    public void removeUserFromEventButtonPressed(int id) {
+        this.mPresenter.removeUserFromEvent(id);
     }
 
     @Override
@@ -209,11 +210,16 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                     textView.setText((i + 1) + ". " + event.players.get(i).username);
                     textView.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL));
                     playerInfoContainer.addView(textView);
+
                     RelativeLayout.LayoutParams textViewParams = (RelativeLayout.LayoutParams)textView.getLayoutParams();
                     textViewParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
                     textViewParams.leftMargin = margin;
                     textViewParams.rightMargin = margin * 3;
                     textView.setLayoutParams(textViewParams);
+
+                    if(userId == event.admin.id) {
+                        addKickButton(event.players.get(i), playerInfoContainer);
+                    }
 
                     String url;
                     View img;
@@ -286,8 +292,26 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 showMessenger();
                 break;
             case R.id.signOffEvent:
-                removeUserFromEventButtonPressed();
+                removeUserFromEventButtonPressed(mPresenter.getLocalUser().getOnlineId());
+                break;
+            default:
+                int id = view.getId();
+                removeUserFromEventButtonPressed(id);
                 break;
         }
+    }
+
+    private void addKickButton(User player, RelativeLayout playerInfoContainer) {
+        ImageButton rejectButton = new ImageButton(new ContextThemeWrapper(EventActivity.this, R.style.DangerButton));
+        rejectButton.setImageResource(android.R.drawable.ic_delete);
+        rejectButton.setId(player.id);
+        rejectButton.setOnClickListener(EventActivity.this);
+        playerInfoContainer.addView(rejectButton);
+
+        RelativeLayout.LayoutParams rejectBtnParams = (RelativeLayout.LayoutParams) rejectButton.getLayoutParams();
+        rejectBtnParams.height = 50;
+        rejectBtnParams.width = 50;
+        rejectBtnParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        rejectButton.setLayoutParams(rejectBtnParams);
     }
 }

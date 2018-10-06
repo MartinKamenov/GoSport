@@ -38,6 +38,6 @@ public class EventContracts {
 
         void showMessageOnUITread(final String message);
 
-        void removeUserFromEventButtonPressed();
+        void removeUserFromEventButtonPressed(int id);
     }
 }
