@@ -182,6 +182,7 @@ public class CustomLocationsFragment extends Fragment implements CustomLocations
 
         LinearLayout.LayoutParams cardParams = (LinearLayout.LayoutParams)cardView.getLayoutParams();
         cardParams.width = (Constants.SCREEN_WIDTH / 2) - marginBetweenCardsHorizontal;
+        cardParams.height = Constants.SCREEN_HEIGHT / 2;
         cardParams.setMargins(marginBetweenCardsHorizontal / 2, 0, marginBetweenCardsHorizontal / 2, 0);
         cardView.setLayoutParams(cardParams);
         cardView.setRadius(30);
