@@ -84,10 +84,9 @@
                     </LinearLayout>
                     <CheckBox
                         android:id="@+id/checkbox_teams"
-                        android:checked="true"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Отворено за всички"
+                        android:text="Затворено само за определени отбори"
                         android:fontFamily="sans-serif-condensed"/>
                     <LinearLayout
                         android:id="@+id/teams_container"

@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -232,26 +233,41 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
         int neededPlayers = -1;
         if(checkBoxLimitations.isChecked()) {
             TextView playersLimitTxt = root.findViewById(R.id.players_limit_txt);
+            if(playersLimitTxt.getText().toString().length() == 0) {
+                showMessage("За да ограничите броя на необходимите играчи, моля въведете число в полето: \"Брой неогходими играчи\"");
+                return;
+            }
             neededPlayers = Integer.parseInt(playersLimitTxt.getText().toString());
         }
         StringBuilder teamIds = new StringBuilder();
         // Fill teamIds
         int count = teamsContainer.getChildCount();
-        if(!checkBoxTeams.isChecked()) {
+        int numberOfTeams = 0;
+        if(checkBoxTeams.isChecked()) {
             teamIds.append("[");
             for(int i = 0; i < count; i++) {
+                // The child on index 0 is the header TextView
+                if(i == 0) {
+                    continue;
+                }
                 CheckBox team = (CheckBox) teamsContainer.getChildAt(i);
                 if(team.isChecked()) {
                     if (teamIds.length() > 1) {
                         teamIds.append(", ");
                     }
                     teamIds.append(team.getId());
+                    numberOfTeams++;
                 }
 
             }
             teamIds.append("]");
         } else {
             teamIds.append("null");
+        }
+
+        if(numberOfTeams == 0 && checkBoxTeams.isChecked()) {
+            showMessage("За да затворите събитието за избрани отбори, трябва да изберете поне един отбор.");
+            return;
         }
 
         mPresenter.createNewEvent(name, sport, date, longitude, latitude, place, neededPlayers, teamIds.toString());
@@ -373,6 +389,15 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
             public void run() {
                 NewEventFragment.this.mTeams = teams;
                 teamsContainer.removeAllViews();
+                TextView teamsHeader = new TextView(getActivity());
+                teamsHeader.setTypeface(Typeface.create("sans-serif-condensed", Typeface.NORMAL), Typeface.BOLD_ITALIC);
+                if(teams.length > 0) {
+                    teamsHeader.setText("Отбори:");
+                } else {
+                    teamsHeader.setText("Не участвате в отбор");
+                }
+                teamsHeader.setTextColor(Constants.SECONDCOLOR);
+                teamsContainer.addView(teamsHeader);
                 // Show teams
                 for(int i = 0; i < teams.length; i++) {
                     TeamWrapper team = teams[i];
@@ -399,7 +424,7 @@ public class NewEventFragment extends Fragment implements NewEventContracts.INew
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if(b) {
+        if(!b) {
             teamsContainer.setVisibility(View.GONE);
         } else {
             teamsContainer.setVisibility(View.VISIBLE);
