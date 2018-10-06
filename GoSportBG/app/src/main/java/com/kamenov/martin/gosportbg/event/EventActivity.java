@@ -192,12 +192,20 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 hideProgressBar();
                 final int margin = 50;
                 int userId = mPresenter.getLocalUser().getOnlineId();
+                boolean playerIsInEvent = false;
                 for(int i = 0; i < event.players.size(); i++) {
                     User user = event.players.get(i);
                     if(user.id == userId) {
+                        playerIsInEvent = true;
                         showButtonForMessenger();
+                        break;
                     }
                 }
+
+                if(!playerIsInEvent) {
+                    showAddUserToEventButton();
+                }
+
                 mNameTextView.setText(event.name);
                 DateTime dateTime = event.datetime;
                 mSportTextView.setText(event.sport);
@@ -272,6 +280,12 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     public void showButtonForMessenger() {
         this.mAddUserToEventBtn.setVisibility(View.GONE);
         findViewById(R.id.options_container).setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showAddUserToEventButton() {
+        findViewById(R.id.options_container).setVisibility(View.GONE);
+        this.mAddUserToEventBtn.setVisibility(View.VISIBLE);
     }
 
     @Override

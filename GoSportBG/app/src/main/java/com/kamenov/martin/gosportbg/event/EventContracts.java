@@ -36,6 +36,8 @@ public class EventContracts {
 
         void hideProgressBar();
 
+        void showAddUserToEventButton();
+
         void showMessageOnUITread(final String message);
 
         void removeUserFromEventButtonPressed(int id);

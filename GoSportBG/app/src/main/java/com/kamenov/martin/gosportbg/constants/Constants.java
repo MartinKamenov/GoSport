@@ -49,4 +49,6 @@ public class Constants {
     public static int[][] THEMES = new int[][] {{Color.parseColor("#282828"), Color.parseColor("#ffffff")},
             {Color.parseColor("#ffffff"), Color.parseColor("#282828")}};
     public static String[] THEME_NAMES = new String[] {"Черна", "Бяла"};
+
+    public static int BG_ZONE_DIFFERENCE = 3;
 }

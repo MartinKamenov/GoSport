@@ -257,7 +257,7 @@ public class MessengerFragment extends Fragment implements MessengerContracts.IM
         String timeString = dateTime.dayOfMonth + " " +
                 Constants.MONTHS[dateTime.month] + " " +
                 dateTime.year + "\n" +
-                String.format("%02d:%02d",dateTime.hour, dateTime.minute);
+                String.format("%02d:%02d", (dateTime.hour + Constants.BG_ZONE_DIFFERENCE) % 24, dateTime.minute);
         timeText.setText(timeString);
         messageContainer.addView(timeText);
 
