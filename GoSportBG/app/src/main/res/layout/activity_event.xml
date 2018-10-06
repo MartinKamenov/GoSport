@@ -222,29 +222,38 @@
             android:layout_height="60dp"
             android:text="Присъединяване към събитие"
             android:fontFamily="sans-serif-condensed"
+            android:drawableLeft="@android:drawable/ic_input_add"
             android:theme="@style/SuccessButton"
             android:textColor="#fff"
             android:layout_alignParentBottom="true"/>
-        <Button
-            android:id="@+id/showMessenger"
+        <LinearLayout
+            android:id="@+id/options_container"
             android:layout_width="match_parent"
+            android:weightSum="4"
             android:layout_height="60dp"
+            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
-            android:text="Отваряне на чат"
-            android:fontFamily="sans-serif-condensed"
-            android:theme="@style/InfoButton"
-            android:textColor="#fff"
-            android:visibility="gone"/>
-        <Button
-            android:id="@+id/signOffEvent"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true"
-            android:text="Оттегляне от събитие"
-            android:fontFamily="sans-serif-condensed"
-            android:theme="@style/InfoButton"
-            android:textColor="#fff"
-            android:visibility="gone"/>
+            android:visibility="gone">
+            <Button
+                android:id="@+id/showMessenger"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="60dp"
+                android:drawableLeft="@android:drawable/ic_dialog_email"
+                android:text="Отваряне на чат"
+                android:fontFamily="sans-serif-condensed"
+                android:theme="@style/InfoButton"
+                android:textColor="#fff"/>
+            <ImageButton
+                android:id="@+id/signOffEvent"
+                android:src="@android:drawable/ic_delete"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="60dp"
+                android:fontFamily="sans-serif-condensed"
+                android:theme="@style/DangerButton"
+                android:textColor="#fff"/>
+        </LinearLayout>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/progress_bar_form"

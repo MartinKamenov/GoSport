@@ -68,6 +68,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     private Button mAddUserToEventBtn;
     private RelativeLayout mEventContainer;
     private Button showMessengerButton;
+    private ImageButton signOffEventButton;
     private TextView mSportTextView;
     private ImageCachingService imageCachingService;
 
@@ -101,6 +102,9 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
 
         showMessengerButton = findViewById(R.id.showMessenger);
         showMessengerButton.setOnClickListener(this);
+
+        signOffEventButton = findViewById(R.id.signOffEvent);
+        signOffEventButton.setOnClickListener(this);
 
         mAddUserToEventBtn = findViewById(R.id.addUserToEvent);
         mAddUserToEventBtn.setOnClickListener(this);
@@ -261,14 +265,13 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
                 MarkerOptions markerOptions = new MarkerOptions().position(place).title("Selected place").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
                 mMap.addMarker(markerOptions);
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place, 13.0f));
-                // Show event information, hide progressbar
             }
         });
     }
 
     public void showButtonForMessenger() {
         this.mAddUserToEventBtn.setVisibility(View.GONE);
-        this.showMessengerButton.setVisibility(View.VISIBLE);
+        findViewById(R.id.options_container).setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -302,6 +305,7 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
     }
 
     private void addKickButton(User player, RelativeLayout playerInfoContainer) {
+        int sizeOfButton = 60;
         ImageButton rejectButton = new ImageButton(new ContextThemeWrapper(EventActivity.this, R.style.DangerButton));
         rejectButton.setImageResource(android.R.drawable.ic_delete);
         rejectButton.setId(player.id);
@@ -309,9 +313,9 @@ public class EventActivity extends FragmentActivity implements EventContracts.IE
         playerInfoContainer.addView(rejectButton);
 
         RelativeLayout.LayoutParams rejectBtnParams = (RelativeLayout.LayoutParams) rejectButton.getLayoutParams();
-        rejectBtnParams.height = 50;
-        rejectBtnParams.width = 50;
-        rejectBtnParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        rejectBtnParams.height = sizeOfButton;
+        rejectBtnParams.width = sizeOfButton;
+        rejectBtnParams.addRule(RelativeLayout.ALIGN_PARENT_START);
         rejectButton.setLayoutParams(rejectBtnParams);
     }
 }
