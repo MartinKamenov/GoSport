@@ -58,15 +58,14 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        if(!imageCachingService.hasBitmap(url)) {
-            imageCachingService.setBitmap(url, result);
-        }
-
         if(!usedLoaderConstruntor) {
             bmImage.setImageBitmap(result);
         } else {
             if(result == null) {
                 result = BitmapFactory.decodeResource(mActivity.getResources(), R.drawable.noimagefound);
+            }
+            if(!imageCachingService.hasBitmap(url)) {
+                imageCachingService.setBitmap(url, result);
             }
             mParent = (ViewGroup) mProgressBar.getParent();
             ViewGroup.LayoutParams params = mProgressBar.getLayoutParams();

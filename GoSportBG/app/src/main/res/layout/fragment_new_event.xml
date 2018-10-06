@@ -78,7 +78,7 @@
                             android:layout_width="250px"
                             android:layout_height="wrap_content"
                             android:inputType="number"
-                            android:maxLength="3"
+                            android:maxLength="2"
                             android:textAlignment="center"
                             android:fontFamily="sans-serif-condensed"/>
                     </LinearLayout>
