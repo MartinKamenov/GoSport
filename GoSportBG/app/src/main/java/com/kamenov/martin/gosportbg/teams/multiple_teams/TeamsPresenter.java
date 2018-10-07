@@ -82,11 +82,11 @@ public class TeamsPresenter implements TeamsContracts.ITeamsPresenter, GetHandle
         if(picture != null) {
             body = String.format("{\"name\":\"%s\",\"sport\":\"%s\"" +
                             ",\"adminId\":\"%d\", \"imageString\":\"%s\"}",
-                    name, sport, adminId, picture.replace("\n", "\\n"));
+                    name.replace("\n", "\\n"), sport, adminId, picture.replace("\n", "\\n"));
         } else {
             body = String.format("{\"name\":\"%s\",\"sport\":\"%s\"" +
                             ",\"adminId\":\"%d\"}",
-                    name, sport, adminId);
+                    name.replace("\n", "\\n"), sport, adminId);
         }
         if(picture!=null) {
             String str = picture.replace("\n", "\\n");

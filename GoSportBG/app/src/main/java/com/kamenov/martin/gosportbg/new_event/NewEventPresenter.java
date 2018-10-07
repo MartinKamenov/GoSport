@@ -53,7 +53,7 @@ public class NewEventPresenter implements NewEventContracts.INewEventPresenter, 
         String body = String.format("{\"name\":\"%s\",\"sport\":\"%s\",\"year\":\"%s\",\"month\":\"%s\"," +
                 "\"day\":\"%s\",\"hours\":\"%s\",\"minutes\":\"%s\",\"longitude\":\"%s\"," +
                 "\"latitude\":\"%s\",\"address\":\"%s\",\"neededPlayers\":\"%d\",\"adminId\":\"%d\"," +
-                "\"teamIds\":%s}", name, sport, date.year, date.month, date.dayOfMonth, date.hour,
+                "\"teamIds\":%s}", name.replace("\n", "\\n"), sport, date.year, date.month, date.dayOfMonth, date.hour,
                 date.minute, longitude, latitude, address, neededPlayers, myId, teamIds);
         mView.showLoadingBar();
         mRequester.post(this, Constants.DOMAIN + "/events/createEvent", body);
