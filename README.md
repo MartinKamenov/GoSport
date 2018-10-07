@@ -4,7 +4,7 @@
 
 
 ## Google play
-Comming soon
+https://play.google.com/store/apps/details?id=com.kamenov.martin.gosportbg
 
 ## Features
 - Creating events
