@@ -1,11 +1,13 @@
 <resources>
-    <string name="app_name">GoSport</string>
+    <string name="app_name" translatable="false">GoSport</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="facebook_app_id">1858056840892364</string>
-    <string name="fb_login_protocol_scheme">fb1858056840892364</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_event">Event</string>
-    <string name="title_activity_show_events">Events</string>
+    <string name="hello_blank_fragment" translatable="true">Hello blank fragment</string>
+    <string name="facebook_app_id" translatable="false">1858056840892364</string>
+    <string name="fb_login_protocol_scheme" translatable="false">fb1858056840892364</string>
+    <string name="title_activity_maps" translatable="true">Map</string>
+    <string name="title_activity_event" translatable="true">Event</string>
+    <string name="title_activity_show_events" translatable="true">Events</string>
+    <string name="sport_label" translatable="false">Sport:</string>
+    <string name="date_label" translatable="false">Date:</string>
 </resources>

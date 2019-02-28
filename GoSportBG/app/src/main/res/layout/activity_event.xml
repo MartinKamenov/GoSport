@@ -58,7 +58,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="Спорт:"
+                            android:text="@string/sport_label"
                             android:textSize="20dp"
                             android:gravity="left"
                             android:fontFamily="sans-serif-condensed"/>
