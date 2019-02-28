@@ -95,7 +95,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="Дата:"
+                            android:text="@string/date_label"
                             android:textSize="20dp"
                             android:gravity="left"
                             android:fontFamily="sans-serif-condensed"/>
@@ -131,7 +131,7 @@
                             android:layout_width="0dp"
                             android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:text="Час:"
+                            android:text="@string/hour_label"
                             android:textSize="20dp"
                             android:gravity="left"
                             android:fontFamily="sans-serif-condensed"/>
@@ -167,7 +167,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:text="Описание:"
+                        android:text="@string/description_label"
                         android:textSize="20dp"
                         android:gravity="left"
                         android:fontFamily="sans-serif-condensed"/>
@@ -202,7 +202,7 @@
                             android:layout_marginTop="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Участници:"
+                            android:text="@string/participants_label"
                             android:textAlignment="center"
                             android:textSize="20dp"
                             android:fontFamily="sans-serif-condensed"/>
@@ -220,7 +220,7 @@
             android:id="@+id/addUserToEvent"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="Присъединяване към събитие"
+            android:text="@string/join_event_button_text"
             android:fontFamily="sans-serif-condensed"
             android:drawableLeft="@android:drawable/ic_input_add"
             android:theme="@style/SuccessButton"
@@ -240,7 +240,7 @@
                 android:layout_weight="3"
                 android:layout_height="60dp"
                 android:drawableLeft="@android:drawable/ic_dialog_email"
-                android:text="Отваряне на чат"
+                android:text="@string/open_chat_btn_text"
                 android:fontFamily="sans-serif-condensed"
                 android:theme="@style/InfoButton"
                 android:textColor="#fff"/>
@@ -272,7 +272,7 @@
                 android:id="@+id/progress_bar_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Зареждане на събитие"/>
+                android:text="@string/loading_event_txt"/>
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

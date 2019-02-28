@@ -10,4 +10,10 @@
     <string name="title_activity_show_events" translatable="true">Events</string>
     <string name="sport_label" translatable="false">Sport:</string>
     <string name="date_label" translatable="false">Date:</string>
+    <string name="hour_label" translatable="false">Time:</string>
+    <string name="description_label" translatable="false">Description:</string>
+    <string name="participants_label" translatable="false">Participants:</string>
+    <string name="join_event_button_text" translatable="false">Join the event</string>
+    <string name="open_chat_btn_text" translatable="false">Open chat</string>
+    <string name="loading_event_txt" translatable="false">Loading event</string>
 </resources>
