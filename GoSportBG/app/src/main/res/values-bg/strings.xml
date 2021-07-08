@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GoSport</string>
+    <string name="hello_blank_fragment" translatable="true">Здравей</string>
+    <string name="title_activity_maps" translatable="true">Карта</string>
+    <string name="title_activity_event" translatable="true">Събитие</string>
+    <string name="title_activity_show_events" translatable="true">Събития</string>
+</resources>
